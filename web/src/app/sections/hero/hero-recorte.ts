@@ -19,13 +19,13 @@ import { BOTON, SUBTITULO, TITULO } from './textos';
   imports: [Boton, FondoLuces],
   template: `
     <section
-      class="relative grid min-h-svh place-items-end justify-items-center overflow-hidden bg-fondo px-margen-movil pt-[calc(var(--space-16)+env(safe-area-inset-top))] pb-[calc(var(--space-10)+env(safe-area-inset-bottom))] text-texto md:px-margen-escritorio lg:pb-[calc(var(--space-16)+env(safe-area-inset-bottom))]"
+      class="relative grid min-h-svh place-items-center overflow-hidden bg-fondo px-margen-movil pt-[calc(var(--space-16)+env(safe-area-inset-top))] pb-[calc(var(--space-16)+env(safe-area-inset-bottom))] text-texto"
       aria-labelledby="hero-titulo"
     >
-      <app-fondo-luces #campo class="absolute inset-0 lg:left-5/12" [arriba]="true" />
+      <app-fondo-luces #campo class="absolute inset-0" />
       <div
         #bloque
-        class="relative flex max-w-(--container-texto) flex-col items-center gap-6 rounded-lg bg-fondo px-6 py-10 text-center md:px-12 md:py-14 lg:w-5/12 lg:items-start lg:self-center lg:justify-self-start lg:px-0 lg:text-left"
+        class="relative flex max-w-(--container-texto) flex-col items-center gap-6 rounded-lg bg-fondo px-6 py-10 text-center md:px-12 md:py-14"
       >
         <h1 id="hero-titulo" class="text-titulo-1 ancho-titulo">{{ titulo }}</h1>
         <p class="text-entrada text-texto-2">{{ subtitulo }}</p>

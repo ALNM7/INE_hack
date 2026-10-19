@@ -1,5 +1,6 @@
 {
-  "listo": false,
+  "listo": true,
+  "poster": "media/hero_poster.jpg",
   "fuentes": [
     { "src": "media/hero_loop.webm", "tipo": "video/webm" },
     { "src": "media/hero_loop.mp4", "tipo": "video/mp4" }
