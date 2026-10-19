@@ -1,8 +1,29 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, viewChild } from '@angular/core';
+import { MovimientoReducido } from '../../core/movimiento-reducido.service';
+import { Escala } from '../../sections/escala/escala';
+import { Hero } from '../../sections/hero/hero';
+import { MarcadorSeccion } from '../../shared/ui/marcador-seccion';
 
 @Component({
   selector: 'app-home',
-  template: '<main class="min-h-svh bg-fondo text-texto"></main>',
+  imports: [Hero, Escala, MarcadorSeccion],
+  template: `
+    <main class="bg-fondo text-texto">
+      <app-hero (empezar)="empezar()" />
+      <app-escala />
+      <app-marcador-seccion nombre="Acto 1 · Dibújalo tú" ancla="dibujalo" />
+      <app-marcador-seccion nombre="Acto 2 · Lo que se apagó" ancla="cohorte" />
+      <app-marcador-seccion nombre="Acto 3 · Tu Wrapped" ancla="wrapped" />
+    </main>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Home {}
+export class Home {
+  private readonly reducido = inject(MovimientoReducido).activo;
+  private readonly escala = viewChild.required(Escala);
+
+  protected empezar(): void {
+    document.getElementById('escala')?.scrollIntoView({ behavior: this.reducido() ? 'auto' : 'smooth', block: 'start' });
+    this.escala().enfocar();
+  }
+}

@@ -2,7 +2,7 @@
 
 Micrositio de storytelling con datos para el hackatón del INE "Hackea la participación" 2026, Reto 3. Cuenta, con los Conteos Censales de Participación Ciudadana 2012, 2018 y 2024, cómo cae la participación electoral en la juventud y dónde sigue encendida.
 
-Estado: Fase 0 (preparación) terminada. El plan completo está en `docs/PLAN_la_generacion_que_se_apago.md`.
+Estado: Fases 0, 1 y 2 terminadas. De la Fase 3 están la arquitectura, el Hero (3 variantes) y la Escala. El plan completo está en `docs/PLAN_la_generacion_que_se_apago.md`.
 
 ## Qué hay en el repo
 
@@ -40,6 +40,22 @@ Build de producción:
 cd web
 npx ng build
 ```
+
+Variantes del hero para elegir: `http://localhost:4200/?v=1`, `?v=2` y `?v=3`. Con `?v=` aparece un selector arriba (teclas 1 a 3, flechas y R para repetir la entrada). Sin el parámetro se muestra la variante 1 y no hay selector.
+
+## Publicar en GitHub Pages
+
+```bash
+cd web
+npm run build:pages
+npm run deploy
+```
+
+`build:pages` compila con `--base-href /INE_hack/` y copia `index.html` como `404.html` para que funcionen las rutas. `deploy` publica `dist/web/browser` en la rama `gh-pages`.
+
+## Video del hero
+
+El hero lee `web/public/media/hero.json`. Con `"listo": false` muestra el póster (hecho con tokens) y no pide ningún video. Cuando estén `hero_loop.mp4` y `hero_loop.webm` en `web/public/media/`, cambia `"listo"` a `true`. No hay que tocar código.
 
 ## Datos
 

@@ -9,6 +9,10 @@ export interface ResumenAnio {
   ns: number;
   part: number;
   ns_pct: number;
+  part_h: number;
+  part_m: number;
+  nv_h: number;
+  nv_m: number;
 }
 
 export interface Nacional {
@@ -29,14 +33,23 @@ export interface EdadExacta {
   '2024_m': Participacion[];
 }
 
-export interface SerieCohorte {
-  campos: string[];
-  filas: Participacion[][];
+export type FilaCohorteLarga = [edad2012: number, p2012: Participacion, p2018: Participacion, p2024: Participacion];
+
+export type FilaCohorteCorta = [edad2018: number, p2018: Participacion, p2024: Participacion];
+
+export interface CohorteLarga {
+  campos: ['edad_2012', 'p2012', 'p2018', 'p2024'];
+  filas: FilaCohorteLarga[];
+}
+
+export interface CohorteCorta {
+  campos: ['edad_2018', 'p2018', 'p2024'];
+  filas: FilaCohorteCorta[];
 }
 
 export interface Cohortes {
-  larga: SerieCohorte;
-  corta: SerieCohorte;
+  larga: CohorteLarga;
+  corta: CohorteCorta;
 }
 
 export interface GruposSexo {
@@ -113,4 +126,11 @@ export interface Meta {
   ns_2012: string;
   cobertura: string;
   municipios: number;
+  correcciones: string;
+  mapa: string;
+}
+
+export interface PropiedadesEstado {
+  c: number;
+  n: string;
 }
