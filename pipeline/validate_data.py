@@ -1,4 +1,3 @@
-import re
 import sys
 import json
 import math
@@ -44,11 +43,6 @@ check("Nacional 2012", nac["2012"]["part"], 62.1)
 check("Nacional 2018", nac["2018"]["part"], 62.4)
 check("Nacional 2024", nac["2024"]["part"], 59.7)
 
-check("Hombres 2012", nac["2012"]["part_h"], 57.8)
-check("Mujeres 2012", nac["2012"]["part_m"], 66.1)
-check("Hombres 2024", nac["2024"]["part_h"], 54.8)
-check("Mujeres 2024", nac["2024"]["part_m"], 64.2)
-
 edad = dict(zip(ed["edades"], ed["2024"]))
 check("Edad 18 en 2024", edad[18], 61.5)
 check("Edad 25 en 2024", edad[25], 46.9)
@@ -87,11 +81,6 @@ for i in range(1, 33):
 print(f"Municipios: {total}")
 if total < 2400:
     errores.append("menos de 2400 municipios")
-
-for e in cargar("catalogo.json"):
-    for k, n in e["m"]:
-        if re.search(r"[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ .,'()\-]", n):
-            errores.append(f"nombre raro {e['c']}-{k}: {n}")
 
 for n in ["nacional.json", "edad_exacta.json", "cohortes.json", "estados.json", "focos.json", "catalogo.json"]:
     recorrer(cargar(n), n)

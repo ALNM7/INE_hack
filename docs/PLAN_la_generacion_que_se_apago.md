@@ -282,7 +282,7 @@ Criterio: ningún color, tamaño o duración escrito a mano en los componentes; 
 4. La generación de 2012: 66.7% a los 18, 52.1% a los 24, 50.3% a los 30. "Nunca se recuperó."
 5. Contraste: la generación de 50 en 2018 se mantuvo (68.8 a 68.9).
 6. Brecha de género 25 a 29: hombres 40.6%, mujeres 53.9%.
-7. Mapa de jóvenes 18 a 24 por estado con `geo/mx_estados.topojson` (ya incluido, unir por `c`); etiquetas en Sonora (38.7) y Yucatán (64.8); tooltip con Angular CDK Overlay.
+7. Mapa de jóvenes 18 a 24 por estado; etiquetas en Sonora (38.7) y Yucatán (64.8); tooltip con Angular CDK Overlay.
 8. Cierre: "Pero hay casi 15 mil secciones donde los jóvenes sí votan." (cifra exacta en `focos.json`, campo `total`). Puntos que se encienden escalonados con semilla fija.
 
 **8.5 Acto 3, "Tu Wrapped".** Formulario: estado, municipio (dependiente), edad, sexo. Genera 5 tarjetas 1080x1920 (vista escalada y deslizable):
@@ -296,7 +296,7 @@ Si un dato es `null`, usar el del estado y avisarlo. Descargar PNG con html-to-i
 
 **8.6 Metodología.** Fuente y enlace, qué se cuenta y qué no, definición de participación, cohorte aproximada, supresión, calidad de captura, diferencia de NS en 2012, solo se comparan presidenciales.
 
-**8.7 Ficha institucional.** `/ficha/21/115` (Puebla capital), hoja carta, estilo claro para imprimir (`@page { size: letter; margin: 12mm; }`). Contenido: municipio, participación 2024 y 2018, curva del municipio contra la nacional, brecha de género en jóvenes, sección más y menos participativa, 3 mensajes para pláticas en escuelas, QR al sitio. Enlace discreto desde el sitio: "Soy del INE o docente: generar ficha de mi municipio".
+**8.7 Ficha institucional.** `/ficha/21/114`, hoja carta, estilo claro para imprimir (`@page { size: letter; margin: 12mm; }`). Contenido: municipio, participación 2024 y 2018, curva del municipio contra la nacional, brecha de género en jóvenes, sección más y menos participativa, 3 mensajes para pláticas en escuelas, QR al sitio. Enlace discreto desde el sitio: "Soy del INE o docente: generar ficha de mi municipio".
 
 ### Cierre de la Fase 3
 1. Correr `find-animation-opportunities` sobre todo el sitio y aplicar lo que tenga sentido.
