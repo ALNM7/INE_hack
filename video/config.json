@@ -1,0 +1,5 @@
+{
+  "url": "alnm7.github.io/INE_hack",
+  "zona_segura": { "arriba": 250, "abajo": 350, "lados": 90 },
+  "subtitulos": { "max_caracteres": 42, "corte": 34 }
+}
