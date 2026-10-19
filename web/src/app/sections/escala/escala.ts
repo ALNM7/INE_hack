@@ -72,7 +72,19 @@ export class Escala {
       });
       const estado: EstadoCampo = { apagado: 0, jovenes: 0, uniforme: reducido };
       const pintar = () => campo.fijar({ ...estado });
-      const observador = new ResizeObserver(() => campo.medir());
+      // En móvil la barra del navegador cambia el alto al hacer scroll; solo
+      // se vuelve a medir cuando el tamaño del lienzo cambia de verdad.
+      let anchoPrevio = 0;
+      let altoPrevio = 0;
+      const observador = new ResizeObserver(([entrada]) => {
+        const { width, height } = entrada.contentRect;
+        if (Math.abs(width - anchoPrevio) < 1 && Math.abs(height - altoPrevio) < 1) {
+          return;
+        }
+        anchoPrevio = width;
+        altoPrevio = height;
+        campo.medir();
+      });
       observador.observe(lienzo);
 
       const contexto = gsap.context(() => {
