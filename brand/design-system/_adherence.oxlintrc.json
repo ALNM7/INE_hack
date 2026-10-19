@@ -1,0 +1,623 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": [
+          {
+            "group": [
+              "components/acciones/**",
+              "components/cifras/**",
+              "components/compartir/**",
+              "components/formularios/**",
+              "components/fuentes/**",
+              "components/graficas/**",
+              "components/iconos/**",
+              "components/impresion/**",
+              "components/narrativa/**",
+              "ui_kits/micrositio/**"
+            ],
+            "message": "Import design-system components from 'index.js', not component internals."
+          }
+        ]
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color: use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/\\b\\d+px\\b/]",
+        "message": "Raw px value: use a design-system spacing token via var()."
+      },
+      {
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Bricolage Grotesque|Atkinson Hyperlegible Next|IBM Plex Mono))/i]",
+        "message": "Font not provided by the design system. Available: Bricolage Grotesque, Atkinson Hyperlegible Next, IBM Plex Mono."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Boton'] > JSXAttribute > JSXIdentifier[name!=/^(?:variante|tamano|icono|iconoFinal|disabled|completo|href|type|onClick|children|style|key|ref|className|style|children)$/]",
+        "message": "<Boton> doesn't accept that prop. Declared props: variante, tamano, icono, iconoFinal, disabled, completo, href, type, onClick, children, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Boton'] > JSXAttribute[name.name='variante'] > Literal[value!=/^(?:primario|secundario|texto)$/]",
+        "message": "<Boton> variante must be one of 'primario' | 'secundario' | 'texto'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Boton'] > JSXAttribute[name.name='tamano'] > Literal[value!=/^(?:md|lg)$/]",
+        "message": "<Boton> tamano must be one of 'md' | 'lg'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Boton'] > JSXAttribute[name.name='type'] > Literal[value!=/^(?:button|submit|reset)$/]",
+        "message": "<Boton> type must be one of 'button' | 'submit' | 'reset'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='CampoEdad'] > JSXAttribute > JSXIdentifier[name!=/^(?:valor|onCambiar|min|max|etiqueta|ayuda|error|id|style|key|ref|className|style|children)$/]",
+        "message": "<CampoEdad> doesn't accept that prop. Declared props: valor, onCambiar, min, max, etiqueta, ayuda, error, id, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='CampoLuces'] > JSXAttribute > JSXIdentifier[name!=/^(?:forma|mostrarMapa|colorMapa|colorBordes|total|proporcion|encendidas|columnas|radio|separacion|semilla|orden|halo|animar|colorEncendida|colorApagada|etiqueta|style|key|ref|className|style|children)$/]",
+        "message": "<CampoLuces> doesn't accept that prop. Declared props: forma, mostrarMapa, colorMapa, colorBordes, total, proporcion, encendidas, columnas, radio, separacion, semilla, orden, halo, animar, colorEncendida, colorApagada, etiqueta, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='CampoLuces'] > JSXAttribute[name.name='forma'] > Literal[value!=/^(?:mexico|rejilla)$/]",
+        "message": "<CampoLuces> forma must be one of 'mexico' | 'rejilla'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='CampoLuces'] > JSXAttribute[name.name='orden'] > Literal[value!=/^(?:azar|lineal)$/]",
+        "message": "<CampoLuces> orden must be one of 'azar' | 'lineal'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='CifraProtagonista'] > JSXAttribute > JSXIdentifier[name!=/^(?:valor|unidad|antetitulo|etiqueta|fuente|tamano|tono|animar|alinear|style|key|ref|className|style|children)$/]",
+        "message": "<CifraProtagonista> doesn't accept that prop. Declared props: valor, unidad, antetitulo, etiqueta, fuente, tamano, tono, animar, alinear, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='CifraProtagonista'] > JSXAttribute[name.name='tamano'] > Literal[value!=/^(?:display|cifra)$/]",
+        "message": "<CifraProtagonista> tamano must be one of 'display' | 'cifra'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='CifraProtagonista'] > JSXAttribute[name.name='tono'] > Literal[value!=/^(?:luz|texto|apagada)$/]",
+        "message": "<CifraProtagonista> tono must be one of 'luz' | 'texto' | 'apagada'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='CifraProtagonista'] > JSXAttribute[name.name='alinear'] > Literal[value!=/^(?:inicio|centro)$/]",
+        "message": "<CifraProtagonista> alinear must be one of 'inicio' | 'centro'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='FichaImprimible'] > JSXAttribute > JSXIdentifier[name!=/^(?:municipio|estado|anio|participacionJoven|participacionTotal|participacionEstado|participacionNacional|porEdad|seccionAlta|seccionBaja|preguntas|url|qrSrc|escala|style|key|ref|className|style|children)$/]",
+        "message": "<FichaImprimible> doesn't accept that prop. Declared props: municipio, estado, anio, participacionJoven, participacionTotal, participacionEstado, participacionNacional, porEdad, seccionAlta, seccionBaja, preguntas, url, qrSrc, escala, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='SerieEdad'] > JSXAttribute > JSXIdentifier[name!=/^(?:id|nombre|puntos|tono|punteada|etiquetaFinal|key|ref|className|style|children)$/]",
+        "message": "<SerieEdad> doesn't accept that prop. Declared props: id, nombre, puntos, tono, punteada, etiquetaFinal."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Icono'] > JSXAttribute > JSXIdentifier[name!=/^(?:nombre|tamano|grosor|titulo|style|key|ref|className|style|children)$/]",
+        "message": "<Icono> doesn't accept that prop. Declared props: nombre, tamano, grosor, titulo, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MapaEstados'] > JSXAttribute > JSXIdentifier[name!=/^(?:valores|escala|dominio|promedio|rango|formato|seleccionado|onSeleccionar|etiquetaLeyenda|mostrarLeyenda|style|key|ref|className|style|children)$/]",
+        "message": "<MapaEstados> doesn't accept that prop. Declared props: valores, escala, dominio, promedio, rango, formato, seleccionado, onSeleccionar, etiquetaLeyenda, mostrarLeyenda, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MapaEstados'] > JSXAttribute[name.name='escala'] > Literal[value!=/^(?:secuencial|divergente)$/]",
+        "message": "<MapaEstados> escala must be one of 'secuencial' | 'divergente'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='NotaMetodologica'] > JSXAttribute > JSXIdentifier[name!=/^(?:titulo|abierta|children|style|key|ref|className|style|children)$/]",
+        "message": "<NotaMetodologica> doesn't accept that prop. Declared props: titulo, abierta, children, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='PasoScrolly'] > JSXAttribute > JSXIdentifier[name!=/^(?:numero|antetitulo|activo|alineacion|children|style|key|ref|className|style|children)$/]",
+        "message": "<PasoScrolly> doesn't accept that prop. Declared props: numero, antetitulo, activo, alineacion, children, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='PasoScrolly'] > JSXAttribute[name.name='alineacion'] > Literal[value!=/^(?:izquierda|centro|derecha)$/]",
+        "message": "<PasoScrolly> alineacion must be one of 'izquierda' | 'centro' | 'derecha'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='PieFuente'] > JSXAttribute > JSXIdentifier[name!=/^(?:fuente|nota|enlace|style|key|ref|className|style|children)$/]",
+        "message": "<PieFuente> doesn't accept that prop. Declared props: fuente, nota, enlace, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='SelectorEstadoMunicipio'] > JSXAttribute > JSXIdentifier[name!=/^(?:estados|estado|municipio|onCambiar|direccion|style|key|ref|className|style|children)$/]",
+        "message": "<SelectorEstadoMunicipio> doesn't accept that prop. Declared props: estados, estado, municipio, onCambiar, direccion, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='SelectorEstadoMunicipio'] > JSXAttribute[name.name='direccion'] > Literal[value!=/^(?:columna|fila)$/]",
+        "message": "<SelectorEstadoMunicipio> direccion must be one of 'columna' | 'fila'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='SelectorSexo'] > JSXAttribute > JSXIdentifier[name!=/^(?:valor|onCambiar|opciones|etiqueta|ayuda|nombre|style|key|ref|className|style|children)$/]",
+        "message": "<SelectorSexo> doesn't accept that prop. Declared props: valor, onCambiar, opciones, etiqueta, ayuda, nombre, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='TarjetaWrapped'] > JSXAttribute > JSXIdentifier[name!=/^(?:variante|datos|escala|indice|total|fuente|style|key|ref|className|style|children)$/]",
+        "message": "<TarjetaWrapped> doesn't accept that prop. Declared props: variante, datos, escala, indice, total, fuente, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='TarjetaWrapped'] > JSXAttribute[name.name='variante'] > Literal[value!=/^(?:municipio|edad|generacion|secciones|cierre)$/]",
+        "message": "<TarjetaWrapped> variante must be one of 'municipio' | 'edad' | 'generacion' | 'secciones' | 'cierre'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Toast'] > JSXAttribute > JSXIdentifier[name!=/^(?:tono|mensaje|accion|onCerrar|flotante|duracion|children|style|key|ref|className|style|children)$/]",
+        "message": "<Toast> doesn't accept that prop. Declared props: tono, mensaje, accion, onCerrar, flotante, duracion, children, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Toast'] > JSXAttribute[name.name='tono'] > Literal[value!=/^(?:info|exito|alerta)$/]",
+        "message": "<Toast> tono must be one of 'info' | 'exito' | 'alerta'."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {
+      "Boton": {
+        "replaces": []
+      },
+      "CampoEdad": {
+        "replaces": []
+      },
+      "CampoLuces": {
+        "replaces": []
+      },
+      "CifraProtagonista": {
+        "replaces": []
+      },
+      "FichaImprimible": {
+        "replaces": []
+      },
+      "SerieEdad": {
+        "replaces": []
+      },
+      "Icono": {
+        "replaces": []
+      },
+      "MapaEstados": {
+        "replaces": []
+      },
+      "NotaMetodologica": {
+        "replaces": []
+      },
+      "PasoScrolly": {
+        "replaces": []
+      },
+      "PieFuente": {
+        "replaces": []
+      },
+      "SelectorEstadoMunicipio": {
+        "replaces": []
+      },
+      "SelectorSexo": {
+        "replaces": []
+      },
+      "TarjetaWrapped": {
+        "replaces": []
+      },
+      "Toast": {
+        "replaces": []
+      }
+    },
+    "tokens": [
+      "--breakpoint-lg",
+      "--breakpoint-md",
+      "--breakpoint-xl",
+      "--color-acento",
+      "--color-acento-texto",
+      "--color-alerta",
+      "--color-apagada",
+      "--color-apagada-papel",
+      "--color-arena",
+      "--color-ceniza",
+      "--color-coral",
+      "--color-div-0",
+      "--color-div-1",
+      "--color-div-2",
+      "--color-div-3",
+      "--color-div-4",
+      "--color-div-5",
+      "--color-div-6",
+      "--color-div-7",
+      "--color-div-8",
+      "--color-div-papel-0",
+      "--color-div-papel-1",
+      "--color-div-papel-2",
+      "--color-div-papel-3",
+      "--color-div-papel-4",
+      "--color-div-papel-5",
+      "--color-div-papel-6",
+      "--color-div-papel-7",
+      "--color-div-papel-8",
+      "--color-divergente-0",
+      "--color-divergente-1",
+      "--color-divergente-2",
+      "--color-divergente-3",
+      "--color-divergente-4",
+      "--color-divergente-5",
+      "--color-divergente-6",
+      "--color-divergente-7",
+      "--color-divergente-8",
+      "--color-escala-0",
+      "--color-escala-1",
+      "--color-escala-2",
+      "--color-escala-3",
+      "--color-escala-4",
+      "--color-escala-5",
+      "--color-escala-6",
+      "--color-escala-7",
+      "--color-escala-8",
+      "--color-foco-apagado",
+      "--color-foco-encendido",
+      "--color-fondo",
+      "--color-hombre",
+      "--color-hombres",
+      "--color-hombres-papel",
+      "--color-hueso",
+      "--color-ladrillo",
+      "--color-linea",
+      "--color-luz",
+      "--color-luz-halo",
+      "--color-luz-papel",
+      "--color-luz-suave",
+      "--color-luz-tinta",
+      "--color-mujer",
+      "--color-mujeres",
+      "--color-mujeres-papel",
+      "--color-noche-1",
+      "--color-noche-2",
+      "--color-noche-3",
+      "--color-noche-linea",
+      "--color-papel-1",
+      "--color-papel-2",
+      "--color-papel-3",
+      "--color-papel-linea",
+      "--color-seq-0",
+      "--color-seq-1",
+      "--color-seq-2",
+      "--color-seq-3",
+      "--color-seq-4",
+      "--color-seq-5",
+      "--color-seq-6",
+      "--color-seq-7",
+      "--color-seq-8",
+      "--color-seq-papel-0",
+      "--color-seq-papel-1",
+      "--color-seq-papel-2",
+      "--color-seq-papel-3",
+      "--color-seq-papel-4",
+      "--color-seq-papel-5",
+      "--color-seq-papel-6",
+      "--color-seq-papel-7",
+      "--color-seq-papel-8",
+      "--color-sobre-acento",
+      "--color-superficie",
+      "--color-superficie-alta",
+      "--color-texto",
+      "--color-texto-2",
+      "--color-texto-3",
+      "--color-tinta-1",
+      "--color-tinta-2",
+      "--color-tinta-3",
+      "--container-grafica",
+      "--container-max",
+      "--container-texto",
+      "--duration-corta",
+      "--duration-encendido",
+      "--duration-escalonado",
+      "--duration-escena",
+      "--duration-instante",
+      "--duration-larga",
+      "--duration-media",
+      "--ease-apagado",
+      "--ease-enfasis",
+      "--ease-entrada",
+      "--ease-escena",
+      "--ease-salida",
+      "--ease-scroll",
+      "--font-mono",
+      "--font-texto",
+      "--font-titulo",
+      "--font-weight-extra",
+      "--font-weight-medio",
+      "--font-weight-negrita",
+      "--font-weight-regular",
+      "--font-weight-semi",
+      "--grid-columnas-escritorio",
+      "--grid-columnas-movil",
+      "--radius-full",
+      "--radius-lg",
+      "--radius-md",
+      "--radius-sm",
+      "--radius-xs",
+      "--shadow-flotante",
+      "--shadow-halo",
+      "--shadow-papel",
+      "--shadow-tooltip",
+      "--space-0",
+      "--space-1",
+      "--space-10",
+      "--space-12",
+      "--space-16",
+      "--space-2",
+      "--space-20",
+      "--space-24",
+      "--space-3",
+      "--space-32",
+      "--space-4",
+      "--space-5",
+      "--space-6",
+      "--space-8",
+      "--spacing",
+      "--spacing-margen-escritorio",
+      "--spacing-margen-movil",
+      "--spacing-medianil-escritorio",
+      "--spacing-medianil-movil",
+      "--spacing-paso",
+      "--text-antetitulo",
+      "--text-antetitulo--letter-spacing",
+      "--text-antetitulo--line-height",
+      "--text-cifra",
+      "--text-cifra--letter-spacing",
+      "--text-cifra--line-height",
+      "--text-cuerpo",
+      "--text-cuerpo--letter-spacing",
+      "--text-cuerpo--line-height",
+      "--text-display",
+      "--text-display--letter-spacing",
+      "--text-display--line-height",
+      "--text-entrada",
+      "--text-entrada--letter-spacing",
+      "--text-entrada--line-height",
+      "--text-etiqueta",
+      "--text-etiqueta--letter-spacing",
+      "--text-etiqueta--line-height",
+      "--text-nota",
+      "--text-nota--letter-spacing",
+      "--text-nota--line-height",
+      "--text-titulo-1",
+      "--text-titulo-1--letter-spacing",
+      "--text-titulo-1--line-height",
+      "--text-titulo-2",
+      "--text-titulo-2--letter-spacing",
+      "--text-titulo-2--line-height",
+      "--text-titulo-3",
+      "--text-titulo-3--letter-spacing",
+      "--text-titulo-3--line-height",
+      "--text-wrapped-cifra",
+      "--text-wrapped-cifra--letter-spacing",
+      "--text-wrapped-cifra--line-height",
+      "--text-wrapped-cuerpo",
+      "--text-wrapped-cuerpo--letter-spacing",
+      "--text-wrapped-cuerpo--line-height",
+      "--text-wrapped-etiqueta",
+      "--text-wrapped-etiqueta--letter-spacing",
+      "--text-wrapped-etiqueta--line-height",
+      "--text-wrapped-titulo",
+      "--text-wrapped-titulo--letter-spacing",
+      "--text-wrapped-titulo--line-height"
+    ],
+    "tokenKinds": {
+      "--color-noche-1": "color",
+      "--color-noche-2": "color",
+      "--color-noche-3": "color",
+      "--color-noche-linea": "color",
+      "--color-luz": "color",
+      "--color-luz-suave": "color",
+      "--color-luz-halo": "color",
+      "--color-apagada": "color",
+      "--color-hueso": "color",
+      "--color-arena": "color",
+      "--color-ceniza": "color",
+      "--color-coral": "color",
+      "--color-papel-1": "color",
+      "--color-papel-2": "color",
+      "--color-papel-3": "color",
+      "--color-papel-linea": "color",
+      "--color-tinta-1": "color",
+      "--color-tinta-2": "color",
+      "--color-tinta-3": "color",
+      "--color-luz-papel": "color",
+      "--color-luz-tinta": "color",
+      "--color-apagada-papel": "color",
+      "--color-ladrillo": "color",
+      "--color-mujeres": "color",
+      "--color-hombres": "color",
+      "--color-mujeres-papel": "color",
+      "--color-hombres-papel": "color",
+      "--color-seq-0": "color",
+      "--color-seq-1": "color",
+      "--color-seq-2": "color",
+      "--color-seq-3": "color",
+      "--color-seq-4": "color",
+      "--color-seq-5": "color",
+      "--color-seq-6": "color",
+      "--color-seq-7": "color",
+      "--color-seq-8": "color",
+      "--color-seq-papel-0": "color",
+      "--color-seq-papel-1": "color",
+      "--color-seq-papel-2": "color",
+      "--color-seq-papel-3": "color",
+      "--color-seq-papel-4": "color",
+      "--color-seq-papel-5": "color",
+      "--color-seq-papel-6": "color",
+      "--color-seq-papel-7": "color",
+      "--color-seq-papel-8": "color",
+      "--color-div-0": "color",
+      "--color-div-1": "color",
+      "--color-div-2": "color",
+      "--color-div-3": "color",
+      "--color-div-4": "color",
+      "--color-div-5": "color",
+      "--color-div-6": "color",
+      "--color-div-7": "color",
+      "--color-div-8": "color",
+      "--color-div-papel-0": "color",
+      "--color-div-papel-1": "color",
+      "--color-div-papel-2": "color",
+      "--color-div-papel-3": "color",
+      "--color-div-papel-4": "color",
+      "--color-div-papel-5": "color",
+      "--color-div-papel-6": "color",
+      "--color-div-papel-7": "color",
+      "--color-div-papel-8": "color",
+      "--color-fondo": "color",
+      "--color-superficie": "color",
+      "--color-superficie-alta": "color",
+      "--color-linea": "color",
+      "--color-texto": "color",
+      "--color-texto-2": "color",
+      "--color-texto-3": "color",
+      "--color-foco-encendido": "color",
+      "--color-foco-apagado": "color",
+      "--color-acento-texto": "color",
+      "--color-sobre-acento": "color",
+      "--color-alerta": "color",
+      "--color-mujer": "color",
+      "--color-hombre": "color",
+      "--color-acento": "color",
+      "--color-escala-0": "color",
+      "--color-escala-1": "color",
+      "--color-escala-2": "color",
+      "--color-escala-3": "color",
+      "--color-escala-4": "color",
+      "--color-escala-5": "color",
+      "--color-escala-6": "color",
+      "--color-escala-7": "color",
+      "--color-escala-8": "color",
+      "--color-divergente-0": "color",
+      "--color-divergente-1": "color",
+      "--color-divergente-2": "color",
+      "--color-divergente-3": "color",
+      "--color-divergente-4": "color",
+      "--color-divergente-5": "color",
+      "--color-divergente-6": "color",
+      "--color-divergente-7": "color",
+      "--color-divergente-8": "color",
+      "--font-titulo": "font",
+      "--font-texto": "font",
+      "--font-mono": "font",
+      "--font-weight-regular": "font",
+      "--font-weight-medio": "font",
+      "--font-weight-semi": "font",
+      "--font-weight-negrita": "font",
+      "--font-weight-extra": "font",
+      "--text-display": "other",
+      "--text-display--line-height": "font",
+      "--text-display--letter-spacing": "font",
+      "--text-cifra": "other",
+      "--text-cifra--line-height": "font",
+      "--text-cifra--letter-spacing": "font",
+      "--text-titulo-1": "other",
+      "--text-titulo-1--line-height": "font",
+      "--text-titulo-1--letter-spacing": "font",
+      "--text-titulo-2": "other",
+      "--text-titulo-2--line-height": "font",
+      "--text-titulo-2--letter-spacing": "font",
+      "--text-titulo-3": "other",
+      "--text-titulo-3--line-height": "font",
+      "--text-titulo-3--letter-spacing": "font",
+      "--text-entrada": "other",
+      "--text-entrada--line-height": "font",
+      "--text-entrada--letter-spacing": "font",
+      "--text-cuerpo": "other",
+      "--text-cuerpo--line-height": "font",
+      "--text-cuerpo--letter-spacing": "font",
+      "--text-nota": "other",
+      "--text-nota--line-height": "font",
+      "--text-nota--letter-spacing": "font",
+      "--text-etiqueta": "other",
+      "--text-etiqueta--line-height": "font",
+      "--text-etiqueta--letter-spacing": "font",
+      "--text-antetitulo": "other",
+      "--text-antetitulo--line-height": "font",
+      "--text-antetitulo--letter-spacing": "font",
+      "--text-wrapped-cifra": "font",
+      "--text-wrapped-cifra--line-height": "font",
+      "--text-wrapped-cifra--letter-spacing": "font",
+      "--text-wrapped-titulo": "font",
+      "--text-wrapped-titulo--line-height": "font",
+      "--text-wrapped-titulo--letter-spacing": "font",
+      "--text-wrapped-cuerpo": "font",
+      "--text-wrapped-cuerpo--line-height": "font",
+      "--text-wrapped-cuerpo--letter-spacing": "font",
+      "--text-wrapped-etiqueta": "font",
+      "--text-wrapped-etiqueta--line-height": "font",
+      "--text-wrapped-etiqueta--letter-spacing": "font",
+      "--spacing": "spacing",
+      "--space-0": "spacing",
+      "--space-1": "spacing",
+      "--space-2": "spacing",
+      "--space-3": "spacing",
+      "--space-4": "spacing",
+      "--space-5": "spacing",
+      "--space-6": "spacing",
+      "--space-8": "spacing",
+      "--space-10": "spacing",
+      "--space-12": "spacing",
+      "--space-16": "spacing",
+      "--space-20": "spacing",
+      "--space-24": "spacing",
+      "--space-32": "spacing",
+      "--spacing-margen-movil": "spacing",
+      "--spacing-margen-escritorio": "spacing",
+      "--spacing-medianil-movil": "spacing",
+      "--spacing-medianil-escritorio": "spacing",
+      "--spacing-paso": "spacing",
+      "--breakpoint-md": "spacing",
+      "--breakpoint-lg": "spacing",
+      "--breakpoint-xl": "spacing",
+      "--container-texto": "spacing",
+      "--container-grafica": "spacing",
+      "--container-max": "spacing",
+      "--grid-columnas-movil": "other",
+      "--grid-columnas-escritorio": "other",
+      "--radius-xs": "radius",
+      "--radius-sm": "radius",
+      "--radius-md": "radius",
+      "--radius-lg": "radius",
+      "--radius-full": "radius",
+      "--shadow-tooltip": "shadow",
+      "--shadow-flotante": "shadow",
+      "--shadow-halo": "shadow",
+      "--shadow-papel": "shadow",
+      "--duration-instante": "other",
+      "--duration-corta": "other",
+      "--duration-media": "other",
+      "--duration-larga": "other",
+      "--duration-escena": "other",
+      "--duration-encendido": "other",
+      "--duration-escalonado": "other",
+      "--ease-entrada": "other",
+      "--ease-salida": "other",
+      "--ease-enfasis": "other",
+      "--ease-escena": "other",
+      "--ease-scroll": "other",
+      "--ease-apagado": "other"
+    },
+    "fontFamilies": [
+      "Atkinson Hyperlegible Next",
+      "Bricolage Grotesque",
+      "IBM Plex Mono"
+    ]
+  }
+}

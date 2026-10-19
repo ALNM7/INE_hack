@@ -1,0 +1,16 @@
+<!-- @dsCard group="Components" viewport="700x340" name="Cifra protagonista" subtitle="display · cifra · tonos luz/texto/apagada" -->
+<!doctype html><html lang="es"><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{margin:0;padding:24px 28px}</style></head><body><div id="root"></div>
+<script type="text/babel">
+const { CifraProtagonista } = window.LaGeneraciNQueSeApagDesignSystem_a5d389;
+ReactDOM.createRoot(document.getElementById('root')).render(<div style={{display:'grid',gridTemplateColumns:'1.25fr 1fr',gap:32,alignItems:'start'}}>
+<CifraProtagonista antetitulo="25 años · 2024" valor="47" unidad="%" etiqueta="de las personas de 25 años votó en 2024." style={{'--text-display':'150px'}}/>
+<div style={{display:'flex',flexDirection:'column',gap:28}}>
+<CifraProtagonista tamano="cifra" tono="apagada" valor="37.1" unidad=" M" etiqueta="personas no votaron en 2024." style={{'--text-cifra':'64px'}}/>
+<CifraProtagonista tamano="cifra" tono="texto" valor="15,000" unidad="+" fuente={null} etiqueta="secciones donde los jóvenes votan 60% o más." style={{'--text-cifra':'52px'}}/>
+</div></div>);
+</script></body></html>

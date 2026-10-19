@@ -1,0 +1,53 @@
+<!-- @dsCard group="Micrositio" viewport="390x844" name="Micrositio móvil (prototipo)" subtitle="Historia completa navegable a 390 px" -->
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La generación que se apagó</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>body{background:var(--color-noche-2)}#root{max-width:430px;margin:0 auto;background:var(--color-fondo);min-height:100vh}@keyframes dibuja{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="kit-utils.jsx"></script>
+<script type="text/babel" src="Hero.jsx"></script>
+<script type="text/babel" src="EscenaEscala.jsx"></script>
+<script type="text/babel" src="DibujaloTu.jsx"></script>
+<script type="text/babel" src="EscenaCohorte.jsx"></script>
+<script type="text/babel" src="EscenaMapa.jsx"></script>
+<script type="text/babel" src="FormularioWrapped.jsx"></script>
+<script type="text/babel" src="CarruselTarjetas.jsx"></script>
+<script type="text/babel">
+function App() {
+  const { NotaMetodologica, PieFuente } = DS;
+  const [datos, setDatos] = React.useState(null);
+  const carrusel = React.useRef();
+  React.useEffect(() => { if (datos && carrusel.current) window.scrollTo({ top: carrusel.current.offsetTop, behavior: "smooth" }); }, [datos]);
+  return (
+    <main>
+      <Hero />
+      <EscenaEscala />
+      <DibujaloTu />
+      <EscenaCohorte />
+      <EscenaMapa />
+      <Esperanza />
+      {!datos ? <FormularioWrapped onCrear={(f) => setDatos(f)} /> : <div ref={carrusel}><CarruselTarjetas datos={datos} onEditar={() => setDatos(null)} /></div>}
+      <footer style={{ padding: "24px 20px 48px", display: "flex", flexDirection: "column", gap: 14, borderTop: "1px solid var(--color-linea)" }}>
+        <PieFuente nota="Participación sobre lista nominal." />
+        <NotaMetodologica>
+          <p style={{ margin: 0 }}>La participación es el porcentaje de personas inscritas en la lista nominal que votaron. La edad es la cumplida el día de la elección.</p>
+          <p style={{ margin: 0 }}>La generación de 2012 es el grupo que tenía 18 años ese año: 24 en 2018 y 30 en 2024.</p>
+        </NotaMetodologica>
+      </footer>
+    </main>
+  );
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

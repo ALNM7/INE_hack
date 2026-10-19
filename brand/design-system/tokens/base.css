@@ -1,0 +1,23 @@
+/* Base mínima: fondo nocturno, tipografía de lectura, enlaces y foco */
+:root{color-scheme:dark}
+[data-tema="impresion"]{color-scheme:light}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--color-fondo);color:var(--color-texto);font-family:var(--font-texto);font-size:var(--text-cuerpo);line-height:var(--text-cuerpo--line-height);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+h1,h2,h3{font-family:var(--font-titulo);font-weight:var(--font-weight-negrita);text-wrap:balance;margin:0}
+p{text-wrap:pretty}
+a{color:var(--color-acento-texto);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:0.18em}
+a:hover{color:var(--color-texto);text-decoration-thickness:2px}
+::selection{background:var(--color-luz);color:var(--color-noche-1)}
+:focus-visible{outline:2px solid var(--color-acento);outline-offset:3px;border-radius:var(--radius-xs)}
+.tabular{font-variant-numeric:tabular-nums}
+.t-display{font-family:var(--font-titulo);font-size:var(--text-display);line-height:var(--text-display--line-height);letter-spacing:var(--text-display--letter-spacing);font-weight:var(--font-weight-negrita);font-stretch:82%}
+.t-cifra{font-family:var(--font-titulo);font-size:var(--text-cifra);line-height:var(--text-cifra--line-height);letter-spacing:var(--text-cifra--letter-spacing);font-weight:var(--font-weight-negrita);font-stretch:82%}
+.t-titulo-1{font-family:var(--font-titulo);font-size:var(--text-titulo-1);line-height:var(--text-titulo-1--line-height);letter-spacing:var(--text-titulo-1--letter-spacing);font-weight:var(--font-weight-negrita)}
+.t-titulo-2{font-family:var(--font-titulo);font-size:var(--text-titulo-2);line-height:var(--text-titulo-2--line-height);letter-spacing:var(--text-titulo-2--letter-spacing);font-weight:var(--font-weight-semi)}
+.t-titulo-3{font-family:var(--font-titulo);font-size:var(--text-titulo-3);line-height:var(--text-titulo-3--line-height);letter-spacing:var(--text-titulo-3--letter-spacing);font-weight:var(--font-weight-semi)}
+.t-entrada{font-size:var(--text-entrada);line-height:var(--text-entrada--line-height);letter-spacing:var(--text-entrada--letter-spacing)}
+.t-cuerpo{font-size:var(--text-cuerpo);line-height:var(--text-cuerpo--line-height)}
+.t-nota{font-size:var(--text-nota);line-height:var(--text-nota--line-height);letter-spacing:var(--text-nota--letter-spacing);color:var(--color-texto-2)}
+.t-etiqueta{font-family:var(--font-mono);font-size:var(--text-etiqueta);line-height:var(--text-etiqueta--line-height);letter-spacing:var(--text-etiqueta--letter-spacing)}
+.t-antetitulo{font-family:var(--font-mono);font-size:var(--text-antetitulo);line-height:var(--text-antetitulo--line-height);letter-spacing:var(--text-antetitulo--letter-spacing);text-transform:uppercase;font-weight:var(--font-weight-medio)}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important;scroll-behavior:auto!important}}

@@ -1,0 +1,75 @@
+@import "tailwindcss";
+@import "../../brand/fonts.css";
+@import "../../brand/tokens.css";
+
+@layer base {
+  html {
+    color-scheme: dark;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  [data-tema="impresion"] {
+    color-scheme: light;
+  }
+
+  body {
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    font-family: var(--font-texto);
+    font-size: var(--text-cuerpo);
+    line-height: var(--text-cuerpo--line-height);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-titulo);
+    font-weight: var(--font-weight-negrita);
+    font-stretch: var(--font-stretch-titulo);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: var(--color-acento-texto);
+    text-decoration-line: underline;
+    text-decoration-thickness: calc(var(--spacing) / 4);
+    text-underline-offset: 0.18em;
+  }
+
+  ::selection {
+    background-color: var(--color-luz);
+    color: var(--color-noche-1);
+  }
+
+  :focus-visible {
+    outline: calc(var(--spacing) / 2) solid var(--color-acento);
+    outline-offset: calc(var(--spacing) * 0.75);
+    border-radius: var(--radius-xs);
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: var(--text-cuerpo);
+  }
+
+  button,
+  a,
+  [role="button"] {
+    touch-action: manipulation;
+  }
+}
+
+@layer utilities {
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
