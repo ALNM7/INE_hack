@@ -55,7 +55,7 @@ npm run deploy
 
 ## Video del hero
 
-El hero lee `web/public/media/hero.json`. Con `"listo": false` muestra el póster (hecho con tokens) y no pide ningún video. Cuando estén `hero_loop.mp4` y `hero_loop.webm` en `web/public/media/`, cambia `"listo"` a `true`. No hay que tocar código.
+El hero lee `web/public/media/hero.json`. Hoy está activo con el loop del Modelo B (`hero_loop.webm`, `hero_loop.mp4` y el póster `hero_poster.jpg`, generados con `node render.mjs hero` dentro de `video/`). Si se cambia `"listo"` a `false`, el hero muestra solo el póster.
 
 ## Datos
 

@@ -5,28 +5,23 @@ import {
   afterRenderEffect,
   computed,
   inject,
-  input,
   viewChild,
 } from '@angular/core';
-import { MapaService } from '../../core/mapa.service';
 import { MovimientoReducido } from '../../core/movimiento-reducido.service';
 import { MediaHero } from './media-hero';
-import { posterHero } from './poster';
 
 @Component({
   selector: 'app-fondo-luces',
   template: `
     <video
       #video
-      class="block size-full object-contain"
-      [class.object-top]="arriba()"
-      [class.lg:object-center]="arriba()"
+      class="block size-full object-cover"
       [attr.poster]="poster()"
       muted
       loop
       playsinline
       disablepictureinpicture
-      preload="metadata"
+      preload="auto"
       [autoplay]="!reducido()"
       aria-hidden="true"
       tabindex="-1"
@@ -42,19 +37,14 @@ import { posterHero } from './poster';
   },
 })
 export class FondoLuces {
-  readonly arriba = input(false);
-  private readonly mapa = inject(MapaService);
-  protected readonly poster = computed(() => {
-    const estados = this.mapa.estados();
-    return estados ? posterHero(estados) : null;
-  });
+  private readonly media = inject(MediaHero);
+  protected readonly poster = this.media.poster;
   protected readonly reducido = inject(MovimientoReducido).activo;
-  protected readonly fuentes = inject(MediaHero).fuentes;
+  protected readonly fuentes = computed(() => (this.reducido() ? [] : this.media.fuentes()));
   private fuentesCargadas = 0;
   private readonly video = viewChild.required<ElementRef<HTMLVideoElement>>('video');
 
   constructor() {
-    this.mapa.cargar().catch(() => undefined);
     afterRenderEffect(() => {
       const video = this.video().nativeElement;
       const cuantas = this.fuentes().length;
