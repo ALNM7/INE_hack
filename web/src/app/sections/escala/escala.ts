@@ -10,8 +10,10 @@ import {
   viewChildren,
 } from '@angular/core';
 import { DataService } from '../../core/data.service';
+import { MapaService } from '../../core/mapa.service';
 import { ScrollTrigger, curva, duracion, funcionCurva, gsap } from '../../core/motion';
 import { MovimientoReducido } from '../../core/movimiento-reducido.service';
+import { pxToken } from '../../core/tokens';
 import { CampoEscala, EstadoCampo } from './campo-escala';
 import { resumirEscala } from './resumen';
 
@@ -26,6 +28,7 @@ const SEMILLA = 37;
 export class Escala {
   private readonly datos = inject(DataService);
   private readonly reducido = inject(MovimientoReducido).activo;
+  private readonly mapa = inject(MapaService);
   private readonly lienzo = viewChild.required<ElementRef<HTMLCanvasElement>>('lienzo');
   private readonly tarjetas = viewChildren<ElementRef<HTMLElement>>('tarjeta');
   private readonly titulo = viewChild<ElementRef<HTMLElement>>('titulo');
@@ -46,12 +49,14 @@ export class Escala {
 
   constructor() {
     this.datos.nacional.cargar().catch(() => undefined);
+    this.mapa.cargar().catch(() => undefined);
 
     afterRenderEffect((alLimpiar) => {
       const resumen = this.resumen();
       const reducido = this.reducido();
+      const estados = this.mapa.estados();
       const tarjetas = this.tarjetas().map((t) => t.nativeElement);
-      if (!resumen || tarjetas.length < 2) {
+      if (!resumen || !estados || tarjetas.length < 2) {
         return;
       }
       const lienzo = this.lienzo().nativeElement;
@@ -60,6 +65,8 @@ export class Escala {
         apagadas: resumen.apagadas,
         jovenes: resumen.jovenes,
         semilla: SEMILLA,
+        estados,
+        margen: pxToken('--space-2'),
         curvaApagado: funcionCurva('apagado'),
         curvaJovenes: funcionCurva('entrada'),
       });

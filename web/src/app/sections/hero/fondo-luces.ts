@@ -3,9 +3,12 @@ import {
   Component,
   ElementRef,
   afterRenderEffect,
+  computed,
   inject,
+  input,
   viewChild,
 } from '@angular/core';
+import { MapaService } from '../../core/mapa.service';
 import { MovimientoReducido } from '../../core/movimiento-reducido.service';
 import { MediaHero } from './media-hero';
 import { posterHero } from './poster';
@@ -15,8 +18,10 @@ import { posterHero } from './poster';
   template: `
     <video
       #video
-      class="block size-full object-cover"
-      [poster]="poster"
+      class="block size-full object-contain"
+      [class.object-top]="arriba()"
+      [class.lg:object-center]="arriba()"
+      [attr.poster]="poster()"
       muted
       loop
       playsinline
@@ -37,13 +42,19 @@ import { posterHero } from './poster';
   },
 })
 export class FondoLuces {
-  protected readonly poster = posterHero();
+  readonly arriba = input(false);
+  private readonly mapa = inject(MapaService);
+  protected readonly poster = computed(() => {
+    const estados = this.mapa.estados();
+    return estados ? posterHero(estados) : null;
+  });
   protected readonly reducido = inject(MovimientoReducido).activo;
   protected readonly fuentes = inject(MediaHero).fuentes;
   private fuentesCargadas = 0;
   private readonly video = viewChild.required<ElementRef<HTMLVideoElement>>('video');
 
   constructor() {
+    this.mapa.cargar().catch(() => undefined);
     afterRenderEffect(() => {
       const video = this.video().nativeElement;
       const cuantas = this.fuentes().length;
