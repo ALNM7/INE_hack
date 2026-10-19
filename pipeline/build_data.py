@@ -24,6 +24,10 @@ ESTADOS = {
     30: "Veracruz", 31: "Yucatán", 32: "Zacatecas",
 }
 
+CORRECCIONES_NOMBRE = {
+    (4, 6): "Hopelchén",
+}
+
 GRUPOS = ["18-19", "20-24", "25-29", "30-34", "35-44", "45-59", "60-69", "70-79", "80+"]
 CORTES = [17, 19, 24, 29, 34, 44, 59, 69, 79, 200]
 USECOLS = ["EDOCVE", "MPIOCVE", "MPIONOM", "SECCION", "SEXO", "EDAD", "LN", "SV", "NV", "NS"]
@@ -101,12 +105,18 @@ def main():
             if a == 2024 or k not in nombres_mpio:
                 nombres_mpio[k] = v
         print(f"{a}: {len(det)} filas agregadas")
+    nombres_mpio.update(CORRECCIONES_NOMBRE)
 
     nacional = {}
     for a in YEARS:
         ln, sv, nv, ns = totales(datos[a])
+        sx = datos[a].groupby("SEXO")[["SV", "NV"]].sum()
         nacional[str(a)] = {"ln": ln, "sv": sv, "nv": nv, "ns": ns,
-                            "part": part(sv, nv), "ns_pct": round(100.0 * ns / ln, 2)}
+                            "part": part(sv, nv), "ns_pct": round(100.0 * ns / ln, 2),
+                            "part_h": part(int(sx.loc[0, "SV"]), int(sx.loc[0, "NV"])),
+                            "part_m": part(int(sx.loc[1, "SV"]), int(sx.loc[1, "NV"])),
+                            "nv_h": int(sx.loc[0, "NV"]),
+                            "nv_m": int(sx.loc[1, "NV"])}
     d24 = datos[2024]
     nacional["abstencion_2024"] = int(d24["NV"].sum())
     nacional["abstencion_jovenes_2024"] = int(d24[d24["EDAD"] <= 29]["NV"].sum())
@@ -218,6 +228,8 @@ def main():
         "cohorte": "Cohorte aproximada: compara la misma edad desplazada entre elecciones, no a las mismas personas.",
         "ns_2012": "En 2012 casi no hay registros no especificados (0.2%) frente a 6.8% en 2018 y 6.4% en 2024, por diferencias en la captura de cuadernillos.",
         "cobertura": "No incluye casillas especiales ni voto desde el extranjero.",
+        "correcciones": "Se corrigió el nombre del municipio 6 de Campeche, que en el CSV de 2024 aparece como 'Hopelche}én', a 'Hopelchén', como viene en 2012 y 2018.",
+        "mapa": "Geometría de estados de Natural Earth (dominio público), simplificada con mapshaper.",
         "municipios": total_mpios,
     })
     print("listo", total_mpios, "municipios")

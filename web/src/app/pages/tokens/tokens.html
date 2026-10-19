@@ -156,7 +156,7 @@
       <h2 id="t-espacio" class="text-titulo-2">Espaciado</h2>
       <div class="flex flex-col gap-3">
         @for (s of espacios; track s.variable) {
-          <div class="grid grid-cols-[minmax(0,7rem)_minmax(0,1fr)] items-center gap-4">
+          <div class="grid grid-cols-[minmax(0,--spacing(28))_minmax(0,1fr)] items-center gap-4">
             <span class="font-mono text-etiqueta text-texto-2">{{ s.variable.replace('--', '') }} · {{ s.valor }}</span>
             <div class="h-4 rounded-xs bg-luz" [style.width]="css(s.variable)"></div>
           </div>
@@ -245,7 +245,7 @@
       <div class="flex flex-col gap-3">
         <h3 class="text-titulo-3">Duraciones</h3>
         @for (d of duraciones; track d.variable) {
-          <div class="grid grid-cols-[minmax(0,9rem)_minmax(0,1fr)] items-center gap-4">
+          <div class="grid grid-cols-[minmax(0,--spacing(36))_minmax(0,1fr)] items-center gap-4">
             <span class="font-mono text-etiqueta text-texto-2">{{ d.nombre }} · {{ d.css }}</span>
             <div class="h-2 rounded-full bg-superficie-alta">
               <div class="h-2 rounded-full bg-luz" [style.width.%]="(d.segundos / duracionMaxima) * 100"></div>

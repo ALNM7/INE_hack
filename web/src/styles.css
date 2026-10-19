@@ -2,6 +2,26 @@
 @import "../../brand/fonts.css";
 @import "../../brand/tokens.css";
 
+@custom-variant hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @slot;
+    }
+  }
+}
+
+@utility duracion-* {
+  transition-duration: --value(--duration-*);
+}
+
+@utility columnas-* {
+  grid-template-columns: repeat(--value(--grid-columnas-*), minmax(0, 1fr));
+}
+
+@utility ancho-titulo {
+  font-stretch: var(--font-stretch-titulo);
+}
+
 @layer base {
   html {
     color-scheme: dark;

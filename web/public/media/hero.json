@@ -1,0 +1,7 @@
+{
+  "listo": false,
+  "fuentes": [
+    { "src": "media/hero_loop.webm", "tipo": "video/webm" },
+    { "src": "media/hero_loop.mp4", "tipo": "video/mp4" }
+  ]
+}

@@ -1,0 +1,63 @@
+<section id="escala" class="grid bg-fondo text-texto" aria-labelledby="escala-titulo">
+  <div
+    class="sticky top-0 flex h-dvh flex-col gap-4 self-start overflow-hidden px-margen-movil pt-[calc(var(--space-10)+env(safe-area-inset-top))] pb-[calc(var(--space-6)+env(safe-area-inset-bottom))] [grid-area:1/1] md:px-margen-escritorio"
+  >
+    <header class="flex flex-col gap-2 lg:w-7/12">
+      <p class="font-mono text-antetitulo font-medio uppercase text-texto-2">Personas que no votaron · {{ resumen()?.anio }}</p>
+      <h2 #titulo id="escala-titulo" tabindex="-1" class="text-cifra ancho-titulo tabular text-texto-3 outline-none">
+        @if (resumen(); as r) {
+          {{ r.millones }} <span class="text-titulo-3 text-texto-2">millones</span>
+        }
+      </h2>
+    </header>
+
+    <div class="relative min-h-0 flex-1 lg:w-7/12">
+      <canvas #lienzo class="absolute inset-0 size-full" role="img" [attr.aria-label]="descripcionCampo()"></canvas>
+    </div>
+
+    <div class="flex flex-col gap-2 font-mono text-etiqueta text-texto-2 lg:w-7/12">
+      <ul class="flex flex-wrap gap-x-4 gap-y-1">
+        <li class="flex items-center gap-2"><span class="size-2 shrink-0 rounded-full bg-foco-encendido" aria-hidden="true"></span>Votó</li>
+        <li class="flex items-center gap-2"><span class="size-2 shrink-0 rounded-full bg-foco-apagado" aria-hidden="true"></span>No votó</li>
+        <li class="flex items-center gap-2"><span class="size-2 shrink-0 rounded-full bg-arena" aria-hidden="true"></span>No votó y tiene de 18 a 29 años</li>
+      </ul>
+      @if (resumen(); as r) {
+        <p class="text-texto-3">Cada punto: unas {{ r.porPunto }} personas con credencial · Fuente: INE, Conteo Censal de Participación {{ r.anio }}</p>
+      }
+    </div>
+  </div>
+
+  <div class="pointer-events-none relative z-10 flex flex-col px-margen-movil [grid-area:1/1] md:px-margen-escritorio">
+    <div class="h-paso" aria-hidden="true"></div>
+    @if (resumen(); as r) {
+      @for (paso of r.pasos; track paso.numero; let i = $index) {
+        <div class="flex min-h-paso items-center lg:justify-end">
+          <article
+            #tarjeta
+            class="pointer-events-auto w-full rounded-lg border border-linea bg-superficie p-5 lg:w-4/12"
+            [attr.aria-current]="pasoActivo() === i ? 'step' : null"
+          >
+            <div
+              class="flex flex-col gap-3 transition-[opacity,transform] duracion-larga ease-entrada motion-reduce:translate-y-0 motion-reduce:duracion-corta"
+              [class.opacity-40]="pasoActivo() !== i"
+              [class.translate-y-2]="pasoActivo() !== i"
+            >
+              <span class="flex items-center gap-2 font-mono text-antetitulo font-medio uppercase" [class.text-acento-texto]="pasoActivo() === i" [class.text-texto-3]="pasoActivo() !== i">
+                <span
+                  class="size-2 rounded-full"
+                  [class.bg-foco-encendido]="pasoActivo() === i"
+                  [class.shadow-halo]="pasoActivo() === i"
+                  [class.bg-foco-apagado]="pasoActivo() !== i"
+                  aria-hidden="true"
+                ></span>
+                {{ paso.numero }}
+              </span>
+              <p class="text-cuerpo">{{ paso.texto }}</p>
+            </div>
+          </article>
+        </div>
+      }
+    }
+    <div class="h-paso" aria-hidden="true"></div>
+  </div>
+</section>
