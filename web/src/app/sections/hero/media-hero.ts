@@ -9,6 +9,7 @@ export interface FuenteVideo {
 
 interface ManifiestoHero {
   listo: boolean;
+  poster?: string;
   fuentes: FuenteVideo[];
 }
 
@@ -20,6 +21,8 @@ export class MediaHero {
     const m = this.manifiesto();
     return m?.listo ? m.fuentes : [];
   });
+
+  readonly poster = computed(() => this.manifiesto()?.poster ?? null);
 
   constructor() {
     firstValueFrom(inject(HttpClient).get<ManifiestoHero>('media/hero.json')).then(
