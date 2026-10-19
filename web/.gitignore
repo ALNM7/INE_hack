@@ -1,0 +1,12 @@
+/dist
+/tmp
+/out-tsc
+/node_modules
+npm-debug.log
+/.angular/cache
+/coverage
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json

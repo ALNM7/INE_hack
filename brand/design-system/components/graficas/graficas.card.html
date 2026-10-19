@@ -1,0 +1,17 @@
+<!-- @dsCard group="Components" viewport="700x400" name="Gráficas" subtitle="Línea por edad con anotaciones · mapa coroplético con tooltip (datos ilustrativos)" -->
+<!doctype html><html lang="es"><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{margin:0;padding:20px 24px}</style></head><body><div id="root"></div>
+<script type="text/babel">
+const { GraficaEdad, MapaEstados } = window.LaGeneraciNQueSeApagDesignSystem_a5d389;
+const ids="AGU BCN BCS CAM CHP CHH CMX COA COL DUR GUA GRO HID JAL MEX MIC MOR NAY NLE OAX PUE QUE ROO SLP SIN SON TAB TAM TLA VER YUC ZAC".split(" ");
+let s=11;const r=()=>{s=(s*16807)%2147483647;return s/2147483647};const vals={};ids.forEach(i=>vals[i]=+(42+r()*22).toFixed(1));
+const edad=[[18,61],[19,57],[20,54],[21,51.5],[22,49.6],[23,48.4],[24,47.6],[25,47],[26,47.3],[27,47.9],[28,48.7],[29,49.4]].map(([x,y])=>({x,y}));
+ReactDOM.createRoot(document.getElementById('root')).render(<div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:28,alignItems:'start'}}>
+<GraficaEdad alto={300} dominioX={[18,29]} dominioY={[40,70]} series={[{id:'a',tono:'luz',puntos:edad}]} anotaciones={[{x:18,y:61,cifra:'61%',texto:'a los 18',lado:'abajo'},{x:25,y:47,cifra:'47%',texto:'a los 25, menos de la mitad',lado:'abajo'}]}/>
+<MapaEstados valores={vals} dominio={[42,64]}/>
+</div>);
+</script></body></html>

@@ -1,0 +1,258 @@
+<main
+  class="min-h-svh bg-fondo text-texto"
+  [attr.data-tema]="tema() === 'impresion' ? 'impresion' : null"
+>
+  <div class="mx-auto flex max-w-(--container-max) flex-col gap-20 px-margen-movil py-16 md:px-margen-escritorio">
+    <header class="flex flex-col gap-6">
+      <p class="font-mono text-antetitulo font-medio uppercase text-texto-3">Ruta interna · no se enlaza desde el sitio</p>
+      <h1 class="text-titulo-1">Tokens del design system</h1>
+      <p class="max-w-(--container-texto) text-entrada text-texto-2">
+        Todo lo que se ve aquí sale de <code class="font-mono text-etiqueta">brand/tokens.json</code> y de
+        <code class="font-mono text-etiqueta">brand/tokens.css</code>. Si algo se ve mal en esta página, se ve mal en todo el
+        sitio.
+      </p>
+      <div class="flex flex-wrap items-center gap-3">
+        <button
+          type="button"
+          class="rounded-md border border-linea bg-superficie px-4 py-2 font-mono text-etiqueta text-texto transition-[background-color,transform] duration-(--duration-instante) ease-entrada select-none hover:bg-superficie-alta active:scale-[0.98]"
+          [attr.aria-pressed]="tema() === 'impresion'"
+          (click)="alternarTema()"
+        >
+          {{ tema() === 'noche' ? 'Ver tema impresión' : 'Ver tema noche' }}
+        </button>
+        <span class="font-mono text-etiqueta text-texto-3">Tema activo: {{ tema() }}</span>
+      </div>
+      <div class="flex flex-col gap-2 rounded-lg border border-linea bg-noche-1 p-6 text-luz">
+        <span class="font-mono text-etiqueta">bg-noche-1 text-luz</span>
+        <span class="text-titulo-3">Una clase de Tailwind que usa tokens.</span>
+      </div>
+    </header>
+
+    <section class="flex flex-col gap-10" aria-labelledby="t-color">
+      <h2 id="t-color" class="text-titulo-2">Color</h2>
+      @for (grupo of gruposColor; track grupo.titulo) {
+        <div class="flex flex-col gap-4">
+          <div class="flex flex-col gap-1">
+            <h3 class="text-titulo-3">{{ grupo.titulo }}</h3>
+            <p class="text-nota text-texto-2">{{ grupo.nota }}</p>
+          </div>
+          @if (grupo.escala) {
+            <div class="flex flex-col gap-2">
+              <div class="flex h-16 overflow-hidden rounded-lg border border-linea">
+                @for (t of grupo.tokens; track t.variable) {
+                  <div class="flex-1" [style.background-color]="css(t.variable)" [attr.title]="t.variable"></div>
+                }
+              </div>
+              <div class="grid grid-cols-3 gap-x-3 gap-y-1 md:grid-cols-9">
+                @for (t of grupo.tokens; track t.variable) {
+                  <div class="flex min-w-0 flex-col">
+                    <span class="truncate font-mono text-etiqueta text-texto-2">{{ t.variable.replace('--color-', '') }}</span>
+                    <span class="font-mono text-etiqueta text-texto-3">{{ t.valor }}</span>
+                  </div>
+                }
+              </div>
+            </div>
+          } @else {
+            <div class="grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-6">
+              @for (t of grupo.tokens; track t.variable) {
+                <div class="flex min-w-0 flex-col gap-2">
+                  <div class="h-16 rounded-lg border border-linea" [style.background-color]="css(t.variable)"></div>
+                  <div class="flex min-w-0 flex-col">
+                    <span class="truncate font-mono text-etiqueta text-texto">{{ t.variable.replace('--color-', '') }}</span>
+                    <span class="truncate font-mono text-etiqueta text-texto-3">{{ t.valor }}</span>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      }
+
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-1">
+          <h3 class="text-titulo-3">Alias semánticos</h3>
+          <p class="text-nota text-texto-2">Los componentes usan estos nombres. Cambian solos con el tema impresión.</p>
+        </div>
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+          @for (columna of ['noche', 'impresion']; track columna) {
+            <div
+              class="flex min-w-0 flex-col gap-3 rounded-lg border border-linea bg-fondo p-4 text-texto"
+              [attr.data-tema]="columna"
+            >
+              <span class="font-mono text-antetitulo font-medio uppercase text-texto-3">{{ columna }}</span>
+              <div class="grid grid-cols-2 gap-x-3 gap-y-2 sm:grid-cols-3">
+                @for (t of semanticos; track t.variable) {
+                  <div class="flex min-w-0 items-center gap-2">
+                    <span class="size-5 shrink-0 rounded-sm border border-linea" [style.background-color]="css(t.variable)"></span>
+                    <span class="truncate font-mono text-etiqueta">{{ t.variable.replace('--color-', '') }}</span>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="flex flex-col gap-10" aria-labelledby="t-tipo">
+      <h2 id="t-tipo" class="text-titulo-2">Tipografía</h2>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+        @for (f of familias; track f.variable) {
+          <div class="flex min-w-0 flex-col gap-4 rounded-lg border border-linea bg-superficie p-6">
+            <span class="font-mono text-etiqueta text-texto-3">{{ f.variable }}</span>
+            <span class="text-titulo-2" [style.font-family]="css(f.variable)">Aa Ññ 0123456789</span>
+            <span class="text-cuerpo" [style.font-family]="css(f.variable)">A los 18 votamos con ganas. ¿Qué pasó en el camino?</span>
+            <span class="truncate font-mono text-etiqueta text-texto-2" [attr.title]="f.valor">{{ f.valor }}</span>
+          </div>
+        }
+      </div>
+      <div class="flex flex-wrap gap-x-8 gap-y-3">
+        @for (p of pesos; track p.variable) {
+          <div class="flex flex-col">
+            <span class="text-titulo-3" [style.font-weight]="css(p.variable)">Luz</span>
+            <span class="font-mono text-etiqueta text-texto-3">{{ p.variable.replace('--font-weight-', '') }} · {{ p.valor }}</span>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section class="flex flex-col gap-10" aria-labelledby="t-escala">
+      <div class="flex flex-col gap-2">
+        <h2 id="t-escala" class="text-titulo-2">Escala tipográfica</h2>
+        <p class="max-w-(--container-texto) text-nota text-texto-2">
+          Escala fluida entre 390 y 1280 px. El tamaño en px es el que tiene ahora en esta pantalla; cambia la ventana y se
+          recalcula. Los tamaños wrapped son fijos para tarjetas de 1080x1920.
+        </p>
+      </div>
+      <div class="flex flex-col divide-y divide-linea border-y border-linea">
+        @for (t of escalaTexto; track t.variable; let i = $index) {
+          <div class="flex flex-col gap-3 py-6">
+            <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1 font-mono text-etiqueta">
+              <span class="text-texto">{{ t.variable.replace('--text-', '') }}</span>
+              <span class="text-acento-texto tabular">{{ medidas()[i] }}</span>
+              <span class="text-texto-3">{{ t.valor }}</span>
+            </div>
+            <div class="overflow-x-auto">
+              <p
+                #muestra
+                class="whitespace-nowrap"
+                [class.uppercase]="t.antetitulo"
+                [class.font-negrita]="t.titulo"
+                [style.font-stretch]="t.titulo ? 'var(--font-stretch-titulo)' : null"
+                [style.font-family]="t.familia"
+                [style.font-size]="css(t.variable)"
+                [style.line-height]="css(t.variable + '--line-height')"
+                [style.letter-spacing]="css(t.variable + '--letter-spacing')"
+              >
+                {{ t.muestra }}
+              </p>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section class="flex flex-col gap-10" aria-labelledby="t-espacio">
+      <h2 id="t-espacio" class="text-titulo-2">Espaciado</h2>
+      <div class="flex flex-col gap-3">
+        @for (s of espacios; track s.variable) {
+          <div class="grid grid-cols-[minmax(0,7rem)_minmax(0,1fr)] items-center gap-4">
+            <span class="font-mono text-etiqueta text-texto-2">{{ s.variable.replace('--', '') }} · {{ s.valor }}</span>
+            <div class="h-4 rounded-xs bg-luz" [style.width]="css(s.variable)"></div>
+          </div>
+        }
+      </div>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div class="flex min-w-0 flex-col gap-2 rounded-lg border border-linea bg-superficie p-6">
+          <h3 class="text-titulo-3">Márgenes y medianil</h3>
+          @for (m of margenes; track m.variable) {
+            <span class="font-mono text-etiqueta text-texto-2">{{ m.variable.replace('--spacing-', '') }} · {{ m.valor }}</span>
+          }
+        </div>
+        <div class="flex min-w-0 flex-col gap-2 rounded-lg border border-linea bg-superficie p-6">
+          <h3 class="text-titulo-3">Rejilla y contenedores</h3>
+          @for (r of rejilla; track r.variable) {
+            <span class="font-mono text-etiqueta text-texto-2">{{ r.variable.replace('--', '') }} · {{ r.valor }}</span>
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="flex flex-col gap-10" aria-labelledby="t-forma">
+      <h2 id="t-forma" class="text-titulo-2">Radios y elevación</h2>
+      <div class="flex flex-wrap gap-6">
+        @for (r of radios; track r.variable) {
+          <div class="flex flex-col items-start gap-2">
+            <div class="size-16 border border-linea bg-superficie-alta" [style.border-radius]="css(r.variable)"></div>
+            <span class="font-mono text-etiqueta text-texto-2">{{ r.variable.replace('--radius-', '') }} · {{ r.valor }}</span>
+          </div>
+        }
+      </div>
+      <div class="grid grid-cols-2 gap-6 md:grid-cols-4">
+        @for (s of sombras; track s.variable) {
+          <div class="flex flex-col gap-3">
+            <div
+              class="h-16 rounded-md bg-superficie"
+              [class.bg-papel-1]="s.variable === '--shadow-papel'"
+              [style.box-shadow]="css(s.variable)"
+            ></div>
+            <span class="font-mono text-etiqueta text-texto-2">{{ s.variable.replace('--shadow-', '') }}</span>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section class="flex flex-col gap-10" aria-labelledby="t-movimiento">
+      <div class="flex flex-col gap-4">
+        <h2 id="t-movimiento" class="text-titulo-2">Movimiento</h2>
+        <p class="max-w-(--container-texto) text-nota text-texto-2">
+          Cada luz recorre su pista con la curva indicada y la duración encendido. Con movimiento reducido activado en el
+          sistema, las duraciones largas valen 0 y las luces saltan al final.
+        </p>
+        <div>
+          <button
+            type="button"
+            class="rounded-md bg-luz px-4 py-2 font-mono text-etiqueta text-sobre-acento transition-[background-color,transform] duration-(--duration-instante) ease-entrada select-none hover:bg-luz-suave active:scale-[0.98]"
+            (click)="reproducir()"
+          >
+            {{ encendido() ? 'Regresar' : 'Reproducir' }}
+          </button>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        @for (c of curvas; track c.variable) {
+          <div class="flex min-w-0 flex-col gap-4 rounded-lg border border-linea bg-superficie p-6">
+            <div class="flex items-baseline justify-between gap-3">
+              <span class="font-mono text-etiqueta text-texto">{{ c.nombre }}</span>
+              <span class="truncate font-mono text-etiqueta text-texto-3" [attr.title]="c.css">{{ c.css }}</span>
+            </div>
+            <svg viewBox="-4 -16 108 132" class="h-32 w-full overflow-visible" aria-hidden="true">
+              <line x1="0" y1="100" x2="100" y2="0" class="stroke-linea" stroke-dasharray="2 3" vector-effect="non-scaling-stroke" />
+              <path [attr.d]="c.ruta" fill="none" class="stroke-luz" stroke-width="2" vector-effect="non-scaling-stroke" />
+            </svg>
+            <div class="relative h-6 overflow-x-clip rounded-full bg-superficie-alta" role="img" [attr.aria-label]="'Demostración de la curva ' + c.nombre">
+              <div
+                class="absolute inset-0 flex items-center px-1"
+                [style.transition]="'transform var(--duration-encendido) ' + css(c.variable)"
+                [style.transform]="encendido() ? 'translateX(calc(100% - var(--space-6)))' : 'translateX(0)'"
+              >
+                <span class="size-4 rounded-full bg-luz shadow-halo"></span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+      <div class="flex flex-col gap-3">
+        <h3 class="text-titulo-3">Duraciones</h3>
+        @for (d of duraciones; track d.variable) {
+          <div class="grid grid-cols-[minmax(0,9rem)_minmax(0,1fr)] items-center gap-4">
+            <span class="font-mono text-etiqueta text-texto-2">{{ d.nombre }} · {{ d.css }}</span>
+            <div class="h-2 rounded-full bg-superficie-alta">
+              <div class="h-2 rounded-full bg-luz" [style.width.%]="(d.segundos / duracionMaxima) * 100"></div>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+  </div>
+</main>

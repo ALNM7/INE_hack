@@ -1,0 +1,25 @@
+/* Generado desde la misma fuente que export/tokens.json y export/tailwind-theme.css. No editar a mano sin actualizar los tres. */
+/* Movimiento: duraciones y curvas */
+:root {
+  --duration-instante: 90ms; /* @kind other */
+  --duration-corta: 160ms; /* @kind other */
+  --duration-media: 240ms; /* @kind other */
+  --duration-larga: 420ms; /* @kind other */
+  --duration-escena: 900ms; /* @kind other */
+  --duration-encendido: 1400ms; /* @kind other */
+  --duration-escalonado: 6ms; /* @kind other */
+  --ease-entrada: cubic-bezier(0.16, 1, 0.3, 1); /* @kind other */
+  --ease-salida: cubic-bezier(0.4, 0, 1, 1); /* @kind other */
+  --ease-enfasis: cubic-bezier(0.34, 1.56, 0.64, 1); /* @kind other */
+  --ease-escena: cubic-bezier(0.65, 0, 0.35, 1); /* @kind other */
+  --ease-scroll: linear; /* @kind other */
+  --ease-apagado: cubic-bezier(0.7, 0, 0.84, 0); /* @kind other */
+}
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-media: 0ms; /* @kind other */
+    --duration-larga: 0ms; /* @kind other */
+    --duration-escena: 0ms; /* @kind other */
+    --duration-encendido: 0ms; /* @kind other */
+  }
+}
