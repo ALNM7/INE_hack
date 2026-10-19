@@ -1,0 +1,212 @@
+<section id="dibujalo" class="bg-fondo text-texto" aria-labelledby="dibujalo-titulo">
+  <div class="mx-auto flex w-full max-w-(--container-grafica) flex-col gap-6 px-margen-movil py-16 md:px-margen-escritorio md:py-24">
+    <header class="flex max-w-(--container-texto) flex-col gap-3">
+      <p class="flex items-center gap-2 font-mono text-antetitulo font-medio uppercase text-acento-texto">
+        <app-icono nombre="lapiz" class="size-4" />
+        Acto 1 · Dibújalo tú
+      </p>
+      <h2 id="dibujalo-titulo" class="text-titulo-2 ancho-titulo">¿Cuánta gente crees que vota a cada edad?</h2>
+      @if (valor18(); as v18) {
+        <p class="text-entrada text-texto-2">
+          A los {{ edadMin }} votó el <span class="tabular text-texto">{{ porcentaje(v18) }}</span>.
+          @if (libre()) {
+            Dibuja cómo crees que sigue la línea hasta los {{ edadMax }}.
+          } @else {
+            Mueve los puntos de cada edad a donde crees que van.
+          }
+        </p>
+      }
+    </header>
+
+    <figure class="flex flex-col gap-3">
+      <div
+        #area
+        class="relative h-80 rounded-lg border border-linea bg-superficie select-none [-webkit-touch-callout:none] [-webkit-user-select:none] md:h-96"
+        [style.touch-action]="revelado() ? 'pan-y' : 'none'"
+        [class.cursor-crosshair]="!revelado() && libre()"
+        [class.cursor-ns-resize]="!revelado() && !libre()"
+        (pointerdown)="abajo($event)"
+        (pointermove)="mover($event)"
+        (pointerup)="soltar($event)"
+        (pointercancel)="soltar($event)"
+        (lostpointercapture)="soltar($event)"
+        (contextmenu)="$event.preventDefault()"
+        (dragstart)="$event.preventDefault()"
+      >
+        <svg #lienzo class="absolute inset-0 size-full overflow-visible" role="img" [attr.aria-label]="descripcion()">
+          @if (listoDatos()) {
+            @let g = geo();
+            <defs>
+              <clipPath id="dibujalo-recorte">
+                <rect #recorte x="0" y="0" [attr.width]="g.ancho" [attr.height]="g.alto" [attr.transform]="reducido() ? null : 'translate(' + -g.ancho + ' 0)'" />
+              </clipPath>
+            </defs>
+
+            <g class="font-mono text-etiqueta" aria-hidden="true">
+              @for (t of ticksY; track t) {
+                <line [attr.x1]="g.izq" [attr.x2]="g.izq + g.iw" [attr.y1]="g.y(t)" [attr.y2]="g.y(t)" class="stroke-linea" />
+                <text [attr.x]="g.izq - g.sep" [attr.y]="g.y(t)" text-anchor="end" dominant-baseline="middle" class="fill-texto-2">{{ t }}</text>
+              }
+              @for (t of ticksX; track t) {
+                <text [attr.x]="g.x(t)" [attr.y]="g.arr + g.ih + g.sep * 2.5" text-anchor="middle" class="fill-texto-2">{{ t }}</text>
+              }
+              <text [attr.x]="g.sep" [attr.y]="g.arr - g.sep * 1.5" class="fill-texto-2">% que votó</text>
+              <text [attr.x]="g.x(edadMax)" [attr.y]="g.alto - g.sep" text-anchor="end" class="fill-texto-2">Edad</text>
+            </g>
+
+            @if (revelado()) {
+              <g #sombra clip-path="url(#dibujalo-recorte)">
+                <path [attr.d]="dSombra()" class="fill-alerta/20" />
+              </g>
+              <path
+                #lineaReal
+                [attr.d]="dReal()"
+                pathLength="1"
+                stroke-dasharray="1"
+                [style.stroke-dashoffset]="reducido() ? 0 : 1"
+                fill="none"
+                class="stroke-foco-encendido [stroke-width:calc(var(--spacing)*0.75)]"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              />
+            }
+
+            <path [attr.d]="dUsuario()" fill="none" stroke-linejoin="round" stroke-linecap="round" [class]="clasesUsuario()" />
+
+            <circle [attr.cx]="g.x(edadMin)" [attr.cy]="g.y(valor18()!)" [attr.r]="g.punto" class="fill-foco-encendido" />
+            <text [attr.x]="g.x(edadMin) + g.sep" [attr.y]="g.y(valor18()!) - g.sep * 1.5" class="fill-acento-texto font-mono text-etiqueta font-medio tabular" aria-hidden="true">
+              {{ porcentaje(valor18()!) }}
+            </text>
+
+            @if (revelado() && !reducido()) {
+              <circle #punta cx="0" cy="0" [attr.r]="g.punto * 1.5" class="fill-luz-suave" />
+            }
+
+            @if (mensajes() && resultado(); as res) {
+              <g class="transition-opacity duracion-larga ease-entrada starting:opacity-0 motion-reduce:duracion-corta" aria-hidden="true">
+                <circle [attr.cx]="res.x25" [attr.cy]="res.y25" [attr.r]="g.punto * 1.25" class="fill-fondo stroke-texto stroke-2" />
+                <text [attr.x]="res.x25 - g.sep" [attr.y]="res.y25 + g.sep * 3" class="fill-acento-texto font-mono text-etiqueta font-negrita tabular">
+                  {{ res.cifra25 }} a los {{ edadClave }}
+                </text>
+              </g>
+            }
+          }
+        </svg>
+
+        @if (listoDatos()) {
+          <div class="pointer-events-none absolute inset-0">
+            @for (c of controles(); track c.grupo.indice; let i = $index) {
+              <div
+                #deslizador
+                role="slider"
+                class="group absolute top-0 left-0 flex size-11 items-center justify-center rounded-full"
+                [style.transform]="'translate(' + c.x + 'px, ' + c.y + 'px) translate(-50%, -50%)'"
+                [attr.tabindex]="revelado() ? -1 : 0"
+                [attr.aria-label]="c.grupo.etiqueta"
+                [attr.aria-valuemin]="valorMin"
+                [attr.aria-valuemax]="valorMax"
+                [attr.aria-valuenow]="c.valor"
+                [attr.aria-valuetext]="c.texto"
+                [attr.aria-disabled]="revelado() ? 'true' : null"
+                (keydown)="tecla($event, i)"
+              >
+                @if (libre()) {
+                  <span class="size-3 rounded-full bg-texto opacity-0 group-focus-visible:opacity-100" aria-hidden="true"></span>
+                } @else if (!revelado()) {
+                  <span
+                    class="size-3 rounded-full border-2 transition-transform duracion-instante ease-entrada"
+                    [class.border-foco-encendido]="c.movido"
+                    [class.bg-foco-encendido]="c.movido"
+                    [class.shadow-halo]="c.movido"
+                    [class.border-texto-2]="!c.movido"
+                    [class.bg-superficie]="!c.movido"
+                    [class.scale-125]="arrastrando() === i"
+                    aria-hidden="true"
+                  ></span>
+                }
+              </div>
+            }
+          </div>
+
+          @if (libre() && ultima() === edadMin && !revelado()) {
+            <div class="pointer-events-none absolute inset-0 flex items-center justify-center gap-2 font-mono text-etiqueta text-texto-2" aria-hidden="true">
+              <app-icono nombre="lapiz" class="size-5" />
+              Dibuja aquí
+            </div>
+          }
+        } @else {
+          <div class="absolute inset-0 flex items-center justify-center p-6 text-center font-mono text-etiqueta text-texto-2">
+            @if (estadoCarga() === 'error') {
+              No pudimos cargar los datos. Recarga la página para intentarlo de nuevo.
+            } @else {
+              Cargando datos…
+            }
+          </div>
+        }
+      </div>
+
+      @if (revelado()) {
+        <ul class="flex flex-wrap gap-x-5 gap-y-1 font-mono text-etiqueta text-texto-2" aria-hidden="true">
+          <li class="flex items-center gap-2"><span class="h-0.75 w-4 shrink-0 rounded-full bg-foco-encendido"></span>Lo que pasó en {{ serie }}</li>
+          <li class="flex items-center gap-2"><span class="w-4 shrink-0 border-t-2 border-dashed border-arena"></span>Tu línea</li>
+          <li class="flex items-center gap-2"><span class="size-3 shrink-0 rounded-xs bg-alerta/20"></span>Diferencia</li>
+        </ul>
+      }
+
+      <figcaption class="flex flex-col gap-1 font-mono text-etiqueta text-texto-3">
+        @if (!revelado()) {
+          <span class="text-nota text-texto-2">{{ guia() }}</span>
+          <span>Con teclado: Tab para elegir una edad, flechas arriba y abajo para moverla, Shift para ir de 10 en 10.</span>
+        }
+        <span>Fuente: INE, Conteo Censal de Participación {{ serie }}</span>
+      </figcaption>
+    </figure>
+
+    <div aria-live="polite" class="flex max-w-(--container-texto) flex-col gap-4">
+      @if (mensajes() && resultado(); as res) {
+        <p
+          class="font-titulo font-negrita text-titulo-2 ancho-titulo transition-[opacity,translate] duracion-larga ease-entrada starting:translate-y-2 starting:opacity-0 motion-reduce:duracion-corta motion-reduce:starting:translate-y-0"
+        >
+          Te equivocaste por <span class="tabular text-acento-texto">{{ res.error }}</span> puntos en promedio.
+        </p>
+        <p
+          class="text-entrada text-texto-2 transition-[opacity,translate] duracion-larga ease-entrada starting:translate-y-2 starting:opacity-0 motion-reduce:duracion-corta motion-reduce:starting:translate-y-0"
+          [style.transition-delay.s]="reducido() ? 0 : escalonado"
+        >
+          {{ res.frase25 }}
+        </p>
+      }
+    </div>
+
+    <div class="flex flex-wrap items-center gap-4">
+      @if (!revelado()) {
+        <button #botonVer appBoton type="button" [disabled]="!listo()" class="disabled:pointer-events-none disabled:opacity-40" (click)="revelar()">Ver la realidad</button>
+      }
+      @if (hayCambios()) {
+        <button #botonOtraVez appBoton variante="texto" type="button" (click)="reiniciar()">
+          Volver a dibujar
+          <app-icono nombre="reiniciar" class="size-5" />
+        </button>
+      }
+    </div>
+
+    @if (mensajes() && resultado()) {
+      <button
+        type="button"
+        class="mt-6 flex min-h-11 items-center gap-3 self-start text-left text-titulo-3 ancho-titulo font-negrita text-texto transition-[opacity,translate,scale,color] duracion-larga ease-entrada select-none starting:translate-y-2 starting:opacity-0 active:scale-[0.98] motion-reduce:duracion-corta motion-reduce:starting:translate-y-0 hover:text-acento-texto"
+        [style.transition-delay.s]="reducido() ? 0 : escalonado * 2"
+        (click)="irAlActo2()"
+      >
+        ¿Qué pasa entre los {{ edadMin }} y los {{ edadClave }}?
+        <span class="flex size-11 shrink-0 items-center justify-center rounded-full border border-texto-3 text-acento-texto">
+          <app-icono nombre="abajo" class="size-5" />
+        </span>
+      </button>
+    }
+  </div>
+
+
+  @if (conSelector()) {
+    <app-selector-variantes [nombres]="nombres" [activo]="variante()" posicion="bottom" (elegir)="elegir($event)" (repetir)="reiniciar()" />
+  }
+</section>

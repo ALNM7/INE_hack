@@ -113,3 +113,93 @@ Rechazados a propósito:
 - **Canvas con redibujado parcial.** Cada cuadro solo repinta las luces cuyo nivel cambió. Con CPU x4 la Escala pasó de 49 fps (p95 de 48 ms) a 60 fps sostenidos (p95 de 16.8 ms).
 - **Luces sobre la silueta de México.** Como pide el manual de marca ("por defecto las luces se reparten sobre la silueta de México en un mapa oscuro: el país se apaga"), las 1,000 luces del hero y de la Escala se acomodan en una rejilla hexagonal dentro del país, sobre los estados en `superficie` con bordes `linea`. La geometría es `web/public/geo/mx_estados.topojson` con la proyección cónica conforme de Lambert de INEGI (paralelos 17.5° y 29.5°). El hero y la Escala usan la misma rejilla, así que las luces encendidas del inicio son las mismas que luego se apagan. Debajo del mapa se aclara que la forma es el país y que los puntos no indican dónde vive cada persona.
 - **Variante 3 del hero con el mapa.** El bloque centrado tapaba el país. En móvil y tablet el mapa queda arriba y el texto abajo; en escritorio, el texto a la izquierda y el mapa en las 7/12 de la derecha.
+
+## Acto 1
+
+Especificación escrita antes de programar, con el vocabulario de `animation-vocabulary`, la secuencia de `animate`, los arreglos de plataforma de `mobile-native` y los principios de gestos y hápticos de `animate-expo` traducidos a la web. Datos: `edad_exacta.json`, serie `"2024"`, edades 18 a 85. El punto de los 18 años viene puesto con el valor real y no se puede mover.
+
+### Puerta de `animate`
+
+Es un momento raro (se ve una vez por visita) y explica un dato, así que aquí sí se gasta presupuesto de movimiento en la revelación. El trazo en sí no se anima: es **Drag** 1:1 y cualquier suavizado se sentiría como lag. Lo que se toca muchas veces (ajustar un punto con flechas, cada paso del trazo) cambia al instante, sin transición.
+
+### Interacción, variante 1 "Trazo libre" (`?a1=1`)
+
+Eje del prototipo: modelo de interacción de dibujo continuo, como un lápiz.
+
+| Qué | Especificación |
+|---|---|
+| Inicio | `pointerdown` en cualquier punto del área de la gráfica. `setPointerCapture` para que el trazo siga aunque el dedo salga del área. Solo el puntero primario; un segundo dedo se ignora (protección multitáctil de `animate`). |
+| Trazo | Cada `pointermove` (más sus eventos agrupados con `getCoalescedEvents`) se convierte a edad redondeada a 1 año y a participación con 1 decimal. La curva sigue al puntero 1:1, sin retraso ni suavizado. |
+| Saltos | Si entre dos eventos el puntero salta varias edades, las intermedias se llenan por interpolación lineal. Si el trazo empieza más adelante de donde iba, el hueco se llena desde la última edad dibujada. |
+| Límites | La edad se acota a 19..85 (los 18 son fijos, no se puede ir antes) y el valor a 0..100. Salir por arriba deja 100, por abajo 0, por los lados la primera o la última edad. Se puede regresar sobre lo ya dibujado para corregirlo. |
+| Listo | El botón "Ver la realidad" se activa cuando el trazo llega a 85. |
+
+### Interacción, variante 2 "Puntos arrastrables" (`?a1=2`)
+
+Eje del prototipo: modelo de interacción por controles discretos, como un ecualizador.
+
+| Qué | Especificación |
+|---|---|
+| Puntos | 9, uno por grupo de edad (18-19, 20-24, 25-29, 30-34, 35-44, 45-59, 60-69, 70-79, 80+), en la edad central de cada grupo; el de 80+ va en 85 para cerrar la curva. Arrancan todos en el valor real de los 18, como línea plana. |
+| Agarre | `pointerdown` en cualquier lugar del área toma el punto más cercano en horizontal, así no hace falta atinarle a un círculo pequeño con el dedo. Se arrastra solo en vertical. |
+| Arrastre | El punto se mueve con el desplazamiento del dedo desde donde se tocó (respeta el punto de agarre, sin salto inicial). Límite duro en 0 y 100. |
+| Curva | Interpolación lineal entre el punto fijo de los 18 y los 9 puntos, edad por edad. |
+| Listo | El botón se activa cuando el usuario movió al menos 3 puntos distintos. |
+
+### Comunes a las dos variantes
+
+- **Pointer Events** y `touch-action: none` solo en el área de la gráfica mientras se puede dibujar; al revelar vuelve a `pan-y` para que el dedo pueda hacer scroll encima de la gráfica. El resto de la página hace scroll normal.
+- **Sin selección ni menú al mantener presionado** (`mobile-native` §8): `user-select: none`, `-webkit-user-select: none`, `-webkit-touch-callout: none` y `contextmenu` cancelado, solo en el área de la gráfica.
+- **Teclado.** Los 9 grupos son `role="slider"` en una capa HTML encima del SVG (el SVG es `role="img"` y sus hijos no serían accesibles). Tab los recorre en orden; flecha arriba y abajo ajustan 1 punto, con Shift 10. En la variante 1, ajustar un grupo sin dibujar lo llena desde la última edad dibujada, así se puede completar la curva solo con teclado.
+- **Texto guía** discreto debajo de la gráfica que dice qué falta ("Sigue hasta los 85", "Mueve 2 puntos más"). Botón secundario "Volver a dibujar" con el ícono `rotate-ccw`.
+
+### Movimiento
+
+| Animación | Qué se mueve | Propiedad | Duración | Curva | Disparador | Movimiento reducido |
+|---|---|---|---|---|---|---|
+| **Drag** del trazo o del punto | Curva del usuario | Atributo `d` del path | Ninguna, 1:1 | No aplica | `pointermove` | Igual: es manipulación directa |
+| **Press / Tap feedback** de los botones | Botón | `scale(0.98)` | `--duration-instante` | `--ease-entrada` | `:active` | Igual |
+| **State indication** del botón al activarse | "Ver la realidad" | `opacity` y color (componente `Boton`) | `--duration-instante` | `--ease-entrada` | Trazo en 85 o 3 puntos movidos | Igual |
+| **State indication** de la línea del usuario al revelar | Curva del usuario | Color de `foco-encendido` a `arena` y trazo punteado | `--duration-corta` | `--ease-entrada` | Clic en "Ver la realidad" | Igual |
+| **Line drawing** de la curva real | Path de la curva real | `stroke-dashoffset` de 1 a 0 con `pathLength="1"` | `--duration-encendido` | `--ease-escena` (se mueve en pantalla de izquierda a derecha) | Justo después del cambio de la línea del usuario | **Fade in** de la curva completa en `--duration-corta` |
+| Punta de luz | Un punto `foco-encendido` en la punta del trazo | `transform: translate` calculado con `getPointAtLength` | La del line drawing | La del line drawing | Igual | No aparece |
+| **Reveal** del sombreado entre curvas | Área entre la curva del usuario y la real, `alerta` a baja opacidad | `clip-path: inset()` sincronizado con la `x` de la punta | La del line drawing | La del line drawing | Igual | **Fade in** en `--duration-corta` |
+| Vibración | El teléfono | `navigator.vibrate` | `--duration-instante` / 3 (unos 30 ms, derivado de un token como el escalonado de texto) | No aplica | En el mismo cuadro en que termina el line drawing y aterriza el mensaje | No vibra |
+| **Stagger** de **Fade in** de los mensajes | Error promedio, frase de los 25, anotación de los 25 y línea final | `opacity` y `translateY(space-2)` | `--duration-larga` | `--ease-entrada` | Al terminar el line drawing | Solo `opacity`, `--duration-corta`, sin stagger |
+
+Hápticos (de `animate-expo`): un solo pulso por acción del usuario, nunca por cada paso del trazo; en el mismo cuadro que el cambio visual al que acompaña; y nunca como única señal, porque muchas personas los tienen apagados y iOS Safari no tiene `navigator.vibrate`. Solo se llama si existe la función y no hay movimiento reducido.
+
+Rechazados a propósito:
+- Suavizado o resorte en el trazo: se sentiría como lag. El dedo manda.
+- Animación al cambiar de variante: es chrome del prototipo y debe ser instantánea.
+- **Idle animation** o **Float** en la flecha de "¿Qué pasa entre los 18 y los 25?": compite con el mensaje que la persona está leyendo. La flecha es estática.
+- **Number ticker** en el error promedio: es la cifra que se lee.
+- Vibración al llegar a 85 o al mover cada punto: sería un háptico por cuadro o por paso.
+
+### Mensajes
+
+- "Te equivocaste por X puntos en promedio." X es el error absoluto medio entre las dos curvas, edad por edad de 18 a 85, con un decimal.
+- A los 25: si el usuario puso 3 puntos o más por encima del real, "Pensaste que a los 25 votaba más gente. En realidad votó solo el X%." Si no, "Le atinaste: a los 25 años votó solo el X%. Casi nadie lo adivina."
+- Línea final: "¿Qué pasa entre los 18 y los 25?" con una flecha que lleva al Acto 2.
+- Todas las cifras salen de `edad_exacta.json` y se formatean con `Intl.NumberFormat("es-MX")`. Los mensajes viven en una región `aria-live="polite"` que existe desde el inicio, para que el lector de pantalla los anuncie al llenarse. Después de revelar, el `aria-label` de la gráfica describe la curva real (inicio, punto más bajo, punto más alto y final, calculados de los datos).
+
+### Decisiones tomadas al implementar el Acto 1
+
+- **Mensaje de los 25 con tres casos.** La regla pedida ("menos o casi igual" da "Le atinaste") le decía "Le atinaste" a quien dibujó 0%. Ahora "Le atinaste" solo sale si la diferencia es menor a 3 puntos; si puso 3 o más por debajo sale "Pensaste que a los 25 votaba menos gente. En realidad votó el X%."
+- **Puntos de 12 px en la variante 2.** Los grupos 18-19, 20-24, 25-29 y 30-34 están a 3 a 5 años de distancia y a 16 px se enciman. El área para tocar sigue siendo toda la gráfica gracias al agarre por cercanía.
+- **Controles del teclado fuera del SVG.** El SVG es `role="img"`, así que los 9 `role="slider"` van en una capa HTML encima, con `pointer-events: none` para que el puntero lo maneje el área.
+- **Selector del Acto 1 abajo.** El del hero va arriba; si la URL trae `?v=` y `?a1=` a la vez, las teclas numéricas cambian los dos.
+
+### Resultados de break-ui (Acto 1)
+
+| Caso | Qué pasó | Corrección |
+|---|---|---|
+| Trazo que sale por arriba | El valor se queda en 100 y el trazo sigue (captura del puntero) | Ninguna |
+| Trazo que sale por abajo | El valor se queda en 0 | Ninguna |
+| Trazo que sale por la derecha | La edad se queda en 85 y el botón se activa | Ninguna |
+| Trazo que sale por la izquierda | La edad se queda en 19; los 18 no se pueden mover | Ninguna |
+| Salto de 20 años de golpe | La curva queda con sus 68 vértices, sin huecos (interpolación lineal) | Ninguna |
+| Curva toda en 0 | Error de 62.2 puntos y sombreado correcto, pero decía "Le atinaste" | Tercer caso del mensaje |
+| Curva toda en 100 | Error de 20.1 puntos, mensaje "votaba más gente" | Ninguna |
+| Rotar a mitad del trazo (390x844 a 844x390) | El trazo sigue con la nueva geometría porque cada evento se convierte con el tamaño actual | Ninguna |
+| 320 px | Sin scroll horizontal; etiquetas legibles; los puntos de la variante 2 se enciman | Puntos de 12 px |

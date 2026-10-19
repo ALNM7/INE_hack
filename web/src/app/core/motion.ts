@@ -94,3 +94,7 @@ export function contextoGsap(
 }
 
 export const ESCALA_ENTRADA = 0.96;
+
+export function vibracionCorta(): number {
+  return Math.round((duracion('instante') * 1000) / 3);
+}
