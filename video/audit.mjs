@@ -31,7 +31,11 @@ export function hf(args, opciones = {}) {
 export function auditar(proyecto) {
   const { mapa } = lanzador();
   const destino = join(raiz, proyecto, ".hyperframes", "anim-map");
-  const r = hf(["--script", mapa, proyecto, "--out", destino]);
+  const html = readFileSync(join(raiz, proyecto, "index.html"), "utf8");
+  const atributo = (n) => html.match(new RegExp(`id="root"[^>]*data-${n}="([\\d.]+)"`))?.[1];
+  const extra = [];
+  for (const n of ["width", "height", "fps"]) if (atributo(n)) extra.push(`--${n}`, atributo(n));
+  const r = hf(["--script", mapa, proyecto, "--out", destino, ...extra]);
   const ruta = join(destino, "animation-map.json");
   if (!existsSync(ruta)) {
     console.error(r.salida);

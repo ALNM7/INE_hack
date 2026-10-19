@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, height=1920">
+<title>Reel cohorte 2012</title>
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/vendor/CustomEase.min.js"></script>
+<script src="assets/vendor/d3.min.js"></script>
+<style id="marca">@font-face{font-family:"Bricolage Grotesque";font-style:normal;font-weight:200 800;font-stretch:75% 100%;font-display:swap;src:url("assets/fonts/bricolage-grotesque-normal-200_800-latin-ext.woff2") format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:"Bricolage Grotesque";font-style:normal;font-weight:200 800;font-stretch:75% 100%;font-display:swap;src:url("assets/fonts/bricolage-grotesque-normal-200_800-latin.woff2") format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:"Atkinson Hyperlegible Next";font-style:italic;font-weight:200 800;font-display:swap;src:url("assets/fonts/atkinson-hyperlegible-next-italic-200_800-latin-ext.woff2") format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:"Atkinson Hyperlegible Next";font-style:italic;font-weight:200 800;font-display:swap;src:url("assets/fonts/atkinson-hyperlegible-next-italic-200_800-latin.woff2") format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:"Atkinson Hyperlegible Next";font-style:normal;font-weight:200 800;font-display:swap;src:url("assets/fonts/atkinson-hyperlegible-next-normal-200_800-latin-ext.woff2") format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:"Atkinson Hyperlegible Next";font-style:normal;font-weight:200 800;font-display:swap;src:url("assets/fonts/atkinson-hyperlegible-next-normal-200_800-latin.woff2") format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:400;font-display:swap;src:url("assets/fonts/ibm-plex-mono-normal-400-latin-ext.woff2") format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:400;font-display:swap;src:url("assets/fonts/ibm-plex-mono-normal-400-latin.woff2") format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:500;font-display:swap;src:url("assets/fonts/ibm-plex-mono-normal-500-latin-ext.woff2") format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:500;font-display:swap;src:url("assets/fonts/ibm-plex-mono-normal-500-latin.woff2") format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:600;font-display:swap;src:url("assets/fonts/ibm-plex-mono-normal-600-latin-ext.woff2") format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:600;font-display:swap;src:url("assets/fonts/ibm-plex-mono-normal-600-latin.woff2") format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+
+:root{--color-noche-1:#0E0C0A;--color-noche-2:#181512;--color-noche-3:#231F1A;--color-noche-linea:#3A342D;--color-luz:#FFB547;--color-luz-suave:#FFD58A;--color-luz-halo:rgb(255 181 71 / 0.35);--color-apagada:#675E55;--color-hueso:#F4EEE6;--color-arena:#B8AEA2;--color-ceniza:#978C80;--color-coral:#FF8466;--color-papel-1:#FBF8F3;--color-papel-2:#F2EDE4;--color-papel-3:#E7E0D4;--color-papel-linea:#D6CDBF;--color-tinta-1:#1C1814;--color-tinta-2:#574F46;--color-tinta-3:#665D53;--color-luz-papel:#E39B22;--color-luz-tinta:#8C5600;--color-apagada-papel:#9A8F80;--color-ladrillo:#B2381E;--color-mujeres:#F0986F;--color-hombres:#65B4E9;--color-mujeres-papel:#B35025;--color-hombres-papel:#0F68A2;--color-seq-0:#342c27;--color-seq-1:#563b25;--color-seq-2:#774b1c;--color-seq-3:#985d06;--color-seq-4:#b67200;--color-seq-5:#d28900;--color-seq-6:#eba300;--color-seq-7:#ffbe2d;--color-seq-8:#ffdb5c;--color-seq-papel-0:#efe7d9;--color-seq-papel-1:#e1d1ba;--color-seq-papel-2:#d4bb9a;--color-seq-papel-3:#c7a57c;--color-seq-papel-4:#bb8f5d;--color-seq-papel-5:#ae783d;--color-seq-papel-6:#a26216;--color-seq-papel-7:#954a00;--color-seq-papel-8:#883100;--color-div-0:#74d7ff;--color-div-1:#6bb1eb;--color-div-2:#608db2;--color-div-3:#546a7d;--color-div-4:#494745;--color-div-5:#75644d;--color-div-6:#a28153;--color-div-7:#d3a055;--color-div-8:#ffbf54;--color-div-papel-0:#005fa0;--color-div-papel-1:#4281b4;--color-div-papel-2:#7aa3c8;--color-div-papel-3:#afc6da;--color-div-papel-4:#eae7e4;--color-div-papel-5:#d4beaa;--color-div-papel-6:#bd9670;--color-div-papel-7:#a56e33;--color-div-papel-8:#8c4600;--color-fondo:var(--color-noche-1);--color-superficie:var(--color-noche-2);--color-superficie-alta:var(--color-noche-3);--color-linea:var(--color-noche-linea);--color-texto:var(--color-hueso);--color-texto-2:var(--color-arena);--color-texto-3:var(--color-ceniza);--color-foco-encendido:var(--color-luz);--color-foco-apagado:var(--color-apagada);--color-acento-texto:var(--color-luz);--color-sobre-acento:var(--color-noche-1);--color-alerta:var(--color-coral);--color-mujer:var(--color-mujeres);--color-hombre:var(--color-hombres);--color-acento:var(--color-luz);--color-escala-0:var(--color-seq-0);--color-escala-1:var(--color-seq-1);--color-escala-2:var(--color-seq-2);--color-escala-3:var(--color-seq-3);--color-escala-4:var(--color-seq-4);--color-escala-5:var(--color-seq-5);--color-escala-6:var(--color-seq-6);--color-escala-7:var(--color-seq-7);--color-escala-8:var(--color-seq-8);--color-divergente-0:var(--color-div-0);--color-divergente-1:var(--color-div-1);--color-divergente-2:var(--color-div-2);--color-divergente-3:var(--color-div-3);--color-divergente-4:var(--color-div-4);--color-divergente-5:var(--color-div-5);--color-divergente-6:var(--color-div-6);--color-divergente-7:var(--color-div-7);--color-divergente-8:var(--color-div-8);--font-titulo:"Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;--font-texto:"Atkinson Hyperlegible Next", "Atkinson Hyperlegible", system-ui, sans-serif;--font-mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;--font-weight-regular:400;--font-weight-medio:500;--font-weight-semi:600;--font-weight-negrita:700;--font-weight-extra:800;--font-stretch-titulo:82%;--text-wrapped-cifra:340px;--text-wrapped-cifra--line-height:0.86;--text-wrapped-cifra--letter-spacing:-0.05em;--text-wrapped-titulo:92px;--text-wrapped-titulo--line-height:1;--text-wrapped-titulo--letter-spacing:-0.03em;--text-wrapped-cuerpo:44px;--text-wrapped-cuerpo--line-height:1.3;--text-wrapped-cuerpo--letter-spacing:0em;--text-wrapped-etiqueta:30px;--text-wrapped-etiqueta--line-height:1.2;--text-wrapped-etiqueta--letter-spacing:0.1em;--spacing:0.25rem;--space-0:0px;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;--space-20:80px;--space-24:96px;--space-32:128px;--spacing-margen-movil:20px;--spacing-margen-escritorio:48px;--spacing-medianil-movil:12px;--spacing-medianil-escritorio:24px;--spacing-paso:85vh;--radius-xs:2px;--radius-sm:4px;--radius-md:8px;--radius-lg:14px;--radius-full:9999px;--shadow-tooltip:0 6px 20px -4px rgb(0 0 0 / 0.55);--shadow-flotante:0 14px 36px -10px rgb(0 0 0 / 0.65);--shadow-halo:0 0 0 3px rgb(255 181 71 / 0.22), 0 0 16px rgb(255 181 71 / 0.4);--shadow-papel:0 1px 2px rgb(28 24 20 / 0.08), 0 10px 28px -12px rgb(28 24 20 / 0.18);--duration-instante:90ms;--duration-corta:160ms;--duration-media:240ms;--duration-larga:420ms;--duration-escena:900ms;--duration-encendido:1400ms;--duration-escalonado:6ms;--ease-entrada:cubic-bezier(0.16, 1, 0.3, 1);--ease-salida:cubic-bezier(0.4, 0, 1, 1);--ease-enfasis:cubic-bezier(0.34, 1.56, 0.64, 1);--ease-escena:cubic-bezier(0.65, 0, 0.35, 1);--ease-scroll:linear;--ease-apagado:cubic-bezier(0.7, 0, 0.84, 0)}</style>
+<script id="marca-js">window.BRAND={"nombre":"La generación que se apagó","color":{"noche1":"#0E0C0A","noche2":"#181512","noche3":"#231F1A","nocheLinea":"#3A342D","luz":"#FFB547","luzSuave":"#FFD58A","luzHalo":"rgb(255 181 71 / 0.35)","apagada":"#675E55","hueso":"#F4EEE6","arena":"#B8AEA2","ceniza":"#978C80","coral":"#FF8466","papel1":"#FBF8F3","papel2":"#F2EDE4","papel3":"#E7E0D4","papelLinea":"#D6CDBF","tinta1":"#1C1814","tinta2":"#574F46","tinta3":"#665D53","luzPapel":"#E39B22","luzTinta":"#8C5600","apagadaPapel":"#9A8F80","ladrillo":"#B2381E","mujeres":"#F0986F","hombres":"#65B4E9","mujeresPapel":"#B35025","hombresPapel":"#0F68A2","seq0":"#342c27","seq1":"#563b25","seq2":"#774b1c","seq3":"#985d06","seq4":"#b67200","seq5":"#d28900","seq6":"#eba300","seq7":"#ffbe2d","seq8":"#ffdb5c","seqPapel0":"#efe7d9","seqPapel1":"#e1d1ba","seqPapel2":"#d4bb9a","seqPapel3":"#c7a57c","seqPapel4":"#bb8f5d","seqPapel5":"#ae783d","seqPapel6":"#a26216","seqPapel7":"#954a00","seqPapel8":"#883100","div0":"#74d7ff","div1":"#6bb1eb","div2":"#608db2","div3":"#546a7d","div4":"#494745","div5":"#75644d","div6":"#a28153","div7":"#d3a055","div8":"#ffbf54","divPapel0":"#005fa0","divPapel1":"#4281b4","divPapel2":"#7aa3c8","divPapel3":"#afc6da","divPapel4":"#eae7e4","divPapel5":"#d4beaa","divPapel6":"#bd9670","divPapel7":"#a56e33","divPapel8":"#8c4600","fondo":"#0E0C0A","superficie":"#181512","superficieAlta":"#231F1A","linea":"#3A342D","texto":"#F4EEE6","texto2":"#B8AEA2","texto3":"#978C80","focoEncendido":"#FFB547","focoApagado":"#675E55","acentoTexto":"#FFB547","sobreAcento":"#0E0C0A","alerta":"#FF8466","mujer":"#F0986F","hombre":"#65B4E9","acento":"#FFB547","escala0":"#342c27","escala1":"#563b25","escala2":"#774b1c","escala3":"#985d06","escala4":"#b67200","escala5":"#d28900","escala6":"#eba300","escala7":"#ffbe2d","escala8":"#ffdb5c","divergente0":"#74d7ff","divergente1":"#6bb1eb","divergente2":"#608db2","divergente3":"#546a7d","divergente4":"#494745","divergente5":"#75644d","divergente6":"#a28153","divergente7":"#d3a055","divergente8":"#ffbf54"},"fuente":{"titulo":"\"Bricolage Grotesque\", \"Arial Narrow\", system-ui, sans-serif","texto":"\"Atkinson Hyperlegible Next\", \"Atkinson Hyperlegible\", system-ui, sans-serif","mono":"\"IBM Plex Mono\", ui-monospace, \"SFMono-Regular\", Menlo, monospace","estiramientoTitulo":"82%","peso":{"regular":400,"medio":500,"semi":600,"negrita":700,"extra":800}},"texto":{"cifra":{"size":"340px","lineHeight":"0.86","letterSpacing":"-0.05em"},"titulo":{"size":"92px","lineHeight":"1","letterSpacing":"-0.03em"},"cuerpo":{"size":"44px","lineHeight":"1.3","letterSpacing":"0em"},"etiqueta":{"size":"30px","lineHeight":"1.2","letterSpacing":"0.1em"}},"curva":{"entrada":[0.16,1,0.3,1],"salida":[0.4,0,1,1],"enfasis":[0.34,1.56,0.64,1],"escena":[0.65,0,0.35,1],"scroll":"linear","apagado":[0.7,0,0.84,0]},"duracion":{"instante":0.09,"corta":0.16,"media":0.24,"larga":0.42,"escena":0.9,"encendido":1.4,"escalonado":0.006},"espacio":{"0":"0px","1":"4px","2":"8px","3":"12px","4":"16px","5":"20px","6":"24px","8":"32px","10":"40px","12":"48px","16":"64px","20":"80px","24":"96px","32":"128px"},"radio":{"xs":"2px","sm":"4px","md":"8px","lg":"14px","full":"9999px"}};gsap.registerPlugin(CustomEase);CustomEase.create("entrada","0.16,1,0.3,1");CustomEase.create("salida","0.4,0,1,1");CustomEase.create("enfasis","0.34,1.56,0.64,1");CustomEase.create("escena","0.65,0,0.35,1");CustomEase.create("apagado","0.7,0,0.84,0");</script>
+<link rel="stylesheet" href="assets/comun/reel.css">
+<style>
+#grafica{position:absolute;left:0;top:0;width:900px;height:840px}
+#grafica svg{display:block;width:900px;height:840px;overflow:visible}
+#nota-cohorte{position:absolute;left:0;right:0;top:850px;display:block}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="reel_cohorte" data-start="0" data-width="1080" data-height="1920" data-duration="15" data-fps="30">
+<section id="visual" class="visual">
+<div id="grafica"></div>
+<span id="nota-cohorte" class="nota"></span>
+</section>
+<script type="application/json" id="pista-musica">{"id":"musica","archivo":"musica/musica.mp3","atributos":{"data-start":"0","data-duration":"15","data-track-index":"9","data-volume":"0.4"}}</script>
+</div>
+<script type="application/json" id="d-cohortes" data-fuente="data/cohortes.json">{"larga":{"campos":["edad_2012","p2012","p2018","p2024"],"filas":[[18,66.7,52.1,50.3],[19,59.1,52.3,51.3],[20,56,52.5,52],[21,54.5,52.9,52.8],[22,53.2,53,53.5],[23,52.7,53.9,54.3],[24,52.6,56,55.2],[25,52.3,57.3,56.2],[26,52.3,58.3,56.9],[27,52.4,59.2,57.8],[28,52.5,59.9,58.7],[29,52.7,60.5,59.4],[30,52.9,61.3,60.3],[31,53.2,62,61.1],[32,53.5,62.6,61.7],[33,56.5,63.2,62.6],[34,58.2,63.9,63.5],[35,59.5,64.5,64.1],[36,60.7,65.1,64.8],[37,62,65.7,65.5],[38,63,66.4,66.2],[39,63.8,66.9,66.8],[40,64.8,67.4,67.3],[41,65.5,67.7,67.9],[42,66,68,68.1],[43,66.6,68.4,68.4],[44,67.2,68.8,68.9],[45,67.9,69.3,69.5],[46,68.5,69.8,70.1],[47,69,70,70.9],[48,69.6,70.6,72.2],[49,70.1,70.9,72.6],[50,70.7,71.2,72.9],[51,71.2,71.5,73.4],[52,71.5,71.6,74.3],[53,72,72,76.8],[54,72.3,72.5,76.5],[55,72.6,72.7,76.4],[56,73,72.9,76.5],[57,73.3,73.1,76.4],[58,73.4,73,76.2],[59,73.7,73.3,75.9],[60,74.2,73.3,75.7]]},"corta":{"campos":["edad_2018","p2018","p2024"],"filas":[[18,64.8,47.1],[19,57.4,46.9],[20,54.8,47],[21,53.4,47.2],[22,52.3,47],[23,52,48.1],[24,52.1,50.3],[25,52.3,51.3],[26,52.5,52],[27,52.9,52.8],[28,53,53.5],[29,53.9,54.3],[30,56,55.2],[31,57.3,56.2],[32,58.3,56.9],[33,59.2,57.8],[34,59.9,58.7],[35,60.5,59.4],[36,61.3,60.3],[37,62,61.1],[38,62.6,61.7],[39,63.2,62.6],[40,63.9,63.5],[41,64.5,64.1],[42,65.1,64.8],[43,65.7,65.5],[44,66.4,66.2],[45,66.9,66.8],[46,67.4,67.3],[47,67.7,67.9],[48,68,68.1],[49,68.4,68.4],[50,68.8,68.9],[51,69.3,69.5],[52,69.8,70.1],[53,70,70.9],[54,70.6,72.2],[55,70.9,72.6],[56,71.2,72.9],[57,71.5,73.4],[58,71.6,74.3],[59,72,76.8],[60,72.5,76.5],[61,72.7,76.4],[62,72.9,76.5],[63,73.1,76.4],[64,73,76.2],[65,73.3,75.9],[66,73.3,75.7],[67,73.3,75],[68,73.3,74.2],[69,73.2,73.4],[70,73,72.5]]}}</script>
+<script type="application/json" id="d-meta" data-fuente="data/meta.json">{"generado":"2026-10-19","fuente":"INE, Conteos Censales de Participación Ciudadana 2012, 2018 y 2024","url":"https://ine.mx/transparencia/datos-abiertos/visualizacion-datos/conteos-censales-participacion/","participacion":"SV / (SV + NV) * 100. Los registros no especificados (NS) se excluyen del denominador.","supresion":"Se publica null cuando SV + NV es menor a 50.","calidad":"Municipios con más de 50% de registros no especificados se marcan con calidad baja.","secciones":"Sección más y menos participativa: solo secciones con al menos 200 registros y hasta 50% no especificados.","focos":"Secciones donde las personas de 18 a 29 años votaron 60% o más, con al menos 50 jóvenes con registro.","cohorte":"Cohorte aproximada: compara la misma edad desplazada entre elecciones, no a las mismas personas.","ns_2012":"En 2012 casi no hay registros no especificados (0.2%) frente a 6.8% en 2018 y 6.4% en 2024, por diferencias en la captura de cuadernillos.","cobertura":"No incluye casillas especiales ni voto desde el extranjero.","municipios":2477}</script>
+<script type="application/json" id="d-config" data-fuente="config.json">{"url":"alnm7.github.io/INE_hack","zona_segura":{"arriba":250,"abajo":350,"lados":90},"subtitulos":{"max_caracteres":42,"corte":34}}</script>
+<script src="assets/comun/reel.js"></script>
+<script>
+(() => {
+  const { leer, decimal, D, meta } = Reel;
+  const C = BRAND.color;
+  const F = BRAND.fuente;
+  const larga = leer("d-cohortes").larga;
+  const fila = larga.filas.reduce((a, b) => (b[0] < a[0] ? b : a));
+  const anios = larga.campos.slice(1).map((c) => Number(c.replace(/\D/g, "")));
+  const columnas = anios.map((anio, i) => ({ anio, edad: fila[0] + (anio - anios[0]), valor: fila[i + 1] }));
+  const caida = columnas[0].valor - columnas.at(-1).valor;
+
+  const ANCHO = 900;
+  const ALTO = 840;
+  const BASE = 660;
+  const ALTURA_MAX = 500;
+  const y = d3.scaleLinear().domain([0, 100]).range([0, ALTURA_MAX]);
+  const x = d3.scalePoint().domain(columnas.map((c) => c.anio)).range([150, ANCHO - 150]);
+  const escala = d3.scaleQuantize().domain([0, 100]).range(d3.range(9).map((i) => C[`seq${i}`]));
+  const BARRA = 190;
+
+  const svg = d3.select("#grafica").append("svg").attr("viewBox", `0 0 ${ANCHO} ${ALTO}`).attr("width", ANCHO).attr("height", ALTO);
+  svg.append("text").attr("id", "titulo-grafica").attr("x", 0).attr("y", 40).attr("fill", C.texto2).attr("font-size", 30).attr("letter-spacing", "0.1em").text(`QUIENES TENÍAN ${fila[0]} EN ${anios[0]}`);
+  svg.append("rect").attr("id", "base").attr("x", 0).attr("y", BASE).attr("width", ANCHO).attr("height", 2).attr("fill", C.linea);
+
+  columnas.forEach((c, i) => {
+    const cx = x(c.anio);
+    const alto = y(c.valor);
+    svg.append("rect").attr("class", "barra").attr("id", `barra-${i}`).attr("x", cx - BARRA / 2).attr("y", BASE - alto).attr("width", BARRA).attr("height", alto).attr("rx", 6).attr("fill", i === 0 ? C.luz : escala(c.valor));
+    svg.append("text").attr("class", "valor").attr("id", `valor-${i}`).attr("x", cx).attr("y", BASE - alto - 28).attr("text-anchor", "middle").attr("fill", i === 0 ? C.luz : C.texto).style("font-family", F.titulo).attr("font-weight", F.peso.extra).style("font-stretch", F.estiramientoTitulo).attr("font-size", 92).attr("letter-spacing", "-0.03em").text(`${decimal(c.valor)}%`);
+    svg.append("text").attr("class", "anio").attr("id", `anio-${i}`).attr("x", cx).attr("y", BASE + 56).attr("text-anchor", "middle").attr("fill", C.texto2).attr("font-size", 34).attr("font-weight", 600).text(c.anio);
+    svg.append("text").attr("class", "edad").attr("id", `edad-${i}`).attr("x", cx).attr("y", BASE + 100).attr("text-anchor", "middle").attr("fill", C.texto3).attr("font-size", 28).text(`${c.edad} años`);
+  });
+
+  const puntos = columnas.map((c) => [x(c.anio), BASE - y(c.valor)]);
+  const pendiente = svg.append("path").attr("id", "pendiente").attr("d", d3.line()(puntos)).attr("fill", "none").attr("stroke", C.alerta).attr("stroke-width", 5).attr("stroke-linecap", "round");
+  const largo = pendiente.node().getTotalLength();
+  pendiente.attr("stroke-dasharray", `${largo} ${largo}`).attr("stroke-dashoffset", largo);
+  const nodos = svg.append("g").attr("id", "nodos").attr("opacity", 0);
+  puntos.forEach(([px, py]) => nodos.append("circle").attr("cx", px).attr("cy", py).attr("r", 10).attr("fill", C.alerta));
+  const fin = puntos.at(-1);
+  const caidaG = svg.append("g").attr("id", "caida").attr("opacity", 0);
+  caidaG.append("text").attr("x", fin[0]).attr("y", fin[1] + 92).attr("text-anchor", "middle").attr("fill", C.fondo).style("font-family", F.titulo).attr("font-weight", F.peso.extra).style("font-stretch", F.estiramientoTitulo).attr("font-size", 64).text(`−${decimal(caida)}`);
+  caidaG.append("text").attr("x", fin[0]).attr("y", fin[1] + 132).attr("text-anchor", "middle").attr("fill", C.fondo).attr("font-size", 28).attr("font-weight", 600).text("PUNTOS");
+
+  document.getElementById("nota-cohorte").textContent = meta.cohorte;
+
+  const tl = gsap.timeline({ paused: true });
+  Reel.cabecera(tl);
+  Reel.subtitulos(tl, [
+    { texto: `En ${anios[0]} tenías *${fila[0]}* y votaste.`, desde: 0.4, hasta: 3.7 },
+    { texto: "¿Y después?", desde: 3.9, hasta: 6.1 },
+    { texto: `A los ${columnas[1].edad}, *${decimal(columnas[1].valor)}%*. A los ${columnas[2].edad}, *${decimal(columnas[2].valor)}%*.`, desde: 6.3, hasta: 12.3 },
+  ]);
+
+  tl.fromTo("#titulo-grafica", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: D.larga, ease: "entrada" }, 0.5);
+  tl.fromTo("#base", { opacity: 0, scaleX: 0.6, transformOrigin: "0% 50%" }, { opacity: 1, scaleX: 1, duration: D.escena, ease: "entrada" }, 0.6);
+  const entradas = [1.0, 4.3, 5.4];
+  columnas.forEach((c, i) => {
+    const t = entradas[i];
+    tl.fromTo(`#anio-${i}, #edad-${i}`, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: D.larga, ease: "entrada", stagger: 0.06 }, t);
+    tl.fromTo(`#barra-${i}`, { scaleY: 0.02, opacity: 0, transformOrigin: "50% 100%" }, { scaleY: 1, opacity: 1, duration: D.encendido * 0.7, ease: "entrada" }, t + 0.1);
+    tl.fromTo(`#valor-${i}`, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: D.larga, ease: "entrada" }, t + 0.1 + D.encendido * 0.7);
+  });
+  tl.to(pendiente.node(), { attr: { "stroke-dashoffset": 0 }, duration: D.encendido, ease: "escena" }, 7.6);
+  tl.to(nodos.node(), { opacity: 1, duration: D.larga, ease: "entrada" }, 9.0);
+  tl.fromTo("#caida", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: D.larga, ease: "entrada" }, 9.6);
+  tl.fromTo("#nota-cohorte", { opacity: 0 }, { opacity: 1, duration: D.escena, ease: "entrada" }, 10.2);
+  tl.to("#barra-1, #barra-2", { opacity: 0.8, duration: D.escena, ease: "escena" }, 11.2);
+  tl.to("#visual", { opacity: 0, y: -24, duration: D.larga, ease: "salida" }, 12.3);
+  Reel.cierre(tl, 12.7);
+  window.__timelines["reel_cohorte"] = tl;
+})();
+</script>
+</body>
+</html>

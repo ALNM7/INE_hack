@@ -93,7 +93,7 @@ export function cssMarca(rutaFuentesRelativa) {
 }
 
 export function scriptMarca() {
-  const datos = JSON.stringify({ color, fuente, texto, curva, duracion, espacio, radio });
+  const datos = JSON.stringify({ nombre: tokens.nombre, color, fuente, texto, curva, duracion, espacio, radio });
   const registro = Object.entries(curva)
     .filter(([, v]) => Array.isArray(v))
     .map(([k, v]) => `CustomEase.create(${JSON.stringify(k)},${JSON.stringify(v.join(","))});`)

@@ -32,6 +32,8 @@ function prepararAssets(proyecto) {
   mkdirSync(join(proyecto, "assets", "vendor"), { recursive: true });
   for (const archivo of archivosFuente()) copyFileSync(archivo, join(proyecto, "assets", "fonts", basename(archivo)));
   for (const [destino, origen] of Object.entries(librerias)) copyFileSync(join(raiz, origen), join(proyecto, "assets", "vendor", destino));
+  mkdirSync(join(proyecto, "assets", "comun"), { recursive: true });
+  for (const archivo of readdirSync(join(raiz, "comun"))) copyFileSync(join(raiz, "comun", archivo), join(proyecto, "assets", "comun", archivo));
 }
 
 function escaparJson(texto) {
@@ -52,6 +54,19 @@ for (const proyecto of proyectos()) {
       return `<script type="application/json" id="${id}" data-fuente="${fuente}">${escaparJson(contenido)}</script>`;
     }
   );
+  html = html.replace(/<audio data-generado="musica"[^>]*><\/audio>/g, "");
+  const pista = html.match(/<script type="application\/json" id="pista-musica">([\s\S]*?)<\/script>/);
+  if (pista) {
+    const def = JSON.parse(pista[1]);
+    if (existsSync(join(raiz, def.archivo))) {
+      mkdirSync(join(proyecto, "assets", "musica"), { recursive: true });
+      const nombre = basename(def.archivo);
+      copyFileSync(join(raiz, def.archivo), join(proyecto, "assets", "musica", nombre));
+      const atributos = Object.entries(def.atributos).map(([k, v]) => `${k}="${v}"`).join(" ");
+      html = html.replace(pista[0], `${pista[0]}<audio data-generado="musica" id="${def.id}" src="assets/musica/${nombre}" ${atributos}></audio>`);
+      console.log(`  música activa: ${def.archivo}`);
+    }
+  }
   writeFileSync(archivo, html);
   total += 1;
   console.log(`sincronizado ${relative(raiz, archivo)}`);

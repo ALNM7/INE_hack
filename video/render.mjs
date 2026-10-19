@@ -34,7 +34,7 @@ function revisar(proyecto) {
   console.log(`${banderas.length} banderas, ${muertas.length} zonas muertas, reporte en ${reporte}`);
   for (const b of banderas) console.log(`  bandera ${b}`);
   for (const m of muertas) console.log(`  zona muerta ${m}`);
-  if (banderas.length && !process.argv.includes("--aceptar-banderas")) throw new Error(`corrige las banderas de ${proyecto} antes de renderizar`);
+  if ((banderas.length || muertas.length) && !process.argv.includes("--aceptar-banderas")) throw new Error(`corrige las banderas y zonas muertas de ${proyecto} antes de renderizar`);
 }
 
 function renderizar(proyecto, args) {
