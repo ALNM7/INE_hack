@@ -12,7 +12,7 @@ Todos los archivos están en `web/public/data/`. Se generaron con `pipeline/buil
 ## `nacional.json`
 ```
 {
-  "2012": { "ln", "sv", "nv", "ns", "part", "ns_pct", "part_h", "part_m", "nv_h", "nv_m" },
+  "2012": { "ln", "sv", "nv", "ns", "part", "ns_pct" },
   "2018": { ... },
   "2024": { ... },
   "abstencion_2024": 37105466,
@@ -21,8 +21,6 @@ Todos los archivos están en `web/public/data/`. Se generaron con `pipeline/buil
 }
 ```
 
-`part_h` y `part_m` son participación de hombres y mujeres; `nv_h` y `nv_m`, cuántos no votaron de cada sexo.
-
 ## `edad_exacta.json`
 `edades` va de 18 a 95. Cada serie tiene un valor por edad en el mismo orden.
 ```
@@ -30,9 +28,6 @@ Todos los archivos están en `web/public/data/`. Se generaron con `pipeline/buil
 ```
 
 ## `cohortes.json`
-Cada bloque trae `campos` (nombres de las columnas) y `filas`.
-- `larga.campos`: `["edad_2012", "p2012", "p2018", "p2024"]`
-- `corta.campos`: `["edad_2018", "p2018", "p2024"]`
 - `larga.filas`: `[edad_en_2012, part_2012, part_2018 a esa edad + 6, part_2024 a esa edad + 12]`, edades 18 a 60.
 - `corta.filas`: `[edad_en_2018, part_2018, part_2024 a esa edad + 6]`, edades 18 a 70.
 
@@ -86,20 +81,12 @@ Secciones donde las personas de 18 a 29 votaron 60% o más. El texto del sitio d
 `[{ "c": 1, "n": "Aguascalientes", "m": [[clave, nombre], ...] }, ...]` para los selectores.
 
 ## `meta.json`
-Fecha de generación, fuente, URL, notas metodológicas, correcciones aplicadas y fuente del mapa, listas para la página de metodología.
-
-## `web/public/geo/mx_estados.topojson`
-Geometría de los 32 estados (Natural Earth, dominio público), 21 KB. Capa `estados`, cada estado con propiedades `c` (clave INE, igual que en `estados.json`) y `n` (nombre). Se une con los datos por `c`. Usar este archivo y no la geometría que trae el design system.
-
-## Correcciones a los datos del INE
-- Municipio 6 de Campeche: el CSV de 2024 dice "Hopelche}én". Se corrigió a "Hopelchén", como aparece en 2012 y 2018. El validador ahora rechaza cualquier nombre con caracteres raros.
+Fecha de generación, fuente, URL y notas metodológicas listas para la página de metodología.
 
 ## Cifras de referencia
 | Indicador | Valor |
 |---|---|
 | Participación nacional 2012, 2018, 2024 | 62.1, 62.4, 59.7 |
-| Hombres y mujeres 2012 | 57.8, 66.1 |
-| Hombres y mujeres 2024 | 54.8, 64.2 |
 | Edad 18, 25 y 65 en 2024 | 61.5, 46.9, 76.8 |
 | Cohorte 2012: 18, 24, 30 años | 66.7, 52.1, 50.3 |
 | Cohorte 2018: 18, 24 años | 64.8, 47.1 |
