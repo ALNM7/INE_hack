@@ -1,5 +1,7 @@
 import { Rgb, aCss, mezclar, rgbToken } from '../../core/tokens';
+import type { Estados } from '../../core/mapa.service';
 import { rangos } from '../../core/semilla';
+import { mapaLuces } from '../../shared/charts/mapa-luces';
 
 export interface EstadoCampo {
   apagado: number;
@@ -12,6 +14,8 @@ export interface ConfigCampo {
   apagadas: number;
   jovenes: number;
   semilla: number;
+  estados: Estados;
+  margen: number;
   curvaApagado: (t: number) => number;
   curvaJovenes: (t: number) => number;
 }
@@ -28,12 +32,16 @@ export class CampoEscala {
   private readonly contexto: CanvasRenderingContext2D;
   private readonly rangoApagado: number[];
   private readonly rangoJoven: Int32Array;
-  private xs = new Float32Array(0);
-  private ys = new Float32Array(0);
+  private xs: Float32Array = new Float32Array(0);
+  private ys: Float32Array = new Float32Array(0);
   private radio = 0;
   private ancho = 0;
   private alto = 0;
   private colorFondo = '';
+  private colorMapa = '';
+  private colorBordes = '';
+  private dpr = 1;
+  private readonly capaFondo = document.createElement('canvas');
   private colorEncendido: Rgb = [0, 0, 0];
   private colorApagado: Rgb = [0, 0, 0];
   private colorJoven: Rgb = [0, 0, 0];
@@ -64,6 +72,8 @@ export class CampoEscala {
     this.estilos.clear();
     this.completo = true;
     this.colorFondo = aCss(rgbToken('--color-fondo', this.canvas));
+    this.colorMapa = aCss(rgbToken('--color-superficie', this.canvas));
+    this.colorBordes = aCss(rgbToken('--color-linea', this.canvas));
     this.colorEncendido = rgbToken('--color-foco-encendido', this.canvas);
     this.colorApagado = rgbToken('--color-foco-apagado', this.canvas);
     this.colorJoven = rgbToken('--color-arena', this.canvas);
@@ -72,34 +82,34 @@ export class CampoEscala {
   medir(): void {
     const caja = this.canvas.getBoundingClientRect();
     const dpr = Math.max(1, window.devicePixelRatio || 1);
+    this.dpr = dpr;
     this.ancho = caja.width;
     this.alto = caja.height;
     this.canvas.width = Math.round(caja.width * dpr);
     this.canvas.height = Math.round(caja.height * dpr);
     this.contexto.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const n = this.config.total;
     if (this.ancho <= 0 || this.alto <= 0) {
       return;
     }
-    const columnas = Math.max(1, Math.round(Math.sqrt((n * this.ancho) / this.alto)));
-    const filas = Math.ceil(n / columnas);
-    const celda = Math.min(this.ancho / columnas, this.alto / filas);
-    const x0 = (this.ancho - columnas * celda) / 2 + celda / 2;
-    const y0 = (this.alto - filas * celda) / 2 + celda / 2;
-    const ultimaFila = n - (filas - 1) * columnas;
-    const xs = new Float32Array(n);
-    const ys = new Float32Array(n);
-    for (let i = 0; i < n; i++) {
-      const fila = Math.floor(i / columnas);
-      const columna = i % columnas;
-      const sangria = fila === filas - 1 ? ((columnas - ultimaFila) * celda) / 2 : 0;
-      xs[i] = x0 + columna * celda + sangria;
-      ys[i] = y0 + fila * celda;
+    const mapa = mapaLuces(this.config.estados, this.ancho, this.alto, this.config.total, this.config.margen);
+    this.xs = mapa.xs;
+    this.ys = mapa.ys;
+    this.radio = mapa.paso * RADIO_RELATIVO;
+    this.capaFondo.width = this.canvas.width;
+    this.capaFondo.height = this.canvas.height;
+    const fondo = this.capaFondo.getContext('2d', { alpha: false })!;
+    fondo.setTransform(dpr, 0, 0, dpr, 0, 0);
+    fondo.fillStyle = this.colorFondo;
+    fondo.fillRect(0, 0, this.ancho, this.alto);
+    fondo.fillStyle = this.colorMapa;
+    fondo.strokeStyle = this.colorBordes;
+    fondo.lineJoin = 'round';
+    for (const ruta of mapa.rutas) {
+      const forma = new Path2D(ruta);
+      fondo.fill(forma);
+      fondo.stroke(forma);
     }
-    this.xs = xs;
-    this.ys = ys;
-    this.radio = celda * RADIO_RELATIVO;
-    this.niveles = new Int32Array(n).fill(-1);
+    this.niveles = new Int32Array(this.config.total).fill(-1);
     this.completo = true;
     this.dibujar();
   }
@@ -143,8 +153,7 @@ export class CampoEscala {
     const { total, apagadas, jovenes, curvaApagado, curvaJovenes } = this.config;
     const completo = this.completo;
     if (completo) {
-      ctx.fillStyle = this.colorFondo;
-      ctx.fillRect(0, 0, this.ancho, this.alto);
+      this.restaurar(0, 0, this.ancho, this.alto);
       this.completo = false;
     }
     if (!this.xs.length) {
@@ -182,12 +191,9 @@ export class CampoEscala {
     const r = this.radio;
     if (!completo) {
       const borde = r + 1;
-      ctx.fillStyle = this.colorFondo;
-      ctx.beginPath();
       for (const i of cambiados) {
-        ctx.rect(this.xs[i] - borde, this.ys[i] - borde, borde * 2, borde * 2);
+        this.restaurar(this.xs[i] - borde, this.ys[i] - borde, borde * 2, borde * 2);
       }
-      ctx.fill();
     }
     for (const [clave, indices] of cubetas) {
       ctx.fillStyle = this.estilo(clave);
@@ -198,5 +204,20 @@ export class CampoEscala {
       }
       ctx.fill();
     }
+  }
+
+  private restaurar(x: number, y: number, ancho: number, alto: number): void {
+    const d = this.dpr;
+    const sx = Math.max(0, Math.floor(x * d));
+    const sy = Math.max(0, Math.floor(y * d));
+    const sw = Math.min(this.capaFondo.width - sx, Math.ceil(ancho * d) + 1);
+    const sh = Math.min(this.capaFondo.height - sy, Math.ceil(alto * d) + 1);
+    if (sw <= 0 || sh <= 0) {
+      return;
+    }
+    this.contexto.save();
+    this.contexto.setTransform(1, 0, 0, 1, 0, 0);
+    this.contexto.drawImage(this.capaFondo, sx, sy, sw, sh, sx, sy, sw, sh);
+    this.contexto.restore();
   }
 }
