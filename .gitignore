@@ -6,3 +6,4 @@ video/**/renders/
 .claude/skills/
 .DS_Store
 Thumbs.db
+.agents/

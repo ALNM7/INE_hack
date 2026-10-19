@@ -14,7 +14,7 @@ import {
 @Component({
   selector: 'app-selector-variantes',
   template: `
-    <nav class="proto-picker" aria-label="Prototype variants" data-position="top" [attr.data-ready]="listo() ? '' : null">
+    <nav class="proto-picker" aria-label="Prototype variants" [attr.data-position]="posicion() === 'top' ? 'top' : null" [attr.data-ready]="listo() ? '' : null">
       <span #resaltado class="proto-picker-highlight" aria-hidden="true"></span>
       @for (nombre of nombres(); track nombre; let i = $index) {
         <button
@@ -137,6 +137,7 @@ import {
 export class SelectorVariantes {
   readonly nombres = input.required<readonly string[]>();
   readonly activo = input.required<number>();
+  readonly posicion = input<'top' | 'bottom'>('top');
   readonly elegir = output<number>();
   readonly repetir = output<void>();
 
@@ -164,7 +165,7 @@ export class SelectorVariantes {
 
   protected tecla(evento: KeyboardEvent): void {
     const objetivo = evento.target as HTMLElement | null;
-    if (objetivo && (/^(INPUT|TEXTAREA|SELECT)$/.test(objetivo.tagName) || objetivo.isContentEditable)) {
+    if (objetivo && (/^(INPUT|TEXTAREA|SELECT)$/.test(objetivo.tagName) || objetivo.isContentEditable || objetivo.closest('[role="slider"]'))) {
       return;
     }
     if (evento.metaKey || evento.ctrlKey || evento.altKey) {
