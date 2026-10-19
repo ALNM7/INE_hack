@@ -23,7 +23,7 @@ function construir() {
   if (r.status !== 0) throw new Error(r.stderr);
 }
 
-function revisar(proyecto) {
+function revisar(proyecto, { estatico = false } = {}) {
   paso(`lint ${proyecto}`);
   const l = hf(["lint", proyecto]);
   const resumen = l.salida.split("\n").filter((x) => /error|warning|✗|⚠/.test(x) && !x.includes("npm notice"));
@@ -33,8 +33,8 @@ function revisar(proyecto) {
   const { banderas, muertas, reporte } = auditar(proyecto);
   console.log(`${banderas.length} banderas, ${muertas.length} zonas muertas, reporte en ${reporte}`);
   for (const b of banderas) console.log(`  bandera ${b}`);
-  for (const m of muertas) console.log(`  zona muerta ${m}`);
-  if ((banderas.length || muertas.length) && !process.argv.includes("--aceptar-banderas")) throw new Error(`corrige las banderas y zonas muertas de ${proyecto} antes de renderizar`);
+  for (const m of muertas) console.log(`  zona muerta ${m}${estatico ? " (composición estática, se acepta)" : ""}`);
+  if ((banderas.length || (muertas.length && !estatico)) && !process.argv.includes("--aceptar-banderas")) throw new Error(`corrige las banderas y zonas muertas de ${proyecto} antes de renderizar`);
 }
 
 function renderizar(proyecto, args) {
@@ -115,7 +115,7 @@ function reel(nombre) {
 }
 
 function carrusel() {
-  revisar("carrusel");
+  revisar("carrusel", { estatico: true });
   const cuadros = join(raiz, "carrusel", "renders", "cuadros");
   rmSync(cuadros, { recursive: true, force: true });
   renderizar("carrusel", ["--format", "png-sequence", "--fps", "1", "-o", cuadros]);
