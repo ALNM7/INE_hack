@@ -23,6 +23,8 @@ Todos los archivos están en `web/public/data/`. Se generaron con `pipeline/buil
 
 `part_h` y `part_m` son participación de hombres y mujeres; `nv_h` y `nv_m`, cuántos no votaron de cada sexo.
 
+También trae `grupos` (los 9 grupos de edad) y `grupos_2012`, `grupos_2018`, `grupos_2024`, cada uno con `t`, `h` y `m`: participación nacional por grupo de edad y sexo. La brecha de género del Acto 2 sale de `grupos_2024` en el grupo `25-29` (hombres 40.6, mujeres 53.9). No calcular promedios a partir de `edad_exacta.json`, porque no están ponderados.
+
 ## `edad_exacta.json`
 `edades` va de 18 a 95. Cada serie tiene un valor por edad en el mismo orden.
 ```
@@ -100,6 +102,7 @@ Geometría de los 32 estados (Natural Earth, dominio público), 21 KB. Capa `est
 | Participación nacional 2012, 2018, 2024 | 62.1, 62.4, 59.7 |
 | Hombres y mujeres 2012 | 57.8, 66.1 |
 | Hombres y mujeres 2024 | 54.8, 64.2 |
+| Hombres y mujeres de 25 a 29 en 2024 | 40.6, 53.9 |
 | Edad 18, 25 y 65 en 2024 | 61.5, 46.9, 76.8 |
 | Cohorte 2012: 18, 24, 30 años | 66.7, 52.1, 50.3 |
 | Cohorte 2018: 18, 24 años | 64.8, 47.1 |
