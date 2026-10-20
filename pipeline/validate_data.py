@@ -49,6 +49,10 @@ check("Mujeres 2012", nac["2012"]["part_m"], 66.1)
 check("Hombres 2024", nac["2024"]["part_h"], 54.8)
 check("Mujeres 2024", nac["2024"]["part_m"], 64.2)
 
+i2529 = nac["grupos"].index("25-29")
+check("Hombres 25-29 en 2024", nac["grupos_2024"]["h"][i2529], 40.6)
+check("Mujeres 25-29 en 2024", nac["grupos_2024"]["m"][i2529], 53.9)
+
 edad = dict(zip(ed["edades"], ed["2024"]))
 check("Edad 18 en 2024", edad[18], 61.5)
 check("Edad 25 en 2024", edad[25], 46.9)

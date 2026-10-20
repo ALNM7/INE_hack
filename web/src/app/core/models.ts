@@ -22,6 +22,10 @@ export interface Nacional {
   abstencion_2024: number;
   abstencion_jovenes_2024: number;
   ln_jovenes_2024: number;
+  grupos: string[];
+  grupos_2012: GruposSexo;
+  grupos_2018: GruposSexo;
+  grupos_2024: GruposSexo;
 }
 
 export interface EdadExacta {

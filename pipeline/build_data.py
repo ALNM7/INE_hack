@@ -121,6 +121,10 @@ def main():
     nacional["abstencion_2024"] = int(d24["NV"].sum())
     nacional["abstencion_jovenes_2024"] = int(d24[d24["EDAD"] <= 29]["NV"].sum())
     nacional["ln_jovenes_2024"] = int(d24[d24["EDAD"] <= 29]["LN"].sum())
+    nacional["grupos"] = GRUPOS
+    for a in YEARS:
+        da = datos[a]
+        nacional[f"grupos_{a}"] = {"t": serie_grupos(da), "h": serie_grupos(da[da["SEXO"] == 0]), "m": serie_grupos(da[da["SEXO"] == 1])}
     escribir("nacional.json", nacional)
 
     edades = list(range(18, 96))

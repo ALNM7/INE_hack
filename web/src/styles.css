@@ -10,6 +10,12 @@
   }
 }
 
+@custom-variant lado {
+  @media (min-width: 48rem), (orientation: landscape) and (min-width: 36rem) {
+    @slot;
+  }
+}
+
 @utility duracion-* {
   transition-duration: --value(--duration-*);
 }
