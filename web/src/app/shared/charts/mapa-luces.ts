@@ -1,5 +1,6 @@
-import { geoConicConformal, geoPath } from 'd3';
+import { geoPath } from 'd3';
 import type { Estados } from '../../core/mapa.service';
+import { proyeccionMexico } from './proyeccion';
 
 export interface MapaLuces {
   xs: Float32Array;
@@ -9,8 +10,6 @@ export interface MapaLuces {
   silueta: string;
 }
 
-const PARALELOS: [number, number] = [17.5, 29.5];
-const MERIDIANO_CENTRAL = 102;
 const RAIZ_TRES_MEDIOS = Math.sqrt(3) / 2;
 const TOLERANCIA = 0.03;
 const INTENTOS = 12;
@@ -57,10 +56,7 @@ function recortar(puntos: [number, number, number, number][], sobran: number): [
 }
 
 export function mapaLuces(estados: Estados, ancho: number, alto: number, total: number, margen: number): MapaLuces {
-  const proyeccion = geoConicConformal()
-    .parallels(PARALELOS)
-    .rotate([MERIDIANO_CENTRAL, 0])
-    .fitExtent(
+  const proyeccion = proyeccionMexico().fitExtent(
       [
         [margen, margen],
         [ancho - margen, alto - margen],

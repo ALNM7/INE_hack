@@ -5,7 +5,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import tokens from '../../../../brand/tokens.json';
 
 gsap.registerPlugin(ScrollTrigger, CustomEase);
-// Evita recalcular los disparadores cuando la barra del navegador móvil aparece o se oculta.
 ScrollTrigger.config({ ignoreMobileResize: true });
 
 export { gsap, ScrollTrigger };
