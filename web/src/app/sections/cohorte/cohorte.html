@@ -206,10 +206,18 @@
         >
           @for (c of visibles(); track c.indice) {
             <article
-              class="pointer-events-auto w-full max-w-(--container-texto) rounded-lg border border-linea bg-superficie p-4 transition-[opacity,transform] duracion-larga ease-entrada select-none starting:translate-y-2 starting:opacity-0 motion-reduce:duracion-corta motion-reduce:starting:translate-y-0 md:p-5"
+              class="pointer-events-auto relative w-full max-w-(--container-texto) rounded-lg border border-linea bg-superficie p-4 transition-[opacity,transform] duracion-larga ease-entrada select-none starting:translate-y-2 starting:opacity-0 motion-reduce:duracion-corta motion-reduce:starting:translate-y-0 md:p-5"
               [class.opacity-40]="!c.activo"
               [attr.aria-current]="c.activo ? 'step' : null"
             >
+              @if (!c.activo) {
+                <button
+                  type="button"
+                  class="absolute inset-0 z-10 cursor-pointer rounded-lg focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-foco-encendido"
+                  [attr.aria-label]="'Volver a: ' + c.paso.antetitulo"
+                  (click)="irAPaso(c.indice)"
+                ></button>
+              }
               <div class="flex flex-col gap-2">
                 <span
                   class="flex items-center gap-2 font-mono text-antetitulo font-medio uppercase"

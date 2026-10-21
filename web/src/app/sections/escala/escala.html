@@ -20,13 +20,21 @@
         <div class="flex shrink-0 flex-col justify-center gap-3 lg:w-4/12">
           @for (paso of r.pasos; track paso.numero; let i = $index) {
             <article
-              class="rounded-lg border border-linea bg-superficie p-5 transition-[opacity,transform] duracion-larga ease-entrada motion-reduce:duracion-corta"
+              class="relative rounded-lg border border-linea bg-superficie p-5 transition-[opacity,transform] duracion-larga ease-entrada motion-reduce:duracion-corta"
               [class.opacity-0]="pasoActivo() < i"
               [class.translate-y-2]="pasoActivo() < i"
               [class.opacity-40]="pasoActivo() > i"
               [attr.aria-hidden]="pasoActivo() < i ? 'true' : null"
               [attr.aria-current]="pasoActivo() === i ? 'step' : null"
             >
+              @if (pasoActivo() > i) {
+                <button
+                  type="button"
+                  class="absolute inset-0 z-10 cursor-pointer rounded-lg focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-foco-encendido"
+                  [attr.aria-label]="'Volver al paso ' + paso.numero + ': ' + paso.texto"
+                  (click)="irAPaso(i)"
+                ></button>
+              }
               <div class="flex flex-col gap-3">
                 <span class="flex items-center gap-2 font-mono text-antetitulo font-medio uppercase" [class.text-acento-texto]="pasoActivo() === i" [class.text-texto-3]="pasoActivo() !== i">
                   <span

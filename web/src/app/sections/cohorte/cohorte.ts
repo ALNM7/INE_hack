@@ -387,6 +387,23 @@ export class Cohorte {
     return medios;
   }
 
+  protected irAPaso(indice: number): void {
+    const tramo = this.tramos()[indice];
+    if (!tramo) {
+      return;
+    }
+    const rect = tramo.getBoundingClientRect();
+    let destino: number;
+    if (this.esLado()) {
+      destino = window.scrollY + rect.top + tramo.offsetHeight / 2 - window.innerHeight / 2;
+    } else {
+      const panel = this.panel();
+      const alturaPanel = panel ? panel.getBoundingClientRect().height : 0;
+      destino = window.scrollY + rect.top - alturaPanel - pxToken('--space-4');
+    }
+    window.scrollTo({ top: destino, behavior: this.reducido() ? 'auto' : 'smooth' });
+  }
+
   protected abrirTabla(): void {
     this.dialogo.open(this.plantillaTabla(), {
       ariaLabelledBy: 'tabla-jovenes-titulo',

@@ -143,4 +143,14 @@ export class Escala {
   enfocar(): void {
     this.titulo()?.nativeElement.focus({ preventScroll: true });
   }
+
+  protected irAPaso(i: number): void {
+    const tramo = this.tramos()[i]?.nativeElement;
+    if (!tramo) {
+      return;
+    }
+    const rect = tramo.getBoundingClientRect();
+    const destino = window.scrollY + rect.top + rect.height / 2 - window.innerHeight / 2;
+    window.scrollTo({ top: destino, behavior: this.reducido() ? 'auto' : 'smooth' });
+  }
 }
