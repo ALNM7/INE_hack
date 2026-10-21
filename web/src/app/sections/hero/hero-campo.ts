@@ -106,11 +106,16 @@ class CampoHero {
     this.ys = new Float32Array(this.total);
     this.fases = new Float32Array(this.total);
     const azar = generador(this.opciones.semilla);
+    const borde = this.radio + 1;
+    const maxX = this.ancho - borde;
+    const maxY = this.alto - borde;
     let i = 0;
     for (let f = 0; f < filas; f++) {
       for (let c = 0; c < cols; c++) {
-        this.xs[i] = (c + 0.5) * pasoX + (azar() - 0.5) * pasoX * JITTER * 2;
-        this.ys[i] = (f + 0.5) * pasoY + (azar() - 0.5) * pasoY * JITTER * 2;
+        const x = (c + 0.5) * pasoX + (azar() - 0.5) * pasoX * JITTER * 2;
+        const y = (f + 0.5) * pasoY + (azar() - 0.5) * pasoY * JITTER * 2;
+        this.xs[i] = Math.min(maxX, Math.max(borde, x));
+        this.ys[i] = Math.min(maxY, Math.max(borde, y));
         this.fases[i] = azar() * Math.PI * 2;
         i++;
       }

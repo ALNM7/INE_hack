@@ -21,18 +21,23 @@ import { BOTON, SUBTITULO, TITULO, TITULO_LINEAS } from './textos';
   imports: [Boton, HeroCampo],
   template: `
     <section
-      class="mx-auto flex min-h-svh w-full max-w-(--container-max) flex-col gap-8 bg-fondo px-margen-movil pt-[calc(var(--space-12)+env(safe-area-inset-top))] pb-[calc(var(--space-10)+env(safe-area-inset-bottom))] text-texto md:gap-10 md:px-margen-escritorio"
+      class="flex min-h-svh flex-col gap-8 bg-fondo pt-[calc(var(--space-12)+env(safe-area-inset-top))] pb-[calc(var(--space-10)+env(safe-area-inset-bottom))] text-texto md:gap-10"
       aria-labelledby="hero-titulo"
     >
-      <h1 id="hero-titulo" class="text-cifra ancho-titulo md:text-display" [attr.aria-label]="titulo">
-        @for (linea of lineas; track linea) {
-          <span #renglon class="block" aria-hidden="true">{{ linea }}</span>
-        }
-      </h1>
-      <div #campo class="relative min-h-40 flex-1 overflow-hidden rounded-lg border border-linea">
+      <div class="mx-auto w-full max-w-(--container-max) px-margen-movil md:px-margen-escritorio">
+        <h1 id="hero-titulo" class="text-cifra ancho-titulo md:text-display" [attr.aria-label]="titulo">
+          @for (linea of lineas; track linea) {
+            <span #renglon class="block" aria-hidden="true">{{ linea }}</span>
+          }
+        </h1>
+      </div>
+      <div
+        #campo
+        class="relative min-h-40 w-full flex-1 [mask-image:linear-gradient(to_bottom,transparent,black_14%,black_86%,transparent)] [-webkit-mask-image:linear-gradient(to_bottom,transparent,black_14%,black_86%,transparent)]"
+      >
         <app-hero-campo class="absolute inset-0" />
       </div>
-      <div class="flex flex-col items-start gap-6">
+      <div class="mx-auto flex w-full max-w-(--container-max) flex-col items-start gap-6 px-margen-movil md:px-margen-escritorio">
         <p #sub class="max-w-(--container-texto) text-entrada text-texto-2">{{ subtitulo }}</p>
         <button #accion appBoton type="button" (click)="empezar.emit()">{{ boton }}</button>
       </div>
