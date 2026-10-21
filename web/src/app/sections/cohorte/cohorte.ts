@@ -111,6 +111,8 @@ export class Cohorte {
   protected readonly tipografia = signal<Tipografia>({ etiqueta: 0, cifra: 0 });
   private colores: { encendido: Rgb; apagado: Rgb } = { encendido: [0, 0, 0], apagado: [0, 0, 0] };
   private montando = false;
+  private programado = false;
+  private tPendiente = 0;
 
   private readonly curvas: Curvas = {
     escena: funcionCurva('escena'),
@@ -269,22 +271,32 @@ export class Cohorte {
 
     afterNextRender(() => {
       let altoPrevio = document.body.scrollHeight;
-      let pendiente = 0;
+      let pendiente = false;
+      const refrescar = () => {
+        pendiente = false;
+        ScrollTrigger.refresh();
+      };
+      const alTerminar = () => {
+        if (pendiente) {
+          refrescar();
+        }
+      };
       const observador = new ResizeObserver(() => {
         const alto = document.body.scrollHeight;
-        if (Math.abs(alto - altoPrevio) < 1 || pendiente) {
+        if (Math.abs(alto - altoPrevio) < 1) {
           return;
         }
         altoPrevio = alto;
-        pendiente = requestAnimationFrame(() => {
-          pendiente = 0;
-          ScrollTrigger.refresh();
-        });
+        pendiente = true;
+        if (!ScrollTrigger.isScrolling()) {
+          refrescar();
+        }
       });
       observador.observe(document.body);
+      ScrollTrigger.addEventListener('scrollEnd', alTerminar);
       destroyRef.onDestroy(() => {
         observador.disconnect();
-        cancelAnimationFrame(pendiente);
+        ScrollTrigger.removeEventListener('scrollEnd', alTerminar);
       });
     });
 
@@ -438,14 +450,22 @@ export class Cohorte {
   }
 
   private fijarT(valor: number): void {
-    if (Math.abs(valor - this.t()) < 1e-4) {
+    this.tPendiente = valor;
+    if (this.programado) {
       return;
     }
-    this.t.set(valor);
-    if (!this.montando) {
-      this.cdr.detectChanges();
-    }
-    this.pintarFocos();
+    this.programado = true;
+    queueMicrotask(() => {
+      this.programado = false;
+      if (Math.abs(this.tPendiente - this.t()) < 1e-4) {
+        return;
+      }
+      this.t.set(this.tPendiente);
+      if (!this.montando) {
+        this.cdr.detectChanges();
+      }
+      this.pintarFocos();
+    });
   }
 
   private irA(paso: number): void {

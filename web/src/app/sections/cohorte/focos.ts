@@ -59,37 +59,55 @@ export function generarFocos(geo: Geo, estados: readonly Estado[], semilla: numb
 }
 
 export class LucesFocos {
-  private readonly contexto: CanvasRenderingContext2D;
   private readonly sprite = document.createElement('canvas');
-  private xs = new Float32Array(0);
-  private ys = new Float32Array(0);
-  private alfas = new Float32Array(0);
+  private capas: HTMLCanvasElement[] = [];
+  private opacidades: number[] = [];
   private dpr = 1;
   private ultimo = -1;
   private uniformeUltimo = false;
 
   constructor(
-    private readonly canvas: HTMLCanvasElement,
+    private readonly contenedor: HTMLElement,
     private readonly puntos: PuntosFocos,
     private readonly config: ConfigLuces,
-  ) {
-    this.contexto = canvas.getContext('2d')!;
-    this.alfas = new Float32Array(puntos.inicio.length);
-  }
+  ) {}
 
   medir(ancho: number, alto: number, proyeccion: GeoProjection): void {
     this.dpr = Math.min(window.devicePixelRatio || 1, 2);
-    this.canvas.width = Math.round(ancho * this.dpr);
-    this.canvas.height = Math.round(alto * this.dpr);
-    const { lon, lat, total } = this.puntos;
-    this.xs = new Float32Array(total);
-    this.ys = new Float32Array(total);
+    this.crearSprite();
+    this.capas.forEach((capa) => capa.remove());
+    const { lon, lat, estado, total, inicio } = this.puntos;
+    const n = inicio.length;
+    const porEstado: [number, number][][] = Array.from({ length: n }, () => []);
     for (let i = 0; i < total; i++) {
       const p = proyeccion([lon[i], lat[i]]);
-      this.xs[i] = p ? p[0] : -1;
-      this.ys[i] = p ? p[1] : -1;
+      if (p && p[0] >= 0 && p[1] >= 0 && p[0] <= ancho && p[1] <= alto) {
+        porEstado[estado[i]].push([p[0], p[1]]);
+      }
     }
-    this.crearSprite();
+    const margen = this.config.radio + this.config.halo;
+    const lado = this.sprite.width;
+    this.capas = porEstado.map((puntos) => {
+      const capa = document.createElement('canvas');
+      capa.setAttribute('aria-hidden', 'true');
+      if (!puntos.length) {
+        return capa;
+      }
+      const x0 = Math.floor(Math.min(...puntos.map((p) => p[0])) - margen);
+      const y0 = Math.floor(Math.min(...puntos.map((p) => p[1])) - margen);
+      const x1 = Math.ceil(Math.max(...puntos.map((p) => p[0])) + margen);
+      const y1 = Math.ceil(Math.max(...puntos.map((p) => p[1])) + margen);
+      capa.width = Math.round((x1 - x0) * this.dpr);
+      capa.height = Math.round((y1 - y0) * this.dpr);
+      capa.style.cssText = `position:absolute;left:0;top:0;width:${x1 - x0}px;height:${y1 - y0}px;transform:translate(${x0}px,${y0}px);opacity:0`;
+      const c = capa.getContext('2d')!;
+      for (const [x, y] of puntos) {
+        c.drawImage(this.sprite, (x - x0) * this.dpr - lado / 2, (y - y0) * this.dpr - lado / 2);
+      }
+      this.contenedor.appendChild(capa);
+      return capa;
+    });
+    this.opacidades = this.capas.map(() => 0);
     this.ultimo = -1;
   }
 
@@ -99,35 +117,22 @@ export class LucesFocos {
     }
     this.ultimo = progreso;
     this.uniformeUltimo = uniforme;
-    const { contexto: c, dpr } = this;
-    c.setTransform(1, 0, 0, 1, 0, 0);
-    c.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    if (progreso <= 0) {
-      return;
-    }
-    const { inicio, estado, total } = this.puntos;
-    for (let e = 0; e < inicio.length; e++) {
+    const { inicio } = this.puntos;
+    this.capas.forEach((capa, e) => {
       const local = uniforme
         ? progreso
         : Math.min(Math.max((progreso - inicio[e]) / DURACION_ESTADO, 0), 1);
-      this.alfas[e] = uniforme ? local : this.config.curva(local);
-    }
-    const lado = this.sprite.width;
-    const mitad = lado / 2;
-    for (let i = 0; i < total; i++) {
-      const a = this.alfas[estado[i]];
-      if (a <= 0) {
-        continue;
+      const alfa = Math.round((uniforme ? local : this.config.curva(local)) * 100) / 100;
+      if (alfa !== this.opacidades[e]) {
+        this.opacidades[e] = alfa;
+        capa.style.opacity = String(alfa);
       }
-      c.globalAlpha = a;
-      c.drawImage(this.sprite, this.xs[i] * dpr - mitad, this.ys[i] * dpr - mitad);
-    }
-    c.globalAlpha = 1;
+    });
   }
 
-  limpiar(): void {
-    this.ultimo = -1;
-    this.contexto.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  destruir(): void {
+    this.capas.forEach((capa) => capa.remove());
+    this.capas = [];
   }
 
   private crearSprite(): void {
@@ -138,9 +143,9 @@ export class LucesFocos {
     const s = this.sprite.getContext('2d')!;
     const centro = lado / 2;
     s.clearRect(0, 0, lado, lado);
-    s.shadowColor = colorToken('--color-luz-halo', this.canvas);
+    s.shadowColor = colorToken('--color-luz-halo', this.contenedor);
     s.shadowBlur = halo * this.dpr;
-    s.fillStyle = aCss(rgbToken('--color-foco-encendido', this.canvas));
+    s.fillStyle = aCss(rgbToken('--color-foco-encendido', this.contenedor));
     s.beginPath();
     s.arc(centro, centro, radio * this.dpr, 0, Math.PI * 2);
     s.fill();

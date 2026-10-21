@@ -121,7 +121,7 @@ interface Seleccion {
             }
           </svg>
         }
-        <canvas #lienzo class="pointer-events-none absolute inset-0 size-full"></canvas>
+        <div #capaFocos class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true"></div>
       </div>
 
       <div class="grid font-mono text-etiqueta text-texto-2">
@@ -182,7 +182,7 @@ export class MapaJovenes {
   private readonly injector = inject(Injector);
   private readonly vcr = inject(ViewContainerRef);
   private readonly area = viewChild.required<ElementRef<HTMLElement>>('area');
-  private readonly lienzo = viewChild.required<ElementRef<HTMLCanvasElement>>('lienzo');
+  private readonly capaFocos = viewChild.required<ElementRef<HTMLElement>>('capaFocos');
   private readonly globo = viewChild.required<TemplateRef<unknown>>('globo');
 
   protected readonly anio = '2024';
@@ -291,7 +291,7 @@ export class MapaJovenes {
       const margen = pxToken('--space-2');
       const area = this.area().nativeElement;
       const puntos = generarFocos(this.geo(), this.datos().estados, SEMILLA_FOCOS);
-      this.luces = new LucesFocos(this.lienzo().nativeElement, puntos, {
+      this.luces = new LucesFocos(this.capaFocos().nativeElement, puntos, {
         radio: pxToken('--space-1') / 2,
         halo: pxToken('--space-2'),
         curva: funcionCurva('entrada'),
@@ -311,7 +311,10 @@ export class MapaJovenes {
         this.ocultar();
       });
       observador.observe(area);
-      destroyRef.onDestroy(() => observador.disconnect());
+      destroyRef.onDestroy(() => {
+        observador.disconnect();
+        this.luces?.destruir();
+      });
     });
 
     effect(() => {
