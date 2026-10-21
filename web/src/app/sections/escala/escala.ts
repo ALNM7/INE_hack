@@ -30,7 +30,7 @@ export class Escala {
   private readonly reducido = inject(MovimientoReducido).activo;
   private readonly mapa = inject(MapaService);
   private readonly lienzo = viewChild.required<ElementRef<HTMLCanvasElement>>('lienzo');
-  private readonly tarjetas = viewChildren<ElementRef<HTMLElement>>('tarjeta');
+  private readonly tramos = viewChildren<ElementRef<HTMLElement>>('tramo');
   private readonly titulo = viewChild<ElementRef<HTMLElement>>('titulo');
 
   protected readonly resumen = computed(() => {
@@ -55,8 +55,8 @@ export class Escala {
       const resumen = this.resumen();
       const reducido = this.reducido();
       const estados = this.mapa.estados();
-      const tarjetas = this.tarjetas().map((t) => t.nativeElement);
-      if (!resumen || !estados || tarjetas.length < 2) {
+      const tramos = this.tramos().map((t) => t.nativeElement);
+      if (!resumen || !estados || tramos.length < 2) {
         return;
       }
       const lienzo = this.lienzo().nativeElement;
@@ -88,9 +88,9 @@ export class Escala {
       observador.observe(lienzo);
 
       const contexto = gsap.context(() => {
-        tarjetas.forEach((tarjeta, i) => {
+        tramos.forEach((tramo, i) => {
           ScrollTrigger.create({
-            trigger: tarjeta,
+            trigger: tramo,
             start: 'top center',
             end: 'bottom center',
             onEnter: () => this.pasoActivo.set(i),
@@ -110,7 +110,7 @@ export class Escala {
                 onUpdate: pintar,
               });
             ScrollTrigger.create({
-              trigger: tarjetas[i],
+              trigger: tramos[i],
               start: 'top center',
               onEnter: () => fundir(1),
               onLeaveBack: () => fundir(0),
@@ -118,7 +118,7 @@ export class Escala {
             return;
           }
           ScrollTrigger.create({
-            trigger: tarjetas[i],
+            trigger: tramos[i],
             start: 'top bottom',
             end: 'center center',
             scrub: true,

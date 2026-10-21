@@ -13,25 +13,26 @@ import { contextoGsap, curva, duracion, escalonadoTexto, gsap } from '../../core
 import { MovimientoReducido } from '../../core/movimiento-reducido.service';
 import { pxToken } from '../../core/tokens';
 import { Boton } from '../../shared/ui/boton';
-import { FondoLuces } from './fondo-luces';
+import { HeroCampo } from './hero-campo';
 import { BOTON, SUBTITULO, TITULO, TITULO_LINEAS } from './textos';
 
 @Component({
   selector: 'app-hero-horizonte',
-  imports: [Boton, FondoLuces],
+  imports: [Boton, HeroCampo],
   template: `
-    <section class="grid min-h-svh grid-rows-[minmax(0,1fr)_auto] bg-fondo text-texto" aria-labelledby="hero-titulo">
-      <div #campo class="relative min-h-48">
-        <app-fondo-luces class="absolute inset-0" />
+    <section
+      class="mx-auto flex min-h-svh w-full max-w-(--container-max) flex-col gap-8 bg-fondo px-margen-movil pt-[calc(var(--space-12)+env(safe-area-inset-top))] pb-[calc(var(--space-10)+env(safe-area-inset-bottom))] text-texto md:gap-10 md:px-margen-escritorio"
+      aria-labelledby="hero-titulo"
+    >
+      <h1 id="hero-titulo" class="text-cifra ancho-titulo md:text-display" [attr.aria-label]="titulo">
+        @for (linea of lineas; track linea) {
+          <span #renglon class="block" aria-hidden="true">{{ linea }}</span>
+        }
+      </h1>
+      <div #campo class="relative min-h-40 flex-1 overflow-hidden rounded-lg border border-linea">
+        <app-hero-campo class="absolute inset-0" />
       </div>
-      <div
-        class="mx-auto flex w-full max-w-(--container-max) flex-col items-start gap-6 px-margen-movil pt-10 pb-[calc(var(--space-10)+env(safe-area-inset-bottom))] md:px-margen-escritorio md:pt-16"
-      >
-        <h1 id="hero-titulo" class="text-titulo-1 ancho-titulo" [attr.aria-label]="titulo">
-          @for (linea of lineas; track linea) {
-            <span #renglon class="block" aria-hidden="true">{{ linea }}</span>
-          }
-        </h1>
+      <div class="flex flex-col items-start gap-6">
         <p #sub class="max-w-(--container-texto) text-entrada text-texto-2">{{ subtitulo }}</p>
         <button #accion appBoton type="button" (click)="empezar.emit()">{{ boton }}</button>
       </div>

@@ -153,9 +153,9 @@
         </ul>
       }
 
-      <figcaption class="flex flex-col gap-1 font-mono text-etiqueta text-texto-3">
+      <figcaption class="flex flex-col gap-1 font-texto text-nota text-texto-2">
         @if (!revelado()) {
-          <span class="text-nota text-texto-2">{{ guia() }}</span>
+          <span class="text-texto">{{ guia() }}</span>
           <span>Con teclado: Tab para elegir una edad, flechas arriba y abajo para moverla, Shift para ir de 10 en 10.</span>
         }
         <span>Fuente: INE, Conteo Censal de Participación {{ serie }}</span>
@@ -167,7 +167,7 @@
         <p
           class="font-titulo font-negrita text-titulo-2 ancho-titulo transition-[opacity,translate] duracion-larga ease-entrada starting:translate-y-2 starting:opacity-0 motion-reduce:duracion-corta motion-reduce:starting:translate-y-0"
         >
-          Te equivocaste por <span class="tabular text-acento-texto">{{ res.error }}</span> puntos en promedio.
+          En promedio te alejaste <span class="tabular text-acento-texto">{{ res.error }}</span> puntos de la realidad.
         </p>
         <p
           class="text-entrada text-texto-2 transition-[opacity,translate] duracion-larga ease-entrada starting:translate-y-2 starting:opacity-0 motion-reduce:duracion-corta motion-reduce:starting:translate-y-0"

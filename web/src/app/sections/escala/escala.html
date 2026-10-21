@@ -2,7 +2,7 @@
   <div
     class="sticky top-0 flex h-svh flex-col gap-4 self-start overflow-hidden px-margen-movil pt-[calc(var(--space-10)+env(safe-area-inset-top))] pb-[calc(var(--space-6)+env(safe-area-inset-bottom))] [grid-area:1/1] md:px-margen-escritorio"
   >
-    <header class="flex flex-col gap-2 lg:w-7/12">
+    <header class="flex flex-col gap-2">
       <p class="font-mono text-antetitulo font-medio uppercase text-texto-2">Personas que no votaron · {{ resumen()?.anio }}</p>
       <h2 #titulo id="escala-titulo" tabindex="-1" class="text-cifra ancho-titulo tabular text-texto-3 outline-none">
         @if (resumen(); as r) {
@@ -11,54 +11,60 @@
       </h2>
     </header>
 
-    <div class="relative min-h-0 flex-1 lg:w-7/12">
-      <canvas #lienzo class="absolute inset-0 size-full" role="img" [attr.aria-label]="descripcionCampo()"></canvas>
+    <div class="flex min-h-0 flex-1 flex-col gap-4 lg:flex-row lg:items-stretch lg:gap-8">
+      <div class="relative min-h-0 w-full flex-1">
+        <canvas #lienzo class="absolute inset-0 size-full" role="img" [attr.aria-label]="descripcionCampo()"></canvas>
+      </div>
+
+      @if (resumen(); as r) {
+        <div class="flex shrink-0 flex-col justify-center gap-3 lg:w-4/12">
+          @for (paso of r.pasos; track paso.numero; let i = $index) {
+            <article
+              class="rounded-lg border border-linea bg-superficie p-5 transition-[opacity,transform] duracion-larga ease-entrada motion-reduce:duracion-corta"
+              [class.opacity-0]="pasoActivo() < i"
+              [class.translate-y-2]="pasoActivo() < i"
+              [class.opacity-40]="pasoActivo() > i"
+              [attr.aria-hidden]="pasoActivo() < i ? 'true' : null"
+              [attr.aria-current]="pasoActivo() === i ? 'step' : null"
+            >
+              <div class="flex flex-col gap-3">
+                <span class="flex items-center gap-2 font-mono text-antetitulo font-medio uppercase" [class.text-acento-texto]="pasoActivo() === i" [class.text-texto-3]="pasoActivo() !== i">
+                  <span
+                    class="size-2 rounded-full"
+                    [class.bg-foco-encendido]="pasoActivo() >= i"
+                    [class.shadow-halo]="pasoActivo() === i"
+                    [class.bg-foco-apagado]="pasoActivo() < i"
+                    aria-hidden="true"
+                  ></span>
+                  {{ paso.numero }}
+                </span>
+                <p class="text-cuerpo">{{ paso.texto }}</p>
+              </div>
+            </article>
+          }
+        </div>
+      }
     </div>
 
-    <div class="flex flex-col gap-2 font-mono text-etiqueta text-texto-2 lg:w-7/12">
-      <ul class="flex flex-wrap gap-x-4 gap-y-1">
+    <div class="flex flex-col gap-2">
+      <ul class="flex flex-wrap gap-x-4 gap-y-1 font-mono text-etiqueta text-texto-2">
         <li class="flex items-center gap-2"><span class="size-2 shrink-0 rounded-full bg-foco-encendido" aria-hidden="true"></span>Votó</li>
         <li class="flex items-center gap-2"><span class="size-2 shrink-0 rounded-full bg-foco-apagado" aria-hidden="true"></span>No votó</li>
         <li class="flex items-center gap-2"><span class="size-2 shrink-0 rounded-full bg-arena" aria-hidden="true"></span>No votó y tiene de 18 a 29 años</li>
       </ul>
-      <p class="text-texto-3">La forma es el país; los puntos no indican dónde vive cada persona.</p>
       @if (resumen(); as r) {
-        <p class="text-texto-3">Cada punto: unas {{ r.porPunto }} personas con credencial · Fuente: INE, Conteo Censal de Participación {{ r.anio }}</p>
+        <p class="text-nota text-texto-2">La forma es el país; los puntos no indican dónde vive cada persona. Cada punto: unas {{ r.porPunto }} personas con credencial · Fuente: INE, Conteo Censal de Participación {{ r.anio }}</p>
       }
     </div>
   </div>
 
-  <div class="pointer-events-none relative z-10 flex flex-col px-margen-movil [grid-area:1/1] md:px-margen-escritorio">
-    <div class="h-paso" aria-hidden="true"></div>
+  <div class="pointer-events-none [grid-area:1/1]" aria-hidden="true">
+    <div class="h-paso"></div>
     @if (resumen(); as r) {
-      @for (paso of r.pasos; track paso.numero; let i = $index) {
-        <div class="flex min-h-paso items-center lg:justify-end">
-          <article
-            #tarjeta
-            class="pointer-events-auto w-full rounded-lg border border-linea bg-superficie p-5 lg:w-4/12"
-            [attr.aria-current]="pasoActivo() === i ? 'step' : null"
-          >
-            <div
-              class="flex flex-col gap-3 transition-[opacity,transform] duracion-larga ease-entrada motion-reduce:translate-y-0 motion-reduce:duracion-corta"
-              [class.opacity-40]="pasoActivo() !== i"
-              [class.translate-y-2]="pasoActivo() !== i"
-            >
-              <span class="flex items-center gap-2 font-mono text-antetitulo font-medio uppercase" [class.text-acento-texto]="pasoActivo() === i" [class.text-texto-3]="pasoActivo() !== i">
-                <span
-                  class="size-2 rounded-full"
-                  [class.bg-foco-encendido]="pasoActivo() === i"
-                  [class.shadow-halo]="pasoActivo() === i"
-                  [class.bg-foco-apagado]="pasoActivo() !== i"
-                  aria-hidden="true"
-                ></span>
-                {{ paso.numero }}
-              </span>
-              <p class="text-cuerpo">{{ paso.texto }}</p>
-            </div>
-          </article>
-        </div>
+      @for (paso of r.pasos; track paso.numero) {
+        <div #tramo class="h-paso"></div>
       }
     }
-    <div class="h-paso" aria-hidden="true"></div>
+    <div class="h-paso"></div>
   </div>
 </section>

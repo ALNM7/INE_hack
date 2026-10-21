@@ -4,12 +4,14 @@ import { Cohorte } from '../../sections/cohorte/cohorte';
 import { Dibujalo } from '../../sections/dibujalo/dibujalo';
 import { Escala } from '../../sections/escala/escala';
 import { Hero } from '../../sections/hero/hero';
+import { BarraProgreso } from '../../shared/ui/barra-progreso';
 import { MarcadorSeccion } from '../../shared/ui/marcador-seccion';
 
 @Component({
   selector: 'app-home',
-  imports: [Hero, Escala, Dibujalo, Cohorte, MarcadorSeccion],
+  imports: [Hero, Escala, Dibujalo, Cohorte, MarcadorSeccion, BarraProgreso],
   template: `
+    <app-barra-progreso />
     <main class="bg-fondo text-texto">
       <app-hero (empezar)="empezar()" />
       <app-escala />
