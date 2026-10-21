@@ -200,51 +200,57 @@
         </div>
       </div>
 
-      <div
-        class="relative z-10 flex flex-col px-margen-movil pb-[30vh] lado:col-start-1 lado:row-start-1 lado:px-0 lado:pb-[40vh]"
-      >
-        @for (paso of pasos(); track $index; let i = $index) {
-          <div class="flex min-h-paso items-start pt-4 lado:items-center lado:pt-0">
+      <div class="grid px-margen-movil lado:col-start-1 lado:row-start-1 lado:px-0">
+        <div
+          class="pointer-events-none sticky top-[calc(52svh+var(--space-3))] z-10 flex h-[calc(48svh-var(--space-4))] flex-col justify-start gap-3 overflow-hidden [grid-area:1/1] lado:top-0 lado:h-dvh lado:justify-center lado:py-10"
+        >
+          @for (c of visibles(); track c.indice) {
             <article
-              #tarjeta
-              class="w-full max-w-(--container-texto) rounded-lg border border-linea bg-superficie p-5"
-              [attr.aria-current]="activo() === i ? 'step' : null"
+              class="pointer-events-auto w-full max-w-(--container-texto) rounded-lg border border-linea bg-superficie p-4 transition-[opacity,transform] duracion-larga ease-entrada select-none starting:translate-y-2 starting:opacity-0 motion-reduce:duracion-corta motion-reduce:starting:translate-y-0 md:p-5"
+              [class.opacity-40]="!c.activo"
+              [attr.aria-current]="c.activo ? 'step' : null"
             >
-              <div
-                class="flex flex-col gap-3 transition-[opacity,transform] duracion-larga ease-entrada motion-reduce:translate-y-0 motion-reduce:duracion-corta"
-                [class.opacity-40]="activo() !== i"
-                [class.translate-y-2]="activo() !== i"
-              >
+              <div class="flex flex-col gap-2">
                 <span
                   class="flex items-center gap-2 font-mono text-antetitulo font-medio uppercase"
-                  [class.text-acento-texto]="activo() === i"
-                  [class.text-texto-3]="activo() !== i"
+                  [class.text-acento-texto]="c.activo"
+                  [class.text-texto-3]="!c.activo"
                 >
                   <span
                     class="size-2 shrink-0 rounded-full"
-                    [class.bg-foco-encendido]="activo() === i"
-                    [class.shadow-halo]="activo() === i"
-                    [class.bg-foco-apagado]="activo() !== i"
+                    [class.bg-foco-encendido]="c.activo"
+                    [class.shadow-halo]="c.activo"
+                    [class.bg-foco-apagado]="!c.activo"
                     aria-hidden="true"
                   ></span>
-                  {{ paso.antetitulo }}
+                  {{ c.paso.antetitulo }}
                 </span>
-                <p class="text-cuerpo">{{ paso.texto }}</p>
-                @if (paso.nota) {
-                  <p class="font-mono text-nota text-texto-2 tabular">{{ paso.nota }}</p>
-                }
-                @if (paso.tabla) {
-                  <div>
-                    <button type="button" appBoton variante="texto" (click)="abrirTabla()">
-                      Ver como tabla
-                    </button>
-                  </div>
+                @if (c.activo || esLado()) {
+                  <p class="text-cuerpo">{{ c.paso.texto }}</p>
+                  @if (c.paso.nota) {
+                    <p class="font-mono text-nota text-texto-2 tabular">{{ c.paso.nota }}</p>
+                  }
+                  @if (c.paso.tabla) {
+                    <div>
+                      <button type="button" appBoton variante="texto" (click)="abrirTabla()">
+                        Ver como tabla
+                      </button>
+                    </div>
+                  }
                 }
               </div>
             </article>
-          </div>
-        }
-        <p class="mt-6 max-w-(--container-texto) font-mono text-etiqueta text-texto-3">
+          }
+        </div>
+
+        <div class="[grid-area:1/1]" aria-hidden="true">
+          @for (paso of pasos(); track $index) {
+            <div #tramo class="h-paso"></div>
+          }
+          <div class="h-[40vh]"></div>
+        </div>
+
+        <p class="mt-6 max-w-(--container-texto) font-mono text-nota text-texto-2 [grid-area:2/1]">
           Fuente: {{ d.fuente }}
         </p>
       </div>

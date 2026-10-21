@@ -93,8 +93,8 @@ export class Cohorte {
   private readonly cdr = inject(ChangeDetectorRef);
   protected readonly reducido = inject(MovimientoReducido).activo;
 
-  private readonly refTarjetas = viewChildren<ElementRef<HTMLElement>>('tarjeta');
-  private readonly tarjetas = computed(() => this.refTarjetas().map((t) => t.nativeElement), {
+  private readonly refTramos = viewChildren<ElementRef<HTMLElement>>('tramo');
+  private readonly tramos = computed(() => this.refTramos().map((t) => t.nativeElement), {
     equal: (a, b) => a.length === b.length && a.every((el, i) => el === b[i]),
   });
   private readonly refPanel = viewChild<ElementRef<HTMLElement>>('panel');
@@ -106,6 +106,7 @@ export class Cohorte {
   private readonly plantillaTabla = viewChild.required<TemplateRef<unknown>>('tabla');
 
   protected readonly t = signal(0);
+  protected readonly esLado = signal(true);
   protected readonly geo = this.mapaServicio.estados;
   private readonly medidas = signal<Medidas | null>(null);
   protected readonly tipografia = signal<Tipografia>({ etiqueta: 0, cifra: 0 });
@@ -140,6 +141,20 @@ export class Cohorte {
   protected readonly activo = computed(() => Math.round(this.t()));
 
   protected readonly mapaActivo = computed(() => this.t() > PASO_MAPA - 0.5);
+
+  private readonly GRUPOS: readonly (readonly number[])[] = [[0], [1, 2, 3], [4, 5], [6, 7]];
+
+  protected readonly visibles = computed(() => {
+    const a = this.activo();
+    const ps = this.pasos();
+    if (!ps.length) {
+      return [];
+    }
+    const grupo = this.GRUPOS.find((g) => g.includes(a)) ?? [a];
+    return grupo
+      .filter((i) => i <= a && i < ps.length)
+      .map((i) => ({ indice: i, paso: ps[i], activo: i === a }));
+  });
 
   protected readonly pasos = computed<Paso[]>(() => {
     const d = this.datos();
@@ -268,6 +283,14 @@ export class Cohorte {
     this.mapaServicio.cargar().catch(() => undefined);
 
     afterNextRender(() => {
+      const consulta = window.matchMedia(CONSULTA_LADO);
+      const sincronizar = () => this.esLado.set(consulta.matches);
+      sincronizar();
+      consulta.addEventListener('change', sincronizar);
+      destroyRef.onDestroy(() => consulta.removeEventListener('change', sincronizar));
+    });
+
+    afterNextRender(() => {
       let altoPrevio = document.body.scrollHeight;
       let pendiente = 0;
       const observador = new ResizeObserver(() => {
@@ -312,17 +335,17 @@ export class Cohorte {
     afterRenderEffect((alLimpiar) => {
       const datos = this.datos();
       const reducido = this.reducido();
-      const tarjetas = this.tarjetas();
+      const tramos = this.tramos();
       const panel = this.panel();
-      if (!datos || !panel || tarjetas.length < PASOS) {
+      if (!datos || !panel || tramos.length < PASOS) {
         return;
       }
-      const medios = untracked(() => this.montar(reducido, tarjetas, panel));
+      const medios = untracked(() => this.montar(reducido, tramos, panel));
       alLimpiar(() => medios.revert());
     });
   }
 
-  private montar(reducido: boolean, tarjetas: HTMLElement[], panel: HTMLElement): gsap.MatchMedia {
+  private montar(reducido: boolean, tramos: HTMLElement[], panel: HTMLElement): gsap.MatchMedia {
     this.montando = true;
     const hueco = pxToken('--space-4');
     const medios = gsap.matchMedia();
@@ -332,9 +355,9 @@ export class Cohorte {
         ? 'center center'
         : () => `top ${panel.getBoundingClientRect().height + hueco}px`;
       if (reducido) {
-        tarjetas.slice(1).forEach((tarjeta, i) => {
+        tramos.slice(1).forEach((tramo, i) => {
           ScrollTrigger.create({
-            trigger: tarjeta,
+            trigger: tramo,
             start: fin,
             onEnter: () => this.irA(i + 1),
             onLeaveBack: () => this.irA(i),
@@ -343,13 +366,13 @@ export class Cohorte {
         return;
       }
       const progresos = new Array<number>(PASOS - 1).fill(0);
-      tarjetas.slice(1).forEach((tarjeta, i) => {
+      tramos.slice(1).forEach((tramo, i) => {
         const actualizar = (disparador: ScrollTrigger) => {
           progresos[i] = disparador.progress;
           this.fijarT(progresos.reduce((a, b) => a + b, 0));
         };
         ScrollTrigger.create({
-          trigger: tarjeta,
+          trigger: tramo,
           start: 'top bottom',
           end: fin,
           scrub: true,
