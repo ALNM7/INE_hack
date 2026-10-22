@@ -4,18 +4,18 @@ import { Cohorte } from '../../sections/cohorte/cohorte';
 import { Dibujalo } from '../../sections/dibujalo/dibujalo';
 import { Escala } from '../../sections/escala/escala';
 import { Hero } from '../../sections/hero/hero';
-import { MarcadorSeccion } from '../../shared/ui/marcador-seccion';
+import { Wrapped } from '../../sections/wrapped/wrapped';
 
 @Component({
   selector: 'app-home',
-  imports: [Hero, Escala, Dibujalo, Cohorte, MarcadorSeccion],
+  imports: [Hero, Escala, Dibujalo, Cohorte, Wrapped],
   template: `
     <main class="bg-fondo text-texto">
       <app-hero (empezar)="empezar()" />
       <app-escala />
       <app-dibujalo />
       <app-cohorte />
-      <app-marcador-seccion nombre="Acto 3 · Tu Wrapped" ancla="wrapped" />
+      <app-wrapped />
     </main>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

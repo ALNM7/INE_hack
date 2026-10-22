@@ -165,7 +165,7 @@ export class SelectorVariantes {
 
   protected tecla(evento: KeyboardEvent): void {
     const objetivo = evento.target as HTMLElement | null;
-    if (objetivo && (/^(INPUT|TEXTAREA|SELECT)$/.test(objetivo.tagName) || objetivo.isContentEditable || objetivo.closest('[role="slider"]'))) {
+    if (objetivo && (/^(INPUT|TEXTAREA|SELECT)$/.test(objetivo.tagName) || objetivo.isContentEditable || objetivo.closest('[role="slider"], [data-teclas-propias]'))) {
       return;
     }
     if (evento.metaKey || evento.ctrlKey || evento.altKey) {

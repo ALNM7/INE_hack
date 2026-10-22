@@ -1,15 +1,21 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import { NgxSonnerToaster } from 'ngx-sonner';
 import { colorToken } from './core/tokens';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  template: '<router-outlet />',
+  imports: [RouterOutlet, NgxSonnerToaster],
+  template: `
+    <router-outlet />
+    <ngx-sonner-toaster theme="dark" position="bottom-center" [offset]="offset" />
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
+  protected readonly offset = 'calc(var(--space-6) + env(safe-area-inset-bottom, 0px))';
+
   constructor() {
     const documento = inject(DOCUMENT);
     const meta = documento.createElement('meta');
