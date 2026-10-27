@@ -203,3 +203,104 @@ Medición en Chromium sin GPU, 390 px, CPU x4, scroll programado de 1.5 s sobre 
 | Mitad de transiciones | La etiqueta "−17.7 puntos" aparecía donde pasaban Ana y Luis: ahora entra en el último 30% del tramo. Leyenda y nota del mapa se enciman al cruzarse: ahora una sale en la primera mitad y la otra entra en la segunda. |
 | Movimiento reducido | Los 8 pasos se activan con fundido corto, sin scrub; los focos se encienden todos juntos. |
 | Consola | Sin errores ni advertencias en todos los casos. |
+
+## Wrapped
+
+Decisión tomada antes de programar, después de leer `pick-ui-library`, `ask-sonner`, `prototype`, `mobile-native`, `animate` y `break-ui`. La especificación de movimiento usa los términos de `animation-vocabulary`. Todas las duraciones y curvas son tokens.
+
+### Componentes de UI de los selectores
+
+`pick-ui-library` pide primitivas accesibles (base-ui) en vez de construir a mano. La traducción a Angular es Angular CDK, que ya está instalado; Spartan UI no hace falta.
+
+| Campo | Componente | Por qué |
+|---|---|---|
+| Estado | `<select>` nativo con estilo de tokens | 32 opciones fijas. En el teléfono abre el selector del sistema, que es lo más rápido y accesible. Igual que la tabla de primitivas de arriba. |
+| Municipio | Combobox propio con `role="combobox"` y `role="listbox"`, teclado con `ActiveDescendantKeyManager` de `@angular/cdk/a11y` y anuncio del número de resultados con `LiveAnnouncer` | Oaxaca tiene 570 municipios: un `<select>` de 570 renglones no se puede recorrer en el teléfono. La búsqueda normaliza con `NFD` y quita diacríticos y mayúsculas ("queretaro" encuentra "Querétaro"). La lista va en el flujo de la página, debajo del campo, y no en un `Overlay`: en el teléfono el teclado ocupa media pantalla y un panel flotante queda debajo de él. 570 renglones de texto no llegan al umbral de virtualización de la skill (1,000 o más), así que se pintan todos; si el filtro deja la lista vacía se dice "No encontramos ese municipio". Se habilita al elegir estado y carga `municipios/XX.json` bajo demanda con el `DataService`. |
+| Edad | `<input type="text" inputmode="numeric" pattern="[0-9]*">` con botones de menos y más, como `CampoEdad` del design system | `type="number"` cambia el valor con la rueda del mouse y acepta "e". Fuente de 16 px como mínimo (`mobile-native`, regla 4), `enterkeyhint="done"`. |
+| Sexo | Radios nativos en botones segmentados, como `SelectorSexo` del design system | Tres opciones visibles de un toque, flechas del teclado gratis por ser radios. |
+| Toasts | `ngx-sonner`, un solo `<ngx-sonner-toaster>` en la raíz (`app.ts`) | `ask-sonner`: un solo Toaster montado una vez, lo más cerca de la raíz, nunca por sección. `theme="dark"` explícito porque el tema por defecto es claro. Colores con las variables `--ngx-sonner-toast-dark-*` apuntando a tokens (peldaño 2 de la escalera, sin `!important`). `position="bottom-center"` con margen de safe area. Solo 3 mensajes: "Tarjeta descargada", "Listo, se descargaron las 5" (`toast.success`) y "No se pudo generar la imagen, intenta de nuevo" (`toast.error`). Generar, cambiar de tarjeta o compartir no llevan toast: el resultado ya se ve. |
+
+Validación: los mensajes aparecen solo al presionar "Ver mi Wrapped", en positivo y con la solución ("Elige tu municipio de la lista."). El campo se marca con borde `alerta` (coral suave del design system) y el mensaje va en color de texto con el ícono en coral, nunca texto rojo. El foco va al primer campo que falta.
+
+### Lógica de las tarjetas
+
+Función pura en `sections/wrapped/tarjetas.ts`: recibe municipio, estado, edad y sexo y devuelve el modelo de las 5 tarjetas. Toda cifra sale de `municipios/XX.json` y `estados.json`; la fecha y la URL salen de `core/config.ts`.
+
+- Con `calidad: "baja"` todas las tarjetas usan el estado y la oración nombra al estado ("En Chiapas votaron..."), porque decir el nombre del municipio con la cifra del estado sería falso aunque haya nota. El municipio sigue en el antetítulo.
+- Con un valor `null` suelto se usa el del estado y la tarjeta lleva la nota.
+- En la tarjeta 3, si hay empates, "la que menos vota" exige que ningún otro grupo tenga un valor igual o menor; si no, cuenta como "entre las que menos votan".
+
+### Prototipo de las tarjetas (`prototype`)
+
+Tres variantes detrás de `?w=1`, `?w=2` y `?w=3`, con el selector de `PICKER.md` abajo (el de arriba es del hero). Eje: la jerarquía, qué se lee primero.
+
+| # | Variante | Eje | Qué se lee primero |
+|---|---|---|---|
+| 1 | Cifra | La cifra manda | Cifra a `--text-wrapped-cifra` en luz, frase debajo a `--text-wrapped-cuerpo`, luces al pie |
+| 2 | Titular | La frase manda | Frase a `--text-wrapped-titulo` con las cifras encendidas dentro del texto; número de tarjeta gigante en luz apagada; luces compactas |
+| 3 | Campo | Las luces mandan | Luces a sangre en los dos tercios de arriba; abajo un bloque sólido `superficie` con cifra a `--text-wrapped-titulo` y frase |
+
+### Entrada de las tarjetas (`animate` con `animation-vocabulary`)
+
+Puerta: se genera una vez o pocas veces por visita (nivel "raro"), así que tiene presupuesto de delicia; el propósito es **State indication** (tus tarjetas están listas) y **Preventing a jarring change** (5 tarjetas que aparecen de golpe). Las cifras no se mueven por estilo.
+
+| Animación | Qué se mueve | Propiedad | Duración | Curva | Disparador | Movimiento reducido |
+|---|---|---|---|---|---|---|
+| **Stagger** de **Fade in** con desplazamiento corto | Bloques de cada tarjeta: antetítulo, cifra, frase, luces, nota | `opacity` 0 a 1 y `translate` de `space-6` a 0 (en pixeles de la tarjeta de 1080) | `--duration-media` | `--ease-entrada` | Montaje de las tarjetas (`@starting-style`) | Solo **Fade in** de `--duration-corta`, sin desplazamiento ni escalonado |
+| Escalonado | Entre bloques | `transition-delay` | Escalonado de texto (`--duration-corta` / 3, de `motion.ts`) | | | Sin retraso |
+| **State indication** de las luces que se encienden | Puntos encendidos de la tarjeta | `background-color` de `foco-apagado` a `foco-encendido` | `--duration-media` | `--ease-entrada` | Después del texto, con `--duration-escalonado` (6 ms) entre luces | Encendidas desde el inicio |
+| Cambio de tarjeta | Carrusel | Scroll nativo con `scroll-snap-type: x mandatory` | El del navegador | El del navegador | Dedo, puntos o flechas del teclado | `behavior: auto` |
+| **Press feedback** de botones | Botones | `scale(0.98)` | `--duration-instante` | `--ease-entrada` | `:active` | Igual |
+
+La herramienta es `@starting-style` con transiciones (la más barata para una entrada al montar, como el Acto 1), no GSAP. La entrada vive dentro de las tarjetas para que todas las tarjetas, también las que no están en pantalla, terminen en su estado final; antes de exportar se espera a que terminen (`getAnimations({ subtree: true })`). Todo dura menos de 300 ms por bloque.
+
+Rechazados: **Number ticker** en las cifras (son el dato que se lee), carrusel con autoplay, **Parallax** o inclinación 3D entre tarjetas, transición propia al cambiar de tarjeta (es una acción de muchas veces; el scroll nativo ya da continuidad) y **Pulse** en la luz del cierre.
+
+### Carrusel (`mobile-native`)
+
+- Pista con `overflow-x: auto`, `scroll-snap-type: x mandatory` y `scroll-snap-align: center`; la física es la del navegador, así que no hace falta `touch-action`. `overscroll-behavior-x: contain` para que el gesto no navegue hacia atrás en el navegador.
+- Cada tarjeta es un nodo real de 1080x1920 dentro de un marco del tamaño en pantalla, escalado con `transform: scale()`. La escala sale de un `ResizeObserver` sobre la pista y del alto visible, así la tarjeta cabe a lo alto en vertical y en horizontal.
+- Indicador: 5 luces, la activa encendida, más "2 de 5" para lectores de pantalla. La pista tiene `tabindex="0"`, `role="region"`, `aria-roledescription="carrusel"`, y responde a flechas, Inicio y Fin. El selector de variantes ignora esas teclas cuando el foco está en el carrusel.
+
+### Exportación a PNG
+
+- `html-to-image` con `toPng` sobre el nodo de 1080x1920, con `width: 1080`, `height: 1920`, `pixelRatio: 1` y `style: { transform: 'none' }` para quitar la escala de pantalla. El PNG sale exactamente de 1080x1920.
+- Fuentes: ya están autoalojadas en WOFF2 (`brand/design-system/assets/fonts/`, enlazadas desde `brand/fonts.css`), así que no hay que pedir nada a Google ni copiarlas a `web/public/fonts/`. Antes de exportar se espera `document.fonts.ready` y `document.fonts.load()` de las tres familias en los pesos que usan las tarjetas; el CSS de fuentes incrustadas se calcula una vez con `getFontEmbedCSS` y se reusa en las 5 tarjetas.
+- Safari de iOS a veces devuelve la primera imagen en blanco porque todavía no decodifica las fuentes incrustadas en el SVG intermedio. Se llama `toPng` dos veces por tarjeta y se usa el segundo resultado.
+- "Descargar todas": secuencial, una tarjeta a la vez, `wrapped-1.png` a `wrapped-5.png`, con una pausa corta entre descargas para que el navegador no las descarte.
+- "Compartir": `navigator.share({ files })` solo si `navigator.canShare({ files })` acepta un PNG; si no, el botón no se muestra. Cancelar el menú de compartir (`AbortError`) no es un error y no lleva toast.
+
+### Decisiones tomadas al implementar
+
+- **`w-max` no es "max-content" en este proyecto.** Tailwind v4 resuelve `w-max` con el token `--container-max` (75rem), así que una rejilla de luces medía 1200 px y se salía de la tarjeta. Se usa `w-[max-content]`.
+- **Los puntos llevan ancho y alto explícitos**, no `aspect-ratio`: con `aspect-ratio` dentro de la rejilla el navegador calculaba mal el ancho.
+- **Comparación de la tarjeta 2 por columnas** (`grid-auto-flow: column`): con 25 columnas y 2 renglones, llenar por renglones dejaba uno lleno y otro a medias; por columnas se lee como una barra.
+- **Relleno del carrusel con el margen de la página.** El porcentaje del `padding-inline` se calcula sobre el contenedor sin el margen negativo; se suma `--margen` para que la primera tarjeta quede centrada.
+- **Alto del marco**: el ancho sale de `clamp(space-24 * 2, min(78vw, (100svh - space-32 - space-24) * 9 / 16), space-32 * 3)`, así en horizontal la tarjeta cabe a lo alto.
+- **Nombre completo bajo el combobox** cuando no cabe en el campo (se mide `scrollWidth` contra `clientWidth`).
+- **Tarjeta de jóvenes con dato del estado** (municipio sin secciones y con `jovenes` en `null`): la oración nombra al estado, igual que con calidad baja, y lleva la nota.
+- **Compartir**: se pregenera el PNG de la tarjeta activa poco después de cambiar de tarjeta, para que `navigator.share` se llame dentro del gesto del usuario (Safari lo exige). Si el usuario cancela (`AbortError`) o el navegador niega el permiso (`NotAllowedError`) no hay toast.
+- **Tamaños de texto por longitud**: frase de cuerpo entre 0.8 y 1 vez el token, titular entre 0.62 y 1.45 veces `--text-wrapped-titulo`, antetítulo entre 0.8 y 1 vez, cifra a 0.82 cuando tiene 5 caracteres ("100.0"). Factor = raíz de (límite / longitud), acotado.
+
+### Pruebas de `break-ui`
+
+Los peores casos son municipios reales, así que entran por la misma frontera que los datos normales (el formulario y los JSON) y no hace falta un archivo de datos falso. Quedan como regresión en `sections/wrapped/tarjetas.spec.ts`. Medido en Chromium con emulación de teléfono (390x844, táctil, densidad 2), salvo donde se indica.
+
+| Caso | Resultado |
+|---|---|
+| Nombre más largo del país: "Heroica Villa Tezoatlán de Segura y Luna, Cuna de la Independencia de Oaxaca" (76 caracteres) | Sin recortes en las 3 variantes ni en el PNG. Titular de la variante 2 baja a 0.74 del token. Falla encontrada y corregida: en la variante 2 el antetítulo se partía letra por letra al lado de las luces; ahora va encima. Otra: en 320 px el campo de municipio cortaba el nombre; ahora aparece completo debajo. |
+| Calidad baja: Chicomuselo, Chiapas | Las 4 tarjetas con datos usan Chiapas, la oración dice "En Chiapas votaron..." y cada una lleva la nota de calidad. Como tampoco tiene secciones, la tarjeta 4 es la de jóvenes del estado. |
+| Grupo en `null`: Abasolo, Coahuila, hombre de 19 | La tarjeta 2 usa el valor de Coahuila para hombres de 18 a 19 y lleva "Dato de Coahuila: ...". La tarjeta 3 rellena el grupo con el estado y lleva la misma nota. Las tarjetas 1 y 4 no llevan nota. |
+| Sin `seccion_max`: San Mateo Tlapiltepec, Oaxaca (calidad "ok", `jovenes` en `null`) | La tarjeta 4 cambia a jóvenes con el dato de Oaxaca. Falla corregida: la oración decía el nombre del municipio con la cifra del estado; ahora dice "En Oaxaca votó...". |
+| Ciudad de México: Iztapalapa, mujer de 30 | Todo del municipio, sin notas. "Alcaldía" cabe en la etiqueta "Municipio o alcaldía". |
+| Edad 18, 29, 30 y 99 | 18 cae en 18 a 19, 29 en 25 a 29, 30 en 30 a 34 y 99 en "80 años o más". 17, 100 y letras muestran "Escribe una edad entre 18 y 99 años." (el campo acepta 2 dígitos y solo números). |
+| Cambiar de estado después de elegir municipio | Falla encontrada y corregida: si el foco seguía en el campo de municipio, el texto anterior se quedaba y filtraba la lista nueva a 0 resultados. Ahora, al cambiar la lista, el campo se limpia y se cierra. |
+| Búsqueda | "queretaro" encuentra "Querétaro"; flecha abajo y Enter lo eligen. En Oaxaca abrir la lista de 570 tarda unos 90 ms y filtrar "santa maria" (53 resultados) unos 40 ms. Sin resultados: "No encontramos ese municipio. Revisa cómo lo escribiste." Escribir el nombre exacto y salir del campo lo elige. |
+| 320 px | Sin scroll horizontal, tarjeta de 234x416 centrada, formulario completo. |
+| Horizontal (844x390) | Falla corregida: la tarjeta medía 455 px de alto, más que la pantalla. Ahora 192x341. |
+| Escritorio (1280x800) | Tarjeta de 324x576, se ven dos completas y parte de la tercera, flechas y puntos funcionan con mouse. |
+| Teclado | Flecha derecha dos veces lleva a "Tarjeta 3 de 5", Fin a la 5; el selector de variantes no se mueve mientras el foco está en el carrusel. |
+| Movimiento reducido | Solo fundido de 160 ms, sin desplazamiento ni escalonado; luces encendidas desde el inicio. |
+| Exportar en Chromium (emulación Android) | Los 15 PNG (5 tarjetas por 3 variantes) miden 1080x1920 y traen las 3 fuentes. Pesan de 154 a 249 KB. "Descargar todas" baja `wrapped-1.png` a `wrapped-5.png` en unos 7 s. Compartir (con `navigator.share` simulado) entrega `wrapped-2.png` de 1080x1920. |
+| Safari de iOS | No se pudo probar: este entorno solo tiene Chromium. El patrón de doble `toPng` está aplicado. Pendiente en iPhone real. |
+| Consola | Sin errores ni advertencias en todos los casos. |

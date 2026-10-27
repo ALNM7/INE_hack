@@ -1,0 +1,238 @@
+<section id="wrapped" class="bg-fondo text-texto" aria-labelledby="wrapped-titulo">
+  <div class="mx-auto flex w-full max-w-(--container-max) flex-col gap-12 px-margen-movil pt-16 pb-24 md:px-margen-escritorio md:pt-24">
+    <header class="flex max-w-(--container-texto) flex-col gap-3">
+      <p class="flex items-center gap-2 font-mono text-antetitulo font-medio uppercase text-acento-texto">
+        <span class="size-2 shrink-0 rounded-full bg-foco-encendido shadow-halo" aria-hidden="true"></span>
+        Acto 3 · Tu Wrapped
+      </p>
+      <h2 id="wrapped-titulo" class="text-titulo-2 ancho-titulo">¿Y en tu municipio?</h2>
+      <p class="text-entrada text-texto-2">Con tu municipio, tu edad y tu sexo armamos cinco tarjetas para compartir.</p>
+    </header>
+
+    <form class="flex max-w-(--container-texto) flex-col gap-7" novalidate (submit)="enviar($event)">
+      <div class="flex flex-col gap-2">
+        <label for="wrapped-estado" class="text-nota font-negrita text-texto">Estado</label>
+        <div class="relative">
+          <select
+            id="wrapped-estado"
+            class="h-13 w-full cursor-pointer appearance-none rounded-sm border-[1.5px] bg-superficie pr-11 pl-3.5 font-texto text-cuerpo text-texto transition-[border-color,box-shadow] duracion-instante ease-entrada outline-none focus:border-foco-encendido focus:shadow-[0_0_0_3px_var(--color-luz-halo)]"
+            [class.border-linea]="!error('estado')"
+            [class.border-alerta]="error('estado')"
+            [class.text-texto-3]="estado() === null"
+            [attr.aria-invalid]="!!error('estado')"
+            [attr.aria-describedby]="error('estado') ? 'wrapped-estado-error' : null"
+            (change)="cambiarEstado($event)"
+          >
+            <option value="" disabled [selected]="estado() === null">Elige tu estado</option>
+            @for (e of catalogo() ?? []; track e.c) {
+              <option [value]="e.c" [selected]="e.c === estado()">{{ e.n }}</option>
+            }
+          </select>
+          <app-icono nombre="desplegar" class="pointer-events-none absolute top-1/2 right-3.5 size-5 -translate-y-1/2 text-texto-2" />
+        </div>
+        @if (error('estado'); as mensaje) {
+          <p id="wrapped-estado-error" class="flex items-start gap-2 text-nota text-texto">
+            <app-icono nombre="alerta" class="mt-0.5 size-4 text-alerta" />{{ mensaje }}
+          </p>
+        }
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <app-combobox-municipio
+          [opciones]="opciones()"
+          [deshabilitado]="estado() === null || cargandoMunicipios() || errorMunicipios()"
+          [cargando]="cargandoMunicipios()"
+          [invalido]="!!error('municipio')"
+          [descripcion]="error('municipio') ? 'wrapped-municipio-error' : null"
+          [(valor)]="municipio"
+        />
+        @if (errorMunicipios()) {
+          <p class="flex flex-wrap items-center gap-x-3 text-nota text-texto">
+            <app-icono nombre="alerta" class="size-4 text-alerta" />No pudimos cargar los municipios.
+            <button appBoton variante="texto" type="button" (click)="reintentarMunicipios()">Intentar de nuevo</button>
+          </p>
+        } @else if (error('municipio'); as mensaje) {
+          <p id="wrapped-municipio-error" class="flex items-start gap-2 text-nota text-texto">
+            <app-icono nombre="alerta" class="mt-0.5 size-4 text-alerta" />{{ mensaje }}
+          </p>
+        }
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label for="wrapped-edad" class="text-nota font-negrita text-texto">Tu edad</label>
+        <div class="flex gap-2">
+          <button
+            type="button"
+            class="flex size-13 shrink-0 items-center justify-center rounded-sm border-[1.5px] border-linea bg-superficie text-texto transition-[transform,background-color] duracion-instante ease-entrada select-none active:scale-[0.98] hover:bg-superficie-alta"
+            aria-label="Restar un año"
+            (click)="pasoEdad(-1)"
+          >
+            <app-icono nombre="menos" class="size-5" />
+          </button>
+          <input
+            id="wrapped-edad"
+            type="text"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            maxlength="2"
+            autocomplete="off"
+            enterkeyhint="done"
+            placeholder="{{ edadMin }} a {{ edadMax }}"
+            class="h-13 min-w-0 flex-1 rounded-sm border-[1.5px] bg-superficie px-3.5 text-center font-mono text-titulo-3 font-medio text-texto tabular transition-[border-color,box-shadow] duracion-instante ease-entrada outline-none placeholder:text-cuerpo placeholder:text-texto-3 focus:border-foco-encendido focus:shadow-[0_0_0_3px_var(--color-luz-halo)]"
+            [class.border-linea]="!error('edad')"
+            [class.border-alerta]="error('edad')"
+            [value]="edad()"
+            [attr.aria-invalid]="!!error('edad')"
+            aria-describedby="wrapped-edad-ayuda"
+            (input)="escribirEdad($event)"
+          />
+          <button
+            type="button"
+            class="flex size-13 shrink-0 items-center justify-center rounded-sm border-[1.5px] border-linea bg-superficie text-texto transition-[transform,background-color] duracion-instante ease-entrada select-none active:scale-[0.98] hover:bg-superficie-alta"
+            aria-label="Sumar un año"
+            (click)="pasoEdad(1)"
+          >
+            <app-icono nombre="mas" class="size-5" />
+          </button>
+        </div>
+        <p id="wrapped-edad-ayuda" class="flex items-start gap-2 text-nota" [class.text-texto]="error('edad')" [class.text-texto-2]="!error('edad')">
+          @if (error('edad'); as mensaje) {
+            <app-icono nombre="alerta" class="mt-0.5 size-4 text-alerta" />{{ mensaje }}
+          } @else {
+            Solo la usamos para ubicar a tu generación.
+          }
+        </p>
+      </div>
+
+      <fieldset class="flex min-w-0 flex-col gap-2" [attr.aria-describedby]="'wrapped-sexo-ayuda'">
+        <legend class="mb-2 text-nota font-negrita text-texto">Sexo</legend>
+        <div class="flex flex-wrap gap-2">
+          @for (s of sexos; track s.id) {
+            <label
+              class="relative flex min-h-12 flex-auto cursor-pointer items-center justify-center gap-2 rounded-sm border-[1.5px] bg-superficie px-4 text-center text-cuerpo text-texto-2 transition-[border-color,background-color,transform] duracion-instante ease-entrada select-none active:scale-[0.98] has-checked:border-foco-encendido has-checked:bg-superficie-alta has-checked:font-negrita has-checked:text-texto has-focus-visible:outline-2 has-focus-visible:outline-offset-3 has-focus-visible:outline-acento"
+              [class.border-linea]="!error('sexo')"
+              [class.border-alerta]="error('sexo')"
+            >
+              <input
+                type="radio"
+                name="wrapped-sexo"
+                class="peer sr-only"
+                [id]="'wrapped-sexo-' + s.id"
+                [value]="s.id"
+                [checked]="sexo() === s.id"
+                (change)="sexo.set(s.id)"
+              />
+              <span class="size-2 shrink-0 rounded-full bg-foco-apagado peer-checked:bg-foco-encendido peer-checked:shadow-halo" aria-hidden="true"></span>
+              {{ s.nombre }}
+            </label>
+          }
+        </div>
+        <p id="wrapped-sexo-ayuda" class="flex items-start gap-2 text-nota" [class.text-texto]="error('sexo')" [class.text-texto-2]="!error('sexo')">
+          @if (error('sexo'); as mensaje) {
+            <app-icono nombre="alerta" class="mt-0.5 size-4 text-alerta" />{{ mensaje }}
+          } @else {
+            Los datos del INE solo distinguen mujeres y hombres.
+          }
+        </p>
+      </fieldset>
+
+      <div class="flex flex-col gap-3">
+        <button appBoton type="submit" class="w-full sm:w-auto sm:self-start">
+          Ver mi Wrapped
+          <app-icono nombre="derecha" class="size-5" />
+        </button>
+        <p class="text-nota text-texto-2">Tus datos no salen de tu teléfono.</p>
+      </div>
+    </form>
+
+    @if (tarjetas().length) {
+      <div id="wrapped-tarjetas" class="flex scroll-mt-6 flex-col gap-6">
+        <div
+          #pista
+          class="pista relative flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain py-2 outline-offset-[-2px] [--margen:var(--spacing-margen-movil)] md:[--margen:var(--spacing-margen-escritorio)]"
+          tabindex="0"
+          role="region"
+          aria-roledescription="carrusel"
+          [attr.aria-label]="'Tus ' + tarjetas().length + ' tarjetas. Usa las flechas para cambiar de tarjeta.'"
+          data-teclas-propias
+          (scroll)="alDesplazar()"
+          (keydown)="teclaPista($event)"
+        >
+          @for (clave of [claveMontaje()]; track clave) {
+            @for (t of tarjetas(); track t.indice; let i = $index) {
+              <div
+                #marco
+                class="marco relative aspect-9/16 shrink-0 snap-center overflow-hidden rounded-lg border border-linea"
+                role="group"
+                aria-roledescription="tarjeta"
+                [attr.aria-label]="i + 1 + ' de ' + tarjetas().length"
+              >
+                <app-tarjeta-wrapped [tarjeta]="t" [variante]="variante()" [escala]="escala()" [reducido]="reducido()" />
+                <p class="sr-only">{{ textoAccesible(t) }}</p>
+              </div>
+            }
+          }
+        </div>
+
+        <div class="flex items-center justify-center gap-2">
+          <button
+            type="button"
+            class="flex size-11 items-center justify-center rounded-full text-texto-2 transition-[transform,color] duracion-instante ease-entrada select-none active:scale-[0.98] hover:text-texto disabled:opacity-40"
+            aria-label="Tarjeta anterior"
+            [disabled]="activa() === 0"
+            (click)="ir(activa() - 1)"
+          >
+            <app-icono nombre="derecha" class="size-5 rotate-180" />
+          </button>
+          @for (t of tarjetas(); track t.indice; let i = $index) {
+            <button
+              type="button"
+              class="group flex size-11 items-center justify-center rounded-full select-none"
+              [attr.aria-label]="'Tarjeta ' + (i + 1)"
+              [attr.aria-current]="i === activa() ? 'true' : null"
+              (click)="ir(i)"
+            >
+              <span
+                class="size-3 rounded-full transition-[background-color,box-shadow] duracion-instante ease-entrada"
+                [class.bg-foco-encendido]="i === activa()"
+                [class.shadow-halo]="i === activa()"
+                [class.bg-foco-apagado]="i !== activa()"
+              ></span>
+            </button>
+          }
+          <button
+            type="button"
+            class="flex size-11 items-center justify-center rounded-full text-texto-2 transition-[transform,color] duracion-instante ease-entrada select-none active:scale-[0.98] hover:text-texto disabled:opacity-40"
+            aria-label="Tarjeta siguiente"
+            [disabled]="activa() === tarjetas().length - 1"
+            (click)="ir(activa() + 1)"
+          >
+            <app-icono nombre="derecha" class="size-5" />
+          </button>
+        </div>
+        <p class="sr-only" aria-live="polite">Tarjeta {{ activa() + 1 }} de {{ tarjetas().length }}</p>
+
+        <div class="flex flex-wrap justify-center gap-3" [attr.aria-busy]="ocupado() !== null">
+          <button appBoton type="button" class="disabled:opacity-60" [disabled]="ocupado() !== null" (click)="descargarUna()">
+            <app-icono nombre="descargar" class="size-5" />
+            {{ ocupado() === 'una' ? 'Preparando imagen' : 'Descargar esta tarjeta' }}
+          </button>
+          <button appBoton variante="secundario" type="button" class="disabled:opacity-60" [disabled]="ocupado() !== null" (click)="descargarTodas()">
+            <app-icono nombre="descargar" class="size-5" />
+            {{ ocupado() === 'todas' ? 'Preparando imágenes' : 'Descargar todas' }}
+          </button>
+          @if (compartible) {
+            <button appBoton variante="secundario" type="button" class="disabled:opacity-60" [disabled]="ocupado() !== null" (click)="compartir()">
+              <app-icono nombre="compartir" class="size-5" />
+              Compartir
+            </button>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (conSelector()) {
+    <app-selector-variantes [nombres]="nombres" [activo]="variante()" posicion="bottom" (elegir)="elegirVariante($event)" (repetir)="repetir()" />
+  }
+</section>

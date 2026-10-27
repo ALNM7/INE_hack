@@ -94,6 +94,28 @@
   }
 }
 
+html [data-sonner-toaster] {
+  --ngx-sonner-font-family: var(--font-texto);
+  --ngx-sonner-border-radius: var(--radius-md);
+  --ngx-sonner-toast-dark-normal-background: var(--color-superficie-alta);
+  --ngx-sonner-toast-dark-normal-border-color: var(--color-linea);
+  --ngx-sonner-toast-dark-normal-color: var(--color-texto);
+}
+
+html [data-sonner-toaster] [data-sonner-toast][data-styled="true"] {
+  font-size: var(--text-cuerpo);
+  line-height: var(--text-nota--line-height);
+  box-shadow: var(--shadow-flotante);
+}
+
+html [data-sonner-toaster] [data-sonner-toast][data-type="success"] [data-icon] {
+  color: var(--color-foco-encendido);
+}
+
+html [data-sonner-toaster] [data-sonner-toast][data-type="error"] [data-icon] {
+  color: var(--color-alerta);
+}
+
 @layer utilities {
   .tabular {
     font-variant-numeric: tabular-nums;
