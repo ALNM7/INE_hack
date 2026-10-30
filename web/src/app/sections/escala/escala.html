@@ -28,11 +28,11 @@
     </div>
   </div>
 
-  <div class="pointer-events-none relative z-10 flex flex-col px-margen-movil [grid-area:1/1] md:px-margen-escritorio pila:pointer-events-auto pila:shrink-0 pila:pb-[calc(var(--alto-barra)+var(--space-3))]">
+  <div class="pointer-events-none relative z-10 flex flex-col px-margen-movil [grid-area:1/1] md:px-margen-escritorio pila:pointer-events-auto pila:grid pila:shrink-0 pila:pb-[calc(var(--alto-barra)+var(--space-3))]">
     <div class="h-paso pila:hidden" aria-hidden="true"></div>
     @if (resumen(); as r) {
       @for (paso of r.pasos; track paso.numero; let i = $index) {
-        <div class="flex min-h-paso items-center lado:justify-end pila:min-h-0 pila:transition-[opacity,translate] pila:duracion-media pila:ease-entrada pila:starting:translate-y-2 pila:starting:opacity-0 pila:data-oculta:hidden motion-reduce:duracion-corta motion-reduce:starting:translate-y-0" [attr.data-oculta]="pasoActivo() !== i ? '' : null">
+        <div class="flex min-h-paso items-center lado:justify-end pila:min-h-0 pila:items-stretch pila:[grid-area:1/1] pila:transition-[opacity,visibility] pila:duracion-media pila:ease-entrada pila:data-oculta:invisible pila:data-oculta:opacity-0 motion-reduce:duracion-corta" [attr.data-oculta]="pasoActivo() !== i ? '' : null">
           <article
             #tarjeta
             class="pointer-events-auto w-full rounded-lg border border-linea bg-superficie p-5 lado:w-4/12"

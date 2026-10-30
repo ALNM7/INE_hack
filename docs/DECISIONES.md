@@ -368,3 +368,8 @@ Rechazados: deslizar el acto completo de lado (**Direction-aware transition**), 
 | Acto 1 | "Saltar" hasta revelar; después de "Ver la realidad", "Siguiente". El botón "¿Qué pasa entre los 18 y los 25?" avanza al Acto 2 y el foco va al título del acto. |
 | Movimiento reducido | Los pasos cambian con el fundido corto, sin animación de scroll ni de progreso. |
 | Consola | Sin errores ni advertencias. |
+
+### Ajustes después de revisarlo (30 oct)
+
+- **Tarjetas del mismo tamaño en móvil (Intro y Acto 2).** Antes la tarjeta activa cambiaba de alto en cada paso y la gráfica (que toma el alto que sobra) se encogía o crecía, lo que rompía la animación. Ahora las tarjetas se apilan en la misma celda de una rejilla (`grid-area: 1/1`) y las inactivas se ocultan con `visibility` y `opacity`, sin salir del flujo: el área mide lo que la tarjeta más alta y todas se estiran a ese alto. El cambio de tarjeta queda como **Crossfade** de `--duration-media`. Medido: la gráfica del Acto 2 mide lo mismo en los 8 pasos (364 px a 390x844, 187 px en iPhone SE).
+- **Acto 1 cabe en una pantalla.** La sección mide `100dvh`; la gráfica toma el alto que sobra (mínimo `min-h-40`) y los botones quedan siempre arriba de la barra, antes y después de revelar (probado en 320x568, 375x667, 390x844 y 1280x800). Se quitó el párrafo "A los 18 votó..." (la cifra ya está en la gráfica), la ayuda de teclado quedó solo para lectores de pantalla (`sr-only`) y se quitó el botón "¿Qué pasa entre los 18 y los 25?", que repetía lo que hace "Siguiente" en la barra. Título y mensajes bajan un nivel de la escala tipográfica en móvil.
