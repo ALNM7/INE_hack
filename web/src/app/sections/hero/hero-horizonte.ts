@@ -20,12 +20,16 @@ import { BOTON, SUBTITULO, TITULO, TITULO_LINEAS } from './textos';
   selector: 'app-hero-horizonte',
   imports: [Boton, FondoLuces],
   template: `
-    <section class="grid min-h-svh grid-rows-[minmax(0,1fr)_auto] bg-fondo text-texto" aria-labelledby="hero-titulo">
-      <div #campo class="relative min-h-48">
+    <section
+      class="relative isolate grid min-h-svh grid-rows-[minmax(0,1fr)_auto] overflow-hidden bg-fondo text-texto"
+      aria-labelledby="hero-titulo"
+    >
+      <div #campo class="absolute inset-0 -z-10">
         <app-fondo-luces class="absolute inset-0" />
+        <div class="absolute inset-0 bg-linear-to-t from-fondo via-fondo/70 to-transparent" aria-hidden="true"></div>
       </div>
       <div
-        class="mx-auto flex w-full max-w-(--container-max) flex-col items-start gap-6 px-margen-movil pt-10 pb-[calc(var(--space-10)+env(safe-area-inset-bottom))] md:px-margen-escritorio md:pt-16"
+        class="relative row-start-2 mx-auto flex w-full max-w-(--container-max) flex-col items-start gap-6 px-margen-movil pt-10 pb-[calc(var(--space-10)+env(safe-area-inset-bottom))] md:px-margen-escritorio md:pt-16"
       >
         <h1 id="hero-titulo" class="text-titulo-1 ancho-titulo" [attr.aria-label]="titulo">
           @for (linea of lineas; track linea) {
