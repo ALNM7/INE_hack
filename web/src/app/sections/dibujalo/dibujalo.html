@@ -5,7 +5,7 @@
         <app-icono nombre="lapiz" class="size-4" />
         Acto 1 · Dibújalo tú
       </p>
-      <h2 id="dibujalo-titulo" class="text-titulo-2 ancho-titulo">¿Cuánta gente crees que vota a cada edad?</h2>
+      <h2 id="dibujalo-titulo" tabindex="-1" class="text-titulo-2 ancho-titulo outline-none">¿Cuánta gente crees que vota a cada edad?</h2>
       @if (valor18(); as v18) {
         <p class="text-entrada text-texto-2">
           A los {{ edadMin }} votó el <span class="tabular text-texto">{{ porcentaje(v18) }}</span>.
@@ -207,6 +207,6 @@
 
 
   @if (conSelector()) {
-    <app-selector-variantes [nombres]="nombres" [activo]="variante()" posicion="bottom" (elegir)="elegir($event)" (repetir)="reiniciar()" />
+    <app-selector-variantes [nombres]="nombres" [activo]="variante()" (elegir)="elegir($event)" (repetir)="reiniciar()" />
   }
 </section>

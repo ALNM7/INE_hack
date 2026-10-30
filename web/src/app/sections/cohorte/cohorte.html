@@ -1,6 +1,6 @@
-<section id="cohorte" class="bg-fondo text-texto" aria-labelledby="cohorte-titulo">
+<section id="cohorte" class="bg-fondo text-texto pila:flex pila:h-dvh pila:flex-col pila:overflow-hidden" aria-labelledby="cohorte-titulo">
   <header
-    class="mx-auto flex max-w-(--container-max) flex-col gap-3 px-margen-movil pt-16 pb-8 md:px-margen-escritorio md:pt-24"
+    class="mx-auto flex max-w-(--container-max) flex-col gap-3 px-margen-movil pt-16 pb-8 md:px-margen-escritorio md:pt-24 pila:mx-0 pila:shrink-0 pila:gap-1 pila:pt-[calc(var(--space-6)+env(safe-area-inset-top))] pila:pb-1"
   >
     <p
       class="flex items-center gap-2 font-mono text-antetitulo font-medio uppercase text-acento-texto"
@@ -11,18 +11,18 @@
       ></span>
       Acto 2 · Lo que se apagó
     </p>
-    <h2 id="cohorte-titulo" class="max-w-(--container-texto) text-titulo-2 ancho-titulo">
+    <h2 #titulo id="cohorte-titulo" tabindex="-1" class="max-w-(--container-texto) text-titulo-2 ancho-titulo outline-none pila:text-titulo-3">
       Qué le pasa a una generación después de su primera elección
     </h2>
   </header>
 
   @if (datos(); as d) {
     <div
-      class="mx-auto grid max-w-(--container-max) lado:grid-cols-2 lado:gap-x-medianil-escritorio lado:px-margen-movil md:lado:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:lado:px-margen-escritorio"
+      class="mx-auto grid max-w-(--container-max) pila:flex pila:min-h-0 pila:w-full pila:flex-1 pila:flex-col lado:grid-cols-2 lado:gap-x-medianil-escritorio lado:px-margen-movil md:lado:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:lado:px-margen-escritorio"
     >
       <div
         #panel
-        class="sticky top-0 z-20 h-[52svh] self-start bg-fondo px-margen-movil pt-[calc(var(--space-4)+env(safe-area-inset-top))] pb-4 lado:col-start-2 lado:row-start-1 lado:h-svh lado:bg-transparent lado:px-0 lado:py-10"
+        class="sticky top-0 z-20 h-[52svh] self-start bg-fondo px-margen-movil pt-[calc(var(--space-4)+env(safe-area-inset-top))] pb-4 pila:static pila:h-auto pila:min-h-0 pila:flex-1 pila:self-stretch pila:pt-2 pila:pb-2 lado:col-start-2 lado:row-start-1 lado:h-svh lado:bg-transparent lado:px-0 lado:pt-10 lado:pb-[calc(var(--alto-barra)+var(--space-4))]"
       >
         <div
           #figura
@@ -201,10 +201,10 @@
       </div>
 
       <div
-        class="relative z-10 flex flex-col px-margen-movil pb-[30vh] lado:col-start-1 lado:row-start-1 lado:px-0 lado:pb-[40vh]"
+        class="relative z-10 flex flex-col px-margen-movil pb-[30vh] pila:shrink-0 pila:pb-[calc(var(--alto-barra)+var(--space-3))] lado:col-start-1 lado:row-start-1 lado:px-0 lado:pb-[40vh]"
       >
         @for (paso of pasos(); track $index; let i = $index) {
-          <div class="flex min-h-paso items-start pt-4 lado:items-center lado:pt-0">
+          <div class="flex min-h-paso items-start pt-4 lado:items-center lado:pt-0 pila:min-h-0 pila:pt-0 pila:transition-[opacity,translate] pila:duracion-media pila:ease-entrada pila:starting:translate-y-2 pila:starting:opacity-0 pila:data-oculta:hidden motion-reduce:duracion-corta motion-reduce:starting:translate-y-0" [attr.data-oculta]="activo() !== i ? '' : null">
             <article
               #tarjeta
               class="w-full max-w-(--container-texto) rounded-lg border border-linea bg-superficie p-5"

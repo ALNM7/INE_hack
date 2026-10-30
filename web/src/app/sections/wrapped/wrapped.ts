@@ -22,6 +22,7 @@ import { map } from 'rxjs';
 import { DataService } from '../../core/data.service';
 import { duracion } from '../../core/motion';
 import { MovimientoReducido } from '../../core/movimiento-reducido.service';
+import { Recorrido } from '../../core/recorrido';
 import { Boton } from '../../shared/ui/boton';
 import { Icono } from '../../shared/ui/icono';
 import { SelectorVariantes } from '../../shared/ui/selector-variantes';
@@ -148,6 +149,11 @@ export class Wrapped {
   private version = 0;
 
   constructor() {
+    inject(Recorrido).registrar('wrapped', {
+      total: signal(1).asReadonly(),
+      ir: () => undefined,
+      titulo: () => document.getElementById('wrapped-titulo'),
+    });
     this.datos.catalogo.cargar().catch(() => undefined);
     this.datos.estados.cargar().catch(() => undefined);
 

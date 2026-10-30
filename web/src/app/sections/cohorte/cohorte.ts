@@ -19,6 +19,7 @@ import { DataService } from '../../core/data.service';
 import { MapaService } from '../../core/mapa.service';
 import { ScrollTrigger, curvas, duracion, funcionCurva, gsap } from '../../core/motion';
 import { MovimientoReducido } from '../../core/movimiento-reducido.service';
+import { CONSULTA_LADO, CONSULTA_PILA, Recorrido, consultaMedia, desplazarA } from '../../core/recorrido';
 import { Rgb, aCss, mezclar, pxToken, rgbToken } from '../../core/tokens';
 import { Boton } from '../../shared/ui/boton';
 import {
@@ -40,8 +41,6 @@ import {
 } from './escena';
 import { MapaJovenes } from './mapa-jovenes';
 
-const CONSULTA_LADO = '(min-width: 48rem), (orientation: landscape) and (min-width: 36rem)';
-const CONSULTA_PILA = '(max-width: 47.99rem) and (orientation: portrait), (max-width: 35.99rem)';
 const ESCALA_RELLENO = [
   'bg-escala-0',
   'bg-escala-1',
@@ -104,6 +103,7 @@ export class Cohorte {
   private readonly grafica = computed(() => this.refGrafica()?.nativeElement);
   private readonly mapa = viewChild(MapaJovenes);
   private readonly plantillaTabla = viewChild.required<TemplateRef<unknown>>('tabla');
+  private readonly titulo = viewChild<ElementRef<HTMLElement>>('titulo');
 
   protected readonly t = signal(0);
   protected readonly geo = this.mapaServicio.estados;
@@ -139,7 +139,12 @@ export class Cohorte {
 
   protected readonly medida = computed(() => this.medidas());
 
-  protected readonly activo = computed(() => Math.round(this.t()));
+  private readonly recorrido = inject(Recorrido);
+  private readonly pila = consultaMedia(CONSULTA_PILA);
+  protected readonly objetivo = signal(0);
+  protected readonly activo = computed(() => (this.pila() ? this.objetivo() : Math.round(this.t())));
+  private aplicar: ((paso: number, instantaneo: boolean) => void) | null = null;
+  private readonly progresoT = { t: 0 };
 
   protected readonly mapaActivo = computed(() => this.t() > PASO_MAPA - 0.5);
 
@@ -269,6 +274,16 @@ export class Cohorte {
     }
     this.mapaServicio.cargar().catch(() => undefined);
 
+    this.recorrido.registrar('cohorte', {
+      total: computed(() => PASOS),
+      ir: (paso, instantaneo) => {
+        this.objetivo.set(paso);
+        this.aplicar?.(paso, instantaneo);
+      },
+      texto: (paso) => this.pasos()[paso]?.texto ?? '',
+      titulo: () => this.titulo()?.nativeElement,
+    });
+
     afterNextRender(() => {
       let altoPrevio = document.body.scrollHeight;
       let pendiente = false;
@@ -329,38 +344,66 @@ export class Cohorte {
       if (!datos || !panel || tarjetas.length < PASOS) {
         return;
       }
-      const medios = untracked(() => this.montar(reducido, tarjetas, panel));
-      alLimpiar(() => medios.revert());
+      const medios = untracked(() => this.montar(reducido, tarjetas));
+      alLimpiar(() => {
+        medios.revert();
+        gsap.killTweensOf(this.progresoT);
+        this.aplicar = null;
+      });
     });
   }
 
-  private montar(reducido: boolean, tarjetas: HTMLElement[], panel: HTMLElement): gsap.MatchMedia {
+  private montar(reducido: boolean, tarjetas: HTMLElement[]): gsap.MatchMedia {
     this.montando = true;
-    const hueco = pxToken('--space-4');
     const medios = gsap.matchMedia();
     medios.add({ lado: CONSULTA_LADO, pila: CONSULTA_PILA }, (contexto) => {
       const lado = !!contexto.conditions?.['lado'];
-      const fin = lado
-        ? 'center center'
-        : () => `top ${panel.getBoundingClientRect().height + hueco}px`;
+      if (!lado) {
+        this.aplicar = (paso, instantaneo) => {
+          if (reducido) {
+            this.irA(paso);
+            return;
+          }
+          if (instantaneo) {
+            gsap.killTweensOf(this.progresoT);
+            this.progresoT.t = paso;
+            this.fijarT(paso);
+            return;
+          }
+          this.progresoT.t = this.t();
+          gsap.to(this.progresoT, {
+            t: paso,
+            duration: duracion('escena'),
+            ease: 'none',
+            overwrite: true,
+            onUpdate: () => this.fijarT(this.progresoT.t),
+          });
+        };
+        return;
+      }
+      const fin = 'center center';
+      const posiciones: (() => number)[] = [() => 0];
       if (reducido) {
         tarjetas.slice(1).forEach((tarjeta, i) => {
-          ScrollTrigger.create({
+          const disparador = ScrollTrigger.create({
             trigger: tarjeta,
             start: fin,
             onEnter: () => this.irA(i + 1),
             onLeaveBack: () => this.irA(i),
           });
+          posiciones.push(() => disparador.start + 1);
         });
+        this.aplicar = (paso, instantaneo) => desplazarA(posiciones[paso](), true);
         return;
       }
+      this.aplicar = (paso, instantaneo) => desplazarA(posiciones[paso](), instantaneo);
       const progresos = new Array<number>(PASOS - 1).fill(0);
       tarjetas.slice(1).forEach((tarjeta, i) => {
         const actualizar = (disparador: ScrollTrigger) => {
           progresos[i] = disparador.progress;
           this.fijarT(progresos.reduce((a, b) => a + b, 0));
         };
-        ScrollTrigger.create({
+        const disparador = ScrollTrigger.create({
           trigger: tarjeta,
           start: 'top bottom',
           end: fin,
@@ -368,9 +411,13 @@ export class Cohorte {
           onUpdate: actualizar,
           onRefresh: actualizar,
         });
+        posiciones.push(() => disparador.end);
       });
     });
     ScrollTrigger.refresh();
+    if (this.recorrido.id() === 'cohorte') {
+      this.aplicar?.(this.objetivo(), true);
+    }
     this.montando = false;
     this.pintarFocos();
     return medios;

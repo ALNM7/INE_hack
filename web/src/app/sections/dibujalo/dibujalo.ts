@@ -20,6 +20,7 @@ import { map } from 'rxjs';
 import { DataService } from '../../core/data.service';
 import { curva, duracion, escalonadoTexto, gsap, vibracionCorta } from '../../core/motion';
 import { MovimientoReducido } from '../../core/movimiento-reducido.service';
+import { Recorrido } from '../../core/recorrido';
 import { pxToken } from '../../core/tokens';
 import { Boton } from '../../shared/ui/boton';
 import { Icono } from '../../shared/ui/icono';
@@ -54,7 +55,6 @@ import {
 
 const VARIANTES = ['Trazo', 'Puntos'] as const;
 const EDAD_CLAVE = 25;
-const ACTO_SIGUIENTE = 'cohorte';
 const TICKS_Y = [0, 25, 50, 75, 100];
 const TICKS_X = [18, 25, 35, 45, 55, 65, 75, 85];
 
@@ -98,6 +98,7 @@ export class Dibujalo {
   private readonly datos = inject(DataService);
   private readonly router = inject(Router);
   private readonly injector = inject(Injector);
+  private readonly recorrido = inject(Recorrido);
   private readonly destroyRef = inject(DestroyRef);
   protected readonly reducido = inject(MovimientoReducido).activo;
 
@@ -328,6 +329,12 @@ export class Dibujalo {
   protected readonly escalonado = escalonadoTexto();
 
   constructor() {
+    this.recorrido.registrar('dibujalo', {
+      total: signal(1).asReadonly(),
+      ir: () => undefined,
+      listo: this.revelado,
+      titulo: () => document.getElementById('dibujalo-titulo'),
+    });
     this.datos.edadExacta.cargar().catch(() => undefined);
 
     effect(() => {
@@ -569,8 +576,6 @@ export class Dibujalo {
   }
 
   protected irAlActo2(): void {
-    document
-      .getElementById(ACTO_SIGUIENTE)
-      ?.scrollIntoView({ behavior: this.reducido() ? 'auto' : 'smooth', block: 'start' });
+    this.recorrido.siguiente();
   }
 }

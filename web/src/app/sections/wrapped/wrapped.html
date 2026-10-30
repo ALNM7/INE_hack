@@ -5,7 +5,7 @@
         <span class="size-2 shrink-0 rounded-full bg-foco-encendido shadow-halo" aria-hidden="true"></span>
         Acto 3 · Tu Wrapped
       </p>
-      <h2 id="wrapped-titulo" class="text-titulo-2 ancho-titulo">¿Y en tu municipio?</h2>
+      <h2 id="wrapped-titulo" tabindex="-1" class="text-titulo-2 ancho-titulo outline-none">¿Y en tu municipio?</h2>
       <p class="text-entrada text-texto-2">Con tu municipio, tu edad y tu sexo armamos cinco tarjetas para compartir.</p>
     </header>
 
@@ -233,6 +233,6 @@
   </div>
 
   @if (conSelector()) {
-    <app-selector-variantes [nombres]="nombres" [activo]="variante()" posicion="bottom" (elegir)="elegirVariante($event)" (repetir)="repetir()" />
+    <app-selector-variantes [nombres]="nombres" [activo]="variante()" (elegir)="elegirVariante($event)" (repetir)="repetir()" />
   }
 </section>

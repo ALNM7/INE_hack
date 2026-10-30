@@ -304,3 +304,67 @@ Los peores casos son municipios reales, así que entran por la misma frontera qu
 | Exportar en Chromium (emulación Android) | Los 15 PNG (5 tarjetas por 3 variantes) miden 1080x1920 y traen las 3 fuentes. Pesan de 154 a 249 KB. "Descargar todas" baja `wrapped-1.png` a `wrapped-5.png` en unos 7 s. Compartir (con `navigator.share` simulado) entrega `wrapped-2.png` de 1080x1920. |
 | Safari de iOS | No se pudo probar: este entorno solo tiene Chromium. El patrón de doble `toPng` está aplicado. Pendiente en iPhone real. |
 | Consola | Sin errores ni advertencias en todos los casos. |
+
+## Recorrido guiado
+
+Pedido del equipo (30 oct): la historia se recorre como diapositivas. No se avanza con scroll libre, solo con botones; "Empezar" en el hero, luego "Siguiente" y "Anterior". Cada tarjeta es un paso. En móvil, las tarjetas de la Escala y del Acto 2 van debajo de la gráfica y se reemplazan; en escritorio esas dos secciones se ven como antes.
+
+### Cómo funciona
+
+- **Un acto a la vez.** `core/recorrido.ts` guarda el acto y el paso actuales. Los actos que no están en pantalla quedan con `hidden`: no se puede llegar a ellos con scroll, ni con el tabulador, ni los lee un lector de pantalla. Cada componente registra cuántos pasos tiene y cómo mostrar un paso.
+- **Pasos:** hero 1, Escala 2, Acto 1 1, Acto 2 8, Acto 3 1.
+- **Scroll bloqueado** (`overflow: hidden` en `html`) en el hero, la Escala y el Acto 2. En el Acto 1 y el Acto 3 la página sí hace scroll, porque son pantallas más altas que el teléfono y solo contienen ese acto, así que no hay forma de saltarse nada.
+- **Escritorio (disposición `lado`)**: "Siguiente" desplaza la ventana hasta la posición donde la tarjeta siguiente queda activa. Las animaciones siguen ligadas al scroll (`scrub`), así que el usuario ve exactamente la misma transición que antes, solo que la dispara el botón. Las posiciones se leen de los `ScrollTrigger` (`start` y `end`), no se calculan aparte.
+- **Móvil (disposición `pila`)**: la Escala y el Acto 2 caben en `100dvh`. Arriba el encabezado, en medio la gráfica (que toma el alto que sobra), abajo la tarjeta del paso y la barra de botones. No hay `ScrollTrigger`: "Siguiente" anima el progreso de la escena con GSAP. Al rotar el teléfono, `gsap.matchMedia` cambia de un modo al otro.
+- **Acto 1**: mientras no se revele la curva, el botón dice "Saltar"; después de "Ver la realidad", "Siguiente". El botón "¿Qué pasa entre los 18 y los 25?" también avanza.
+- **Acto 3**: es el final, la barra solo tiene "Anterior".
+- **Revisión de variantes**: `?acto=intro`, `?acto=1`, `?acto=2` o `?acto=3` abre directo en ese acto, para que Nava no tenga que recorrer toda la historia para ver `?w=` o `?a1=`.
+
+### Excepción al design system
+
+El design system dice "sin barras de navegación fijas". La barra de "Anterior" y "Siguiente" es fija abajo porque el equipo pidió que el avance sea solo con botones. Va sobre `fondo` con borde superior `linea`, respeta la safe area y las secciones reservan su alto (`--alto-barra`) para que nunca tape contenido.
+
+### Movimiento (`animate` con `animation-vocabulary`)
+
+Puerta: "Siguiente" se presiona muchas veces por visita (unas 13), pero cada presión es narrativa y el usuario espera ver qué cambia, así que la transición de la gráfica sí se anima; la barra y los botones no.
+
+| Animación | Qué se mueve | Propiedad | Duración | Curva | Disparador | Movimiento reducido |
+|---|---|---|---|---|---|---|
+| **Crossfade** entre actos | `main` completo | `opacity` | Salida `--duration-corta`, entrada `--duration-media` | `--ease-salida` y `--ease-entrada` | Cambiar de acto | Igual (es un fundido) |
+| Paso en escritorio | Ventana | Scroll programado, la escena sigue con `scrub` | `--duration-escena` | `--ease-escena` (se mueve en pantalla) | "Siguiente" o "Anterior" | Salto directo y el fundido corto que ya tenían los pasos |
+| Paso en móvil | Progreso de la escena (Escala: luces que se apagan y jóvenes; Acto 2: `t`) | Las mismas propiedades que ya animaba el scroll | `--duration-escena` por paso; las luces de la Escala `--duration-encendido` | Lineal sobre el progreso; cada elemento aplica su propia curva, como con el scroll | "Siguiente" o "Anterior" | Estado final con el fundido corto existente |
+| **Fade in** de la tarjeta nueva (móvil) | Tarjeta del paso | `opacity` y `translate` de `space-2` | `--duration-media` | `--ease-entrada` | Cambio de paso (`@starting-style` al pasar de `display: none` a visible) | Solo `opacity`, `--duration-corta` |
+| **Press feedback** | Botones de la barra | `scale(0.98)` | `--duration-instante` | `--ease-entrada` | `:active` | Igual |
+
+Todo es interrumpible: presionar "Siguiente" a mitad de una transición retoma desde el valor actual (`overwrite` en GSAP), no reinicia.
+
+Rechazados: deslizar el acto completo de lado (**Direction-aware transition**), porque el contenido ya se mueve dentro de cada acto y serían dos movimientos; animar el texto del progreso ("Acto 2 · 3 de 8") con **Number ticker**; vibración en cada paso.
+
+### Accesibilidad
+
+- Al cambiar de acto, el foco va al título del acto nuevo (si el foco se quedó en un botón que desapareció) o se queda en "Siguiente".
+- Cada cambio de paso se anuncia con `LiveAnnouncer`: el nombre del acto, "paso N de M" y el texto de la tarjeta.
+
+### Decisiones tomadas al implementar
+
+- **El fundido de salida se cancela al cambiar de acto.** Con `fill: forwards`, al terminar la entrada la página regresaba a opacidad 0 y todo lo que seguía se veía en negro (lo encontró la prueba de escritorio).
+- **La Escala usa la disposición lado a lado con la misma consulta `lado` que el Acto 2** (antes era solo desde `lg`). En un teléfono horizontal la tarjeta tapaba el mapa al quedar fija en su paso.
+- **Pantallas bajas** (`max-height: 30rem`, teléfono horizontal): en la Escala se ocultan las dos notas de pie y la cifra baja a `--text-titulo-2`, para que el mapa tenga alto.
+- **Progreso en dos renglones en móvil** ("Acto 2" arriba, "6/8" abajo): en una línea se cortaba a 375 px.
+- **La Escala arranca con las luces encendidas** (`objetivo = -1`) y se apagan al llegar, no antes de que el usuario las vea.
+- **Las posiciones de escritorio salen de los `ScrollTrigger`**: el paso 0 del Acto 2 es el inicio de la sección, y cada paso siguiente es el `end` del disparador de su tarjeta.
+- **Los selectores de variantes del Acto 1 y del Acto 3 van arriba** para no quedar debajo de la barra.
+- **El toast sube sobre la barra** (`offset` = `--alto-barra` más `space-4`).
+
+### Pruebas
+
+| Caso | Resultado |
+|---|---|
+| Recorrido completo en 390x844 | Hero, Escala 1 y 2, Acto 1 con "Saltar", Acto 2 del 1 al 8, Acto 3 sin "Siguiente", y de regreso con "Anterior" al paso 8 y al 7 del Acto 2. La rueda del mouse no mueve la página en el hero ni en la Escala. |
+| Recorrido completo en 1280x800 | Cada "Siguiente" desplaza la ventana a la tarjeta correcta (Escala 620 y 1300 px; Acto 2 de 877 a 4957 px, cada 680 px) y la escena se anima con el `scrub` de siempre. Falla encontrada y corregida: pantalla negra después del primer cambio de acto. |
+| 320x640 e iPhone SE (375x667) | Ninguna tarjeta, gráfica o mapa queda debajo de la barra (de 12 a 83 px libres), sin scroll horizontal. |
+| Teléfono horizontal (844x390) | Fallas corregidas: la tarjeta tapaba el mapa de la Escala y el mapa medía unos 20 px. Ahora mapa a la izquierda, tarjeta a la derecha. |
+| 5 clics seguidos en "Siguiente" | Llega al paso 6 de 8 sin saltos: cada animación retoma desde donde iba. |
+| Acto 1 | "Saltar" hasta revelar; después de "Ver la realidad", "Siguiente". El botón "¿Qué pasa entre los 18 y los 25?" avanza al Acto 2 y el foco va al título del acto. |
+| Movimiento reducido | Los pasos cambian con el fundido corto, sin animación de scroll ni de progreso. |
+| Consola | Sin errores ni advertencias. |

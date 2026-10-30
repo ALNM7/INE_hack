@@ -14,7 +14,7 @@ import { colorToken } from './core/tokens';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
-  protected readonly offset = 'calc(var(--space-6) + env(safe-area-inset-bottom, 0px))';
+  protected readonly offset = 'calc(var(--alto-barra) + var(--space-4))';
 
   constructor() {
     const documento = inject(DOCUMENT);
