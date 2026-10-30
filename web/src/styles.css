@@ -10,6 +10,12 @@
   }
 }
 
+@custom-variant pila {
+  @media (max-width: 47.99rem) and (orientation: portrait), (max-width: 35.99rem) {
+    @slot;
+  }
+}
+
 @custom-variant lado {
   @media (min-width: 48rem), (orientation: landscape) and (min-width: 36rem) {
     @slot;
@@ -29,6 +35,14 @@
 }
 
 @layer base {
+  :root {
+    --alto-barra: calc(var(--space-16) + var(--space-2) + env(safe-area-inset-bottom, 0px));
+  }
+
+  html[data-recorrido-fijo] {
+    overflow: hidden;
+  }
+
   html {
     color-scheme: dark;
     -webkit-tap-highlight-color: transparent;

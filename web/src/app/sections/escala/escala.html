@@ -1,41 +1,41 @@
-<section id="escala" class="grid bg-fondo text-texto" aria-labelledby="escala-titulo">
+<section id="escala" class="grid bg-fondo text-texto pila:flex pila:h-dvh pila:flex-col pila:overflow-hidden" aria-labelledby="escala-titulo">
   <div
-    class="sticky top-0 flex h-svh flex-col gap-4 self-start overflow-hidden px-margen-movil pt-[calc(var(--space-10)+env(safe-area-inset-top))] pb-[calc(var(--space-6)+env(safe-area-inset-bottom))] [grid-area:1/1] md:px-margen-escritorio"
+    class="sticky top-0 flex h-svh flex-col gap-4 self-start overflow-hidden px-margen-movil pt-[calc(var(--space-10)+env(safe-area-inset-top))] pb-[calc(var(--alto-barra)+var(--space-4))] [@media(max-height:30rem)]:pt-4 [grid-area:1/1] md:px-margen-escritorio pila:static pila:h-auto pila:min-h-0 pila:flex-1 pila:gap-3 pila:self-stretch pila:pt-[calc(var(--space-6)+env(safe-area-inset-top))] pila:pb-3"
   >
-    <header class="flex flex-col gap-2 lg:w-7/12">
+    <header class="flex flex-col gap-2 lado:w-7/12">
       <p class="font-mono text-antetitulo font-medio uppercase text-texto-2">Personas que no votaron · {{ resumen()?.anio }}</p>
-      <h2 #titulo id="escala-titulo" tabindex="-1" class="text-cifra ancho-titulo tabular text-texto-3 outline-none">
+      <h2 #titulo id="escala-titulo" tabindex="-1" class="text-cifra ancho-titulo tabular text-texto-3 outline-none [@media(max-height:30rem)]:text-titulo-2">
         @if (resumen(); as r) {
           {{ r.millones }} <span class="text-titulo-3 text-texto-2">millones</span>
         }
       </h2>
     </header>
 
-    <div class="relative min-h-0 flex-1 lg:w-7/12">
+    <div class="relative min-h-0 flex-1 lado:w-7/12">
       <canvas #lienzo class="absolute inset-0 size-full" role="img" [attr.aria-label]="descripcionCampo()"></canvas>
     </div>
 
-    <div class="flex flex-col gap-2 font-mono text-etiqueta text-texto-2 lg:w-7/12">
+    <div class="flex flex-col gap-2 font-mono text-etiqueta text-texto-2 lado:w-7/12">
       <ul class="flex flex-wrap gap-x-4 gap-y-1">
         <li class="flex items-center gap-2"><span class="size-2 shrink-0 rounded-full bg-foco-encendido" aria-hidden="true"></span>Votó</li>
         <li class="flex items-center gap-2"><span class="size-2 shrink-0 rounded-full bg-foco-apagado" aria-hidden="true"></span>No votó</li>
         <li class="flex items-center gap-2"><span class="size-2 shrink-0 rounded-full bg-arena" aria-hidden="true"></span>No votó y tiene de 18 a 29 años</li>
       </ul>
-      <p class="text-texto-3">La forma es el país; los puntos no indican dónde vive cada persona.</p>
+      <p class="text-texto-3 [@media(max-height:30rem)]:hidden">La forma es el país; los puntos no indican dónde vive cada persona.</p>
       @if (resumen(); as r) {
-        <p class="text-texto-3">Cada punto: unas {{ r.porPunto }} personas con credencial · Fuente: INE, Conteo Censal de Participación {{ r.anio }}</p>
+        <p class="text-texto-3 [@media(max-height:30rem)]:hidden">Cada punto: unas {{ r.porPunto }} personas con credencial · Fuente: INE, Conteo Censal de Participación {{ r.anio }}</p>
       }
     </div>
   </div>
 
-  <div class="pointer-events-none relative z-10 flex flex-col px-margen-movil [grid-area:1/1] md:px-margen-escritorio">
-    <div class="h-paso" aria-hidden="true"></div>
+  <div class="pointer-events-none relative z-10 flex flex-col px-margen-movil [grid-area:1/1] md:px-margen-escritorio pila:pointer-events-auto pila:shrink-0 pila:pb-[calc(var(--alto-barra)+var(--space-3))]">
+    <div class="h-paso pila:hidden" aria-hidden="true"></div>
     @if (resumen(); as r) {
       @for (paso of r.pasos; track paso.numero; let i = $index) {
-        <div class="flex min-h-paso items-center lg:justify-end">
+        <div class="flex min-h-paso items-center lado:justify-end pila:min-h-0 pila:transition-[opacity,translate] pila:duracion-media pila:ease-entrada pila:starting:translate-y-2 pila:starting:opacity-0 pila:data-oculta:hidden motion-reduce:duracion-corta motion-reduce:starting:translate-y-0" [attr.data-oculta]="pasoActivo() !== i ? '' : null">
           <article
             #tarjeta
-            class="pointer-events-auto w-full rounded-lg border border-linea bg-superficie p-5 lg:w-4/12"
+            class="pointer-events-auto w-full rounded-lg border border-linea bg-superficie p-5 lado:w-4/12"
             [attr.aria-current]="pasoActivo() === i ? 'step' : null"
           >
             <div
@@ -59,6 +59,6 @@
         </div>
       }
     }
-    <div class="h-paso" aria-hidden="true"></div>
+    <div class="h-paso pila:hidden" aria-hidden="true"></div>
   </div>
 </section>

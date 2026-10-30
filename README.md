@@ -41,9 +41,11 @@ cd web
 npx ng build
 ```
 
-Variantes del hero para elegir: `http://localhost:4200/?v=1`, `?v=2` y `?v=3`. Con `?v=` aparece un selector arriba (teclas 1 a 3, flechas y R para repetir la entrada). Sin el parámetro se muestra la variante 1 y no hay selector.
+Variantes del hero para elegir: `http://localhost:4200/?v=1`, `?v=2` y `?v=3`. Variantes del Acto 1: `?acto=1&a1=1` y `?acto=1&a1=2`. Con `?v=` aparece un selector arriba (teclas 1 a 3, flechas y R para repetir la entrada). Sin el parámetro se muestra la variante 1 y no hay selector.
 
-Variantes de las tarjetas del Wrapped (Acto 3): `http://localhost:4200/?w=1` (Cifra), `?w=2` (Titular) y `?w=3` (Campo), al final de la página. El selector aparece abajo; las flechas no cambian de variante mientras el foco está en el carrusel. La fecha de la próxima elección y la URL del sitio que salen en la tarjeta 5 viven solo en `web/src/app/core/config.ts`.
+La historia es un recorrido guiado: solo se avanza con "Empezar" y luego con "Siguiente" y "Anterior" en la barra de abajo. Para revisar un acto sin recorrer todo, `?acto=intro`, `?acto=1`, `?acto=2` o `?acto=3` abre directo en él.
+
+Variantes de las tarjetas del Wrapped (Acto 3): `http://localhost:4200/?acto=3&w=1` (Cifra), `?acto=3&w=2` (Titular) y `?acto=3&w=3` (Campo). El selector aparece abajo; las flechas no cambian de variante mientras el foco está en el carrusel. La fecha de la próxima elección y la URL del sitio que salen en la tarjeta 5 viven solo en `web/src/app/core/config.ts`.
 
 ## Publicar en GitHub Pages
 
