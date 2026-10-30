@@ -1,5 +1,5 @@
 <section id="dibujalo" class="flex h-dvh flex-col bg-fondo text-texto" aria-labelledby="dibujalo-titulo">
-  <div class="mx-auto flex min-h-0 w-full max-w-(--container-grafica) flex-1 flex-col gap-4 px-margen-movil pt-[calc(var(--space-6)+env(safe-area-inset-top))] pb-[calc(var(--alto-barra)+var(--space-4))] md:gap-5 md:px-margen-escritorio md:pt-12">
+  <div class="mx-auto flex min-h-0 w-full max-w-(--container-grafica) flex-1 flex-col gap-4 lg:max-w-(--container-max) px-margen-movil pt-[calc(var(--space-6)+env(safe-area-inset-top))] pb-[calc(var(--alto-barra)+var(--space-4))] md:gap-5 md:px-margen-escritorio md:pt-12">
     <header class="flex max-w-(--container-texto) shrink-0 flex-col gap-2">
       <p class="flex items-center gap-2 font-mono text-antetitulo font-medio uppercase text-acento-texto">
         <app-icono nombre="lapiz" class="size-4" />
@@ -8,6 +8,7 @@
       <h2 id="dibujalo-titulo" tabindex="-1" class="text-titulo-3 ancho-titulo outline-none md:text-titulo-2">¿Cuánta gente crees que vota a cada edad?</h2>
     </header>
 
+    <div class="flex min-h-0 flex-1 flex-col gap-4 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:grid-rows-[minmax(0,1fr)] lg:gap-x-12">
     <figure class="flex min-h-0 flex-1 flex-col gap-2">
       <div
         #area
@@ -135,23 +136,24 @@
         }
       </div>
 
-      @if (revelado()) {
-        <ul class="flex shrink-0 flex-wrap gap-x-5 gap-y-1 font-mono text-etiqueta text-texto-2" aria-hidden="true">
-          <li class="flex items-center gap-2"><span class="h-0.75 w-4 shrink-0 rounded-full bg-foco-encendido"></span>Lo que pasó en {{ serie }}</li>
-          <li class="flex items-center gap-2"><span class="w-4 shrink-0 border-t-2 border-dashed border-arena"></span>Tu línea</li>
-          <li class="flex items-center gap-2"><span class="size-3 shrink-0 rounded-xs bg-alerta/20"></span>Diferencia</li>
-        </ul>
-      }
-
       <figcaption class="flex shrink-0 flex-col gap-1 font-mono text-etiqueta text-texto-3">
-        @if (!revelado()) {
-          <span class="text-nota text-texto-2">{{ guia() }}</span>
-          <span class="sr-only">Con teclado: Tab para elegir una edad, flechas arriba y abajo para moverla, Shift para ir de 10 en 10.</span>
-        }
+        <div class="lg:min-h-[calc(var(--text-nota)*var(--text-nota--line-height)*2)]">
+          @if (revelado()) {
+            <ul class="flex flex-wrap gap-x-5 gap-y-1 text-texto-2" aria-hidden="true">
+              <li class="flex items-center gap-2"><span class="h-0.75 w-4 shrink-0 rounded-full bg-foco-encendido"></span>Lo que pasó en {{ serie }}</li>
+              <li class="flex items-center gap-2"><span class="w-4 shrink-0 border-t-2 border-dashed border-arena"></span>Tu línea</li>
+              <li class="flex items-center gap-2"><span class="size-3 shrink-0 rounded-xs bg-alerta/20"></span>Diferencia</li>
+            </ul>
+          } @else {
+            <span class="text-nota text-texto-2">{{ guia() }}</span>
+            <span class="sr-only">Con teclado: Tab para elegir una edad, flechas arriba y abajo para moverla, Shift para ir de 10 en 10.</span>
+          }
+        </div>
         <span>Fuente: INE, Conteo Censal de Participación {{ serie }}</span>
       </figcaption>
     </figure>
 
+    <div class="flex shrink-0 flex-col gap-4 lg:justify-center">
     <div aria-live="polite" class="flex max-w-(--container-texto) shrink-0 flex-col gap-2">
       @if (mensajes() && resultado(); as res) {
         <p
@@ -178,6 +180,8 @@
           <app-icono nombre="reiniciar" class="size-5" />
         </button>
       }
+    </div>
+    </div>
     </div>
 
   </div>
