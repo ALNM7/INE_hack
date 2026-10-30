@@ -1,27 +1,17 @@
-<section id="dibujalo" class="bg-fondo text-texto" aria-labelledby="dibujalo-titulo">
-  <div class="mx-auto flex w-full max-w-(--container-grafica) flex-col gap-6 px-margen-movil py-16 md:px-margen-escritorio md:py-24">
-    <header class="flex max-w-(--container-texto) flex-col gap-3">
+<section id="dibujalo" class="flex h-dvh flex-col bg-fondo text-texto" aria-labelledby="dibujalo-titulo">
+  <div class="mx-auto flex min-h-0 w-full max-w-(--container-grafica) flex-1 flex-col gap-4 px-margen-movil pt-[calc(var(--space-6)+env(safe-area-inset-top))] pb-[calc(var(--alto-barra)+var(--space-4))] md:gap-5 md:px-margen-escritorio md:pt-12">
+    <header class="flex max-w-(--container-texto) shrink-0 flex-col gap-2">
       <p class="flex items-center gap-2 font-mono text-antetitulo font-medio uppercase text-acento-texto">
         <app-icono nombre="lapiz" class="size-4" />
         Acto 1 · Dibújalo tú
       </p>
-      <h2 id="dibujalo-titulo" tabindex="-1" class="text-titulo-2 ancho-titulo outline-none">¿Cuánta gente crees que vota a cada edad?</h2>
-      @if (valor18(); as v18) {
-        <p class="text-entrada text-texto-2">
-          A los {{ edadMin }} votó el <span class="tabular text-texto">{{ porcentaje(v18) }}</span>.
-          @if (libre()) {
-            Dibuja cómo crees que sigue la línea hasta los {{ edadMax }}.
-          } @else {
-            Mueve los puntos de cada edad a donde crees que van.
-          }
-        </p>
-      }
+      <h2 id="dibujalo-titulo" tabindex="-1" class="text-titulo-3 ancho-titulo outline-none md:text-titulo-2">¿Cuánta gente crees que vota a cada edad?</h2>
     </header>
 
-    <figure class="flex flex-col gap-3">
+    <figure class="flex min-h-0 flex-1 flex-col gap-2">
       <div
         #area
-        class="relative h-80 rounded-lg border border-linea bg-superficie select-none [-webkit-touch-callout:none] [-webkit-user-select:none] md:h-96"
+        class="relative min-h-40 flex-1 rounded-lg border border-linea bg-superficie select-none [-webkit-touch-callout:none] [-webkit-user-select:none] md:h-96"
         [style.touch-action]="revelado() ? 'pan-y' : 'none'"
         [class.cursor-crosshair]="!revelado() && libre()"
         [class.cursor-ns-resize]="!revelado() && !libre()"
@@ -146,31 +136,31 @@
       </div>
 
       @if (revelado()) {
-        <ul class="flex flex-wrap gap-x-5 gap-y-1 font-mono text-etiqueta text-texto-2" aria-hidden="true">
+        <ul class="flex shrink-0 flex-wrap gap-x-5 gap-y-1 font-mono text-etiqueta text-texto-2" aria-hidden="true">
           <li class="flex items-center gap-2"><span class="h-0.75 w-4 shrink-0 rounded-full bg-foco-encendido"></span>Lo que pasó en {{ serie }}</li>
           <li class="flex items-center gap-2"><span class="w-4 shrink-0 border-t-2 border-dashed border-arena"></span>Tu línea</li>
           <li class="flex items-center gap-2"><span class="size-3 shrink-0 rounded-xs bg-alerta/20"></span>Diferencia</li>
         </ul>
       }
 
-      <figcaption class="flex flex-col gap-1 font-mono text-etiqueta text-texto-3">
+      <figcaption class="flex shrink-0 flex-col gap-1 font-mono text-etiqueta text-texto-3">
         @if (!revelado()) {
           <span class="text-nota text-texto-2">{{ guia() }}</span>
-          <span>Con teclado: Tab para elegir una edad, flechas arriba y abajo para moverla, Shift para ir de 10 en 10.</span>
+          <span class="sr-only">Con teclado: Tab para elegir una edad, flechas arriba y abajo para moverla, Shift para ir de 10 en 10.</span>
         }
         <span>Fuente: INE, Conteo Censal de Participación {{ serie }}</span>
       </figcaption>
     </figure>
 
-    <div aria-live="polite" class="flex max-w-(--container-texto) flex-col gap-4">
+    <div aria-live="polite" class="flex max-w-(--container-texto) shrink-0 flex-col gap-2">
       @if (mensajes() && resultado(); as res) {
         <p
-          class="font-titulo font-negrita text-titulo-2 ancho-titulo transition-[opacity,translate] duracion-larga ease-entrada starting:translate-y-2 starting:opacity-0 motion-reduce:duracion-corta motion-reduce:starting:translate-y-0"
+          class="font-titulo font-negrita text-titulo-3 ancho-titulo md:text-titulo-2 transition-[opacity,translate] duracion-larga ease-entrada starting:translate-y-2 starting:opacity-0 motion-reduce:duracion-corta motion-reduce:starting:translate-y-0"
         >
           Te equivocaste por <span class="tabular text-acento-texto">{{ res.error }}</span> puntos en promedio.
         </p>
         <p
-          class="text-entrada text-texto-2 transition-[opacity,translate] duracion-larga ease-entrada starting:translate-y-2 starting:opacity-0 motion-reduce:duracion-corta motion-reduce:starting:translate-y-0"
+          class="text-cuerpo text-texto-2 md:text-entrada transition-[opacity,translate] duracion-larga ease-entrada starting:translate-y-2 starting:opacity-0 motion-reduce:duracion-corta motion-reduce:starting:translate-y-0"
           [style.transition-delay.s]="reducido() ? 0 : escalonado"
         >
           {{ res.frase25 }}
@@ -178,7 +168,7 @@
       }
     </div>
 
-    <div class="flex flex-wrap items-center gap-4">
+    <div class="flex shrink-0 flex-wrap items-center gap-4">
       @if (!revelado()) {
         <button #botonVer appBoton type="button" [disabled]="!listo()" class="disabled:pointer-events-none disabled:opacity-40" (click)="revelar()">Ver la realidad</button>
       }
@@ -190,19 +180,6 @@
       }
     </div>
 
-    @if (mensajes() && resultado()) {
-      <button
-        type="button"
-        class="mt-6 flex min-h-11 items-center gap-3 self-start text-left text-titulo-3 ancho-titulo font-negrita text-texto transition-[opacity,translate,scale,color] duracion-larga ease-entrada select-none starting:translate-y-2 starting:opacity-0 active:scale-[0.98] motion-reduce:duracion-corta motion-reduce:starting:translate-y-0 hover:text-acento-texto"
-        [style.transition-delay.s]="reducido() ? 0 : escalonado * 2"
-        (click)="irAlActo2()"
-      >
-        ¿Qué pasa entre los {{ edadMin }} y los {{ edadClave }}?
-        <span class="flex size-11 shrink-0 items-center justify-center rounded-full border border-texto-3 text-acento-texto">
-          <app-icono nombre="abajo" class="size-5" />
-        </span>
-      </button>
-    }
   </div>
 
 

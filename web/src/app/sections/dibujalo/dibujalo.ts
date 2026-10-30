@@ -575,7 +575,4 @@ export class Dibujalo {
     this.router.navigate([], { queryParams: { a1: indice + 1 }, queryParamsHandling: 'merge', replaceUrl: true });
   }
 
-  protected irAlActo2(): void {
-    this.recorrido.siguiente();
-  }
 }

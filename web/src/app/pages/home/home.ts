@@ -18,7 +18,7 @@ const ATAJOS: Record<string, IdActo> = { intro: 'escala', '1': 'dibujalo', '2': 
     <main class="bg-fondo text-texto">
       <div [hidden]="id() !== 'hero'"><app-hero (empezar)="recorrido.siguiente()" /></div>
       <div [hidden]="id() !== 'escala'"><app-escala /></div>
-      <div [hidden]="id() !== 'dibujalo'" class="pb-(--alto-barra)"><app-dibujalo /></div>
+      <div [hidden]="id() !== 'dibujalo'"><app-dibujalo /></div>
       <div [hidden]="id() !== 'cohorte'"><app-cohorte /></div>
       <div [hidden]="id() !== 'wrapped'" class="pb-(--alto-barra)"><app-wrapped /></div>
     </main>

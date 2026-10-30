@@ -201,10 +201,10 @@
       </div>
 
       <div
-        class="relative z-10 flex flex-col px-margen-movil pb-[30vh] pila:shrink-0 pila:pb-[calc(var(--alto-barra)+var(--space-3))] lado:col-start-1 lado:row-start-1 lado:px-0 lado:pb-[40vh]"
+        class="relative z-10 flex flex-col px-margen-movil pb-[30vh] pila:grid pila:shrink-0 pila:pb-[calc(var(--alto-barra)+var(--space-3))] lado:col-start-1 lado:row-start-1 lado:px-0 lado:pb-[40vh]"
       >
         @for (paso of pasos(); track $index; let i = $index) {
-          <div class="flex min-h-paso items-start pt-4 lado:items-center lado:pt-0 pila:min-h-0 pila:pt-0 pila:transition-[opacity,translate] pila:duracion-media pila:ease-entrada pila:starting:translate-y-2 pila:starting:opacity-0 pila:data-oculta:hidden motion-reduce:duracion-corta motion-reduce:starting:translate-y-0" [attr.data-oculta]="activo() !== i ? '' : null">
+          <div class="flex min-h-paso items-start pt-4 lado:items-center lado:pt-0 pila:min-h-0 pila:items-stretch pila:pt-0 pila:[grid-area:1/1] pila:transition-[opacity,visibility] pila:duracion-media pila:ease-entrada pila:data-oculta:invisible pila:data-oculta:opacity-0 motion-reduce:duracion-corta" [attr.data-oculta]="activo() !== i ? '' : null">
             <article
               #tarjeta
               class="w-full max-w-(--container-texto) rounded-lg border border-linea bg-superficie p-5"
