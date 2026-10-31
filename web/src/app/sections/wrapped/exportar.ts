@@ -42,6 +42,10 @@ export function descargarBlob(blob: Blob, nombre: string): void {
   setTimeout(() => URL.revokeObjectURL(url), 60_000);
 }
 
+export function archivoDe(blob: Blob, indice: number): File {
+  return new File([blob], nombreArchivo(indice), { type: 'image/png' });
+}
+
 export function puedeCompartirArchivos(): boolean {
   if (typeof navigator.share !== 'function' || typeof navigator.canShare !== 'function') {
     return false;
@@ -51,6 +55,10 @@ export function puedeCompartirArchivos(): boolean {
   } catch {
     return false;
   }
+}
+
+export function guardaEnGaleria(): boolean {
+  return puedeCompartirArchivos() && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 }
 
 @Injectable({ providedIn: 'root' })

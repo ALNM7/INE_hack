@@ -215,11 +215,11 @@
         <div class="flex flex-wrap justify-center gap-3" [attr.aria-busy]="ocupado() !== null">
           <button appBoton type="button" class="disabled:opacity-60" [disabled]="ocupado() !== null" (click)="descargarUna()">
             <app-icono nombre="descargar" class="size-5" />
-            {{ ocupado() === 'una' ? 'Preparando imagen' : 'Descargar esta tarjeta' }}
+            {{ ocupado() === 'una' ? 'Preparando imagen' : galeria ? 'Guardar en tu galería' : 'Descargar esta tarjeta' }}
           </button>
           <button appBoton variante="secundario" type="button" class="disabled:opacity-60" [disabled]="ocupado() !== null" (click)="descargarTodas()">
             <app-icono nombre="descargar" class="size-5" />
-            {{ ocupado() === 'todas' ? 'Preparando imágenes' : 'Descargar todas' }}
+            {{ ocupado() === 'todas' ? 'Preparando imágenes' : galeria ? 'Guardar las ' + tarjetas().length : 'Descargar todas' }}
           </button>
           @if (compartible) {
             <button appBoton variante="secundario" type="button" class="disabled:opacity-60" [disabled]="ocupado() !== null" (click)="compartir()">
@@ -228,6 +228,11 @@
             </button>
           }
         </div>
+        @if (galeria) {
+          <p class="max-w-(--container-texto) text-center text-nota text-texto-2">
+            Se abre el menú de tu teléfono: elige "Guardar imagen" o "Guardar en Fotos" y quedan en tu galería.
+          </p>
+        }
       </div>
     }
   </div>

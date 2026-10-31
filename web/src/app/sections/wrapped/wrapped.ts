@@ -27,7 +27,7 @@ import { Boton } from '../../shared/ui/boton';
 import { Icono } from '../../shared/ui/icono';
 import { SelectorVariantes } from '../../shared/ui/selector-variantes';
 import { ComboboxMunicipio, OpcionMunicipio } from './combobox-municipio';
-import { ExportadorTarjetas, descargarBlob, nombreArchivo, puedeCompartirArchivos } from './exportar';
+import { ExportadorTarjetas, archivoDe, descargarBlob, guardaEnGaleria, nombreArchivo, puedeCompartirArchivos } from './exportar';
 import { ANCHO_TARJETA, TarjetaWrapped, VarianteTarjeta } from './tarjeta-wrapped';
 import { EDAD_MAX, EDAD_MIN, Entrada, SEXOS, Sexo, Tarjeta, generarTarjetas } from './tarjetas';
 
@@ -84,6 +84,7 @@ export class Wrapped {
   protected readonly sexos = SEXOS;
   protected readonly nombres = VARIANTES;
   protected readonly compartible = puedeCompartirArchivos();
+  protected readonly galeria = guardaEnGaleria();
 
   protected readonly catalogo = this.datos.catalogo.valor;
   private readonly estados = this.datos.estados.valor;
@@ -175,11 +176,24 @@ export class Wrapped {
     effect((limpiar) => {
       const indice = this.activa();
       this.claveMontaje();
-      if (!this.compartible || !this.tarjetas().length) {
+      const total = this.tarjetas().length;
+      if (!this.compartible || !total) {
         return;
       }
-      const espera = setTimeout(() => this.blobDe(indice).catch(() => undefined), duracion('escena') * 1000);
-      limpiar(() => clearTimeout(espera));
+      let cancelado = false;
+      const orden = [indice, ...Array.from({ length: total }, (_, i) => i).filter((i) => i !== indice)];
+      const espera = setTimeout(async () => {
+        for (const i of orden) {
+          if (cancelado) {
+            return;
+          }
+          await this.blobDe(i).catch(() => undefined);
+        }
+      }, duracion('escena') * 1000);
+      limpiar(() => {
+        cancelado = true;
+        clearTimeout(espera);
+      });
     });
 
     inject(DestroyRef).onDestroy(() => cancelAnimationFrame(this.cuadro));
@@ -342,10 +356,15 @@ export class Wrapped {
     this.ocupado.set('una');
     const indice = this.activa();
     try {
-      descargarBlob(await this.blobDe(indice), nombreArchivo(indice + 1));
-      toast.success('Tarjeta descargada');
-    } catch {
-      toast.error('No se pudo generar la imagen, intenta de nuevo');
+      const blob = await this.blobDe(indice);
+      if (this.galeria) {
+        await this.abrirMenu([archivoDe(blob, indice + 1)]);
+      } else {
+        descargarBlob(blob, nombreArchivo(indice + 1));
+        toast.success('Tarjeta descargada');
+      }
+    } catch (error) {
+      this.avisarError(error);
     } finally {
       this.ocupado.set(null);
     }
@@ -358,15 +377,24 @@ export class Wrapped {
     this.ocupado.set('todas');
     const total = this.tarjetas().length;
     try {
+      const blobs: Blob[] = [];
       for (let i = 0; i < total; i++) {
-        descargarBlob(await this.blobDe(i), nombreArchivo(i + 1));
+        blobs.push(await this.blobDe(i));
+      }
+      const archivos = blobs.map((blob, i) => archivoDe(blob, i + 1));
+      if (this.galeria && navigator.canShare({ files: archivos })) {
+        await this.abrirMenu(archivos);
+        return;
+      }
+      for (let i = 0; i < total; i++) {
+        descargarBlob(blobs[i], nombreArchivo(i + 1));
         if (i < total - 1) {
           await esperar(duracion('larga'));
         }
       }
       toast.success(`Listo, se descargaron las ${total}`);
-    } catch {
-      toast.error('No se pudo generar la imagen, intenta de nuevo');
+    } catch (error) {
+      this.avisarError(error);
     } finally {
       this.ocupado.set(null);
     }
@@ -379,16 +407,27 @@ export class Wrapped {
     this.ocupado.set('compartir');
     const indice = this.activa();
     try {
-      const blob = await this.blobDe(indice);
-      const archivo = new File([blob], nombreArchivo(indice + 1), { type: 'image/png' });
-      await navigator.share({ files: [archivo], title: 'La generación que se apagó' });
+      await this.abrirMenu([archivoDe(await this.blobDe(indice), indice + 1)]);
     } catch (error) {
-      if (!(error instanceof DOMException) || (error.name !== 'AbortError' && error.name !== 'NotAllowedError')) {
-        toast.error('No se pudo generar la imagen, intenta de nuevo');
-      }
+      this.avisarError(error);
     } finally {
       this.ocupado.set(null);
     }
+  }
+
+  private abrirMenu(archivos: File[]): Promise<void> {
+    return navigator.share({ files: archivos, title: 'La generación que se apagó' });
+  }
+
+  private avisarError(error: unknown): void {
+    if (error instanceof DOMException && error.name === 'AbortError') {
+      return;
+    }
+    if (error instanceof DOMException && error.name === 'NotAllowedError') {
+      toast.info('Tus tarjetas ya están listas. Vuelve a tocar el botón.');
+      return;
+    }
+    toast.error('No se pudo generar la imagen, intenta de nuevo');
   }
 
   protected elegirVariante(indice: number): void {
