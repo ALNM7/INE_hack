@@ -1,0 +1,65 @@
+[
+  {
+    "clip": 1,
+    "original": "1.ogg",
+    "duracionOriginal": 11.334,
+    "duracion": 10.238,
+    "lufs": -16.17
+  },
+  {
+    "clip": 2,
+    "original": "2.ogg",
+    "duracionOriginal": 20.933,
+    "duracion": 20.152,
+    "lufs": -16.42
+  },
+  {
+    "clip": 3,
+    "original": "3.mp4",
+    "duracionOriginal": 24.425,
+    "duracion": 22.149,
+    "lufs": -16.08
+  },
+  {
+    "clip": 4,
+    "original": "4.ogg",
+    "duracionOriginal": 16.733,
+    "duracion": 15.645,
+    "lufs": -16.44
+  },
+  {
+    "clip": 5,
+    "original": "5.ogg",
+    "duracionOriginal": 13.354,
+    "duracion": 12.479,
+    "lufs": -16.28
+  },
+  {
+    "clip": 6,
+    "original": "6.ogg",
+    "duracionOriginal": 15.493,
+    "duracion": 13.397,
+    "lufs": -16.54
+  },
+  {
+    "clip": 7,
+    "original": "7.mp4",
+    "duracionOriginal": 17.94,
+    "duracion": 17.803,
+    "lufs": -16.39
+  },
+  {
+    "clip": 8,
+    "original": "8.ogg",
+    "duracionOriginal": 9.414,
+    "duracion": 8.145,
+    "lufs": -16.1
+  },
+  {
+    "clip": 9,
+    "original": "9.ogg",
+    "duracionOriginal": 3.193,
+    "duracion": 1.553,
+    "lufs": -17.42
+  }
+]

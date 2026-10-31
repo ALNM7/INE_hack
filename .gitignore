@@ -7,3 +7,6 @@ video/**/renders/
 .DS_Store
 Thumbs.db
 .agents/
+video/pitch/node_modules
+video/pitch/renders
+video/pitch/.claude
