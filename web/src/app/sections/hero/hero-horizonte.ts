@@ -38,7 +38,7 @@ const porcentaje = new Intl.NumberFormat('es-MX', { minimumFractionDigits: 1, ma
       <div
         class="relative row-start-2 mx-auto flex w-full max-w-(--container-max) flex-col items-start gap-6 px-margen-movil pt-10 pb-[calc(var(--space-10)+env(safe-area-inset-bottom))] md:gap-8 md:px-margen-escritorio md:pt-16"
       >
-        <h1 id="hero-titulo" class="text-cifra ancho-titulo md:text-display" [attr.aria-label]="titulo">
+        <h1 id="hero-titulo" class="text-cifra ancho-titulo" [attr.aria-label]="titulo">
           <span #renglon class="block" aria-hidden="true">{{ lineas[0] }}</span>
           <span #renglon class="block" aria-hidden="true"
             >{{ inicioFinal }}<span #palabraApagada class="text-foco-apagado">{{ apagada }}</span></span
