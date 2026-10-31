@@ -29,7 +29,7 @@ import { Estado } from '../../core/models';
 import { funcionCurva } from '../../core/motion';
 import { pxToken } from '../../core/tokens';
 import { proyeccionMexico } from '../../shared/charts/proyeccion';
-import { DatosActo, FOCOS_POR_PUNTO, porcentaje } from './escena';
+import { DatosActo, porcentaje } from './escena';
 import { LucesFocos, generarFocos } from './focos';
 
 const SEMILLA_FOCOS = 2024;
@@ -130,7 +130,6 @@ interface Seleccion {
           [style.opacity]="opacidadLeyenda()"
           [attr.aria-hidden]="nota() > 0.5 ? 'true' : null"
         >
-          <span>% de jóvenes de 18 a 24 años que votó · {{ anio }}</span>
           <div class="flex h-2 max-w-80 overflow-hidden rounded-xs" aria-hidden="true">
             @for (clase of muestras; track clase) {
               <span class="flex-1" [class]="clase"></span>
@@ -141,14 +140,6 @@ interface Seleccion {
             <span>{{ leyenda().max }}</span>
           </div>
         </div>
-        <p
-          class="self-end text-texto-2 [grid-area:1/1]"
-          [style.opacity]="opacidadNota()"
-          [attr.aria-hidden]="nota() > 0.5 ? null : 'true'"
-        >
-          Cada punto representa {{ focosPorPunto }} secciones. La ubicación dentro de cada estado es
-          aproximada.
-        </p>
       </div>
     </figure>
 
@@ -187,7 +178,6 @@ export class MapaJovenes {
 
   protected readonly anio = '2024';
   protected readonly muestras = MUESTRAS;
-  protected readonly focosPorPunto = FOCOS_POR_PUNTO;
   protected readonly medidas = signal({ ancho: 0, alto: 0, margen: 0 });
   protected readonly punto = signal(0);
   protected readonly seleccion = signal<Seleccion | null>(null);
@@ -280,7 +270,6 @@ export class MapaJovenes {
   });
 
   protected readonly opacidadLeyenda = computed(() => Math.max(0, 1 - this.nota() * 2));
-  protected readonly opacidadNota = computed(() => Math.max(0, this.nota() * 2 - 1));
 
   protected readonly opacidadMapa = computed(() => 1 - this.oscuro() * (1 - OSCURO_MINIMO));
 
