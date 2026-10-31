@@ -5,7 +5,7 @@ import { Escena } from "../compartidos/Escena";
 import { Encabezado } from "../compartidos/Encabezado";
 import { Ejes, Lienzo, Marca } from "../compartidos/Grafica";
 import { avance } from "../compartidos/movimiento";
-import { color, duracion, curva } from "../datos/marca";
+import { color, fuente, duracion, curva } from "../datos/marca";
 import { anioReciente, edadExacta, edadesClave, formato, participacionPorEdad, fuenteDatos } from "../datos/cifras";
 import { PropsEscena, usePalabra } from "../datos/tiempos";
 
@@ -30,7 +30,7 @@ const Contenido = () => {
   const larga = Math.round(duracion.larga * fps);
   const clave = edadesClave();
   const marcas = [
-    { edad: clave.primera, momento: palabra(2, `${clave.primera}`), arriba: true },
+    { edad: clave.primera, momento: palabra(2, `${clave.primera}`), arriba: true, inicio: true },
     { edad: clave.minima, momento: palabra(2, `${clave.minima}`), arriba: false },
     { edad: clave.maxima, momento: palabra(2, `${clave.maxima},`), arriba: true },
   ];
@@ -49,7 +49,7 @@ const Contenido = () => {
           etiquetaX={(v) => `${v}`}
           opacidad={avance(frame, 0, larga)}
         />
-        <text x={ANCHO} y={ALTO + 40 + 32} textAnchor="end" fontFamily="inherit" fontSize={18} fill={color.ceniza} opacity={avance(frame, 0, larga)}>
+        <text x={ANCHO} y={ALTO + 40 + 32} textAnchor="end" fontFamily={fuente.mono} fontSize={18} fill={color.ceniza} opacity={avance(frame, 0, larga)}>
           Edad
         </text>
         <path d={ruta} pathLength={1} fill="none" stroke={color.luz} strokeWidth={6} strokeLinecap="round" strokeLinejoin="round" strokeDasharray={1} strokeDashoffset={1 - dibujo} />
@@ -63,6 +63,7 @@ const Contenido = () => {
               valor={formato.porcentaje(valor)}
               leyenda={`${m.edad} años`}
               arriba={m.arriba}
+              alinear={"inicio" in m ? "start" : "middle"}
               progreso={avance(frame, m.momento, larga, curva.entrada)}
             />
           );

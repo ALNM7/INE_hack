@@ -56,6 +56,7 @@ export const Marca = ({
   progreso,
   arriba = true,
   tono = color.luz,
+  alinear = "middle",
 }: {
   cx: number;
   cy: number;
@@ -64,17 +65,18 @@ export const Marca = ({
   progreso: number;
   arriba?: boolean;
   tono?: string;
+  alinear?: "middle" | "start";
 }) => {
   const dy = arriba ? -1 : 1;
   return (
     <g opacity={progreso}>
       <circle cx={cx} cy={cy} r={22 * (0.6 + 0.4 * progreso)} fill={tono} opacity={0.18} />
       <circle cx={cx} cy={cy} r={9} fill={color.noche1} stroke={tono} strokeWidth={4} />
-      <g transform={`translate(${cx},${cy + dy * (64 + (1 - progreso) * 14)})`}>
-        <text textAnchor="middle" y={arriba ? 0 : 36} fontFamily={fuente.titulo} fontStretch={fuente.estiramientoTitulo} fontWeight={fuente.peso.extra} fontSize={64} fill={tono}>
+      <g transform={`translate(${cx + (alinear === "start" ? 24 : 0)},${cy + dy * (64 + (1 - progreso) * 14)})`}>
+        <text textAnchor={alinear} y={arriba ? 0 : 36} fontFamily={fuente.titulo} fontStretch={fuente.estiramientoTitulo} fontWeight={fuente.peso.extra} fontSize={64} fill={tono}>
           {valor}
         </text>
-        <text textAnchor="middle" y={arriba ? -58 : 70} fontFamily={fuente.mono} fontSize={20} fill={color.arena}>
+        <text textAnchor={alinear} y={arriba ? -58 : 70} fontFamily={fuente.mono} fontSize={20} fill={color.arena}>
           {leyenda}
         </text>
       </g>

@@ -70,6 +70,7 @@ const Contenido = () => {
               valor={formato.porcentaje(p.valor)}
               leyenda={`${p.edad} años`}
               arriba={i === 0}
+              alinear={i === 0 ? "start" : "middle"}
               progreso={avance(frame, momentos[i], media)}
             />
           ))}
