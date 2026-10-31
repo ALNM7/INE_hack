@@ -1,0 +1,277 @@
+{
+ "clip": 4,
+ "duracion": 15.644583,
+ "metodo": "proporcional con pausas",
+ "palabras": [
+  {
+   "texto": "Y",
+   "inicio": 0,
+   "fin": 0.117
+  },
+  {
+   "texto": "no",
+   "inicio": 0.117,
+   "fin": 0.274
+  },
+  {
+   "texto": "se",
+   "inicio": 0.274,
+   "fin": 0.43
+  },
+  {
+   "texto": "apaga",
+   "inicio": 0.43,
+   "fin": 0.704
+  },
+  {
+   "texto": "igual",
+   "inicio": 0.704,
+   "fin": 0.978
+  },
+  {
+   "texto": "para",
+   "inicio": 0.978,
+   "fin": 1.212
+  },
+  {
+   "texto": "todos.",
+   "inicio": 1.212,
+   "fin": 1.486
+  },
+  {
+   "texto": "De",
+   "inicio": 1.767,
+   "fin": 1.928
+  },
+  {
+   "texto": "los",
+   "inicio": 1.928,
+   "fin": 2.129
+  },
+  {
+   "texto": "25",
+   "inicio": 2.129,
+   "fin": 2.652
+  },
+  {
+   "texto": "a",
+   "inicio": 2.652,
+   "fin": 2.773
+  },
+  {
+   "texto": "los",
+   "inicio": 2.773,
+   "fin": 2.974
+  },
+  {
+   "texto": "29,",
+   "inicio": 2.974,
+   "fin": 3.497
+  },
+  {
+   "texto": "votan",
+   "inicio": 3.497,
+   "fin": 3.779
+  },
+  {
+   "texto": "54",
+   "inicio": 3.779,
+   "fin": 4.503
+  },
+  {
+   "texto": "de",
+   "inicio": 4.503,
+   "fin": 4.664
+  },
+  {
+   "texto": "cada",
+   "inicio": 4.664,
+   "fin": 4.905
+  },
+  {
+   "texto": "100",
+   "inicio": 4.905,
+   "fin": 5.227
+  },
+  {
+   "texto": "mujeres…",
+   "inicio": 5.227,
+   "fin": 5.589
+  },
+  {
+   "texto": "pero",
+   "inicio": 5.589,
+   "fin": 6.371
+  },
+  {
+   "texto": "solo",
+   "inicio": 6.371,
+   "fin": 6.608
+  },
+  {
+   "texto": "41",
+   "inicio": 6.608,
+   "fin": 7.16
+  },
+  {
+   "texto": "de",
+   "inicio": 7.16,
+   "fin": 7.317
+  },
+  {
+   "texto": "cada",
+   "inicio": 7.317,
+   "fin": 7.554
+  },
+  {
+   "texto": "100",
+   "inicio": 7.554,
+   "fin": 7.869
+  },
+  {
+   "texto": "hombres.",
+   "inicio": 7.869,
+   "fin": 8.224
+  },
+  {
+   "texto": "Y",
+   "inicio": 8.617,
+   "fin": 8.745
+  },
+  {
+   "texto": "también",
+   "inicio": 8.745,
+   "fin": 9.128
+  },
+  {
+   "texto": "depende",
+   "inicio": 9.128,
+   "fin": 9.512
+  },
+  {
+   "texto": "de",
+   "inicio": 9.512,
+   "fin": 9.682
+  },
+  {
+   "texto": "dónde",
+   "inicio": 9.682,
+   "fin": 9.981
+  },
+  {
+   "texto": "vivas:",
+   "inicio": 9.981,
+   "fin": 10.279
+  },
+  {
+   "texto": "en",
+   "inicio": 10.617,
+   "fin": 10.762
+  },
+  {
+   "texto": "Sonora",
+   "inicio": 10.762,
+   "fin": 11.051
+  },
+  {
+   "texto": "vota",
+   "inicio": 11.051,
+   "fin": 11.268
+  },
+  {
+   "texto": "el",
+   "inicio": 11.268,
+   "fin": 11.413
+  },
+  {
+   "texto": "39",
+   "inicio": 11.413,
+   "fin": 11.955
+  },
+  {
+   "texto": "por",
+   "inicio": 11.955,
+   "fin": 12.136
+  },
+  {
+   "texto": "ciento",
+   "inicio": 12.136,
+   "fin": 12.426
+  },
+  {
+   "texto": "de",
+   "inicio": 12.426,
+   "fin": 12.57
+  },
+  {
+   "texto": "los",
+   "inicio": 12.57,
+   "fin": 12.751
+  },
+  {
+   "texto": "jóvenes;",
+   "inicio": 12.751,
+   "fin": 13.077
+  },
+  {
+   "texto": "en",
+   "inicio": 13.261,
+   "fin": 13.298
+  },
+  {
+   "texto": "Yucatán,",
+   "inicio": 13.298,
+   "fin": 13.381
+  },
+  {
+   "texto": "el",
+   "inicio": 13.654,
+   "fin": 14.073
+  },
+  {
+   "texto": "65.",
+   "inicio": 14.073,
+   "fin": 15.645
+  }
+ ],
+ "bloques": [
+  {
+   "lineas": [
+    "Y no se apaga igual para todos."
+   ],
+   "inicio": 0,
+   "fin": 1.767
+  },
+  {
+   "lineas": [
+    "De los 25 a los 29,",
+    "votan 54 de cada 100 mujeres…"
+   ],
+   "inicio": 1.767,
+   "fin": 5.589
+  },
+  {
+   "lineas": [
+    "pero solo 41 de cada 100 hombres."
+   ],
+   "inicio": 5.589,
+   "fin": 8.617
+  },
+  {
+   "lineas": [
+    "Y también depende de dónde",
+    "vivas: en Sonora vota"
+   ],
+   "inicio": 8.617,
+   "fin": 11.268
+  },
+  {
+   "lineas": [
+    "el 39 por ciento de los jóvenes;",
+    "en Yucatán, el 65."
+   ],
+   "inicio": 11.268,
+   "fin": 15.945
+  }
+ ]
+}

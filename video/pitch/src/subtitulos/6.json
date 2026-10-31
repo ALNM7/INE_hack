@@ -1,0 +1,231 @@
+{
+ "clip": 6,
+ "duracion": 13.397271,
+ "metodo": "proporcional con pausas",
+ "palabras": [
+  {
+   "texto": "Después,",
+   "inicio": 0,
+   "fin": 0.537
+  },
+  {
+   "texto": "conforme",
+   "inicio": 0.812,
+   "fin": 1.24
+  },
+  {
+   "texto": "sigues",
+   "inicio": 1.24,
+   "fin": 1.582
+  },
+  {
+   "texto": "avanzando,",
+   "inicio": 1.582,
+   "fin": 2.053
+  },
+  {
+   "texto": "te",
+   "inicio": 2.334,
+   "fin": 2.459
+  },
+  {
+   "texto": "lleva",
+   "inicio": 2.459,
+   "fin": 2.677
+  },
+  {
+   "texto": "por",
+   "inicio": 2.677,
+   "fin": 2.832
+  },
+  {
+   "texto": "la",
+   "inicio": 2.832,
+   "fin": 2.957
+  },
+  {
+   "texto": "historia",
+   "inicio": 2.957,
+   "fin": 3.268
+  },
+  {
+   "texto": "de",
+   "inicio": 3.268,
+   "fin": 3.393
+  },
+  {
+   "texto": "una",
+   "inicio": 3.393,
+   "fin": 3.548
+  },
+  {
+   "texto": "generación",
+   "inicio": 3.548,
+   "fin": 3.922
+  },
+  {
+   "texto": "que",
+   "inicio": 3.922,
+   "fin": 4.078
+  },
+  {
+   "texto": "se",
+   "inicio": 4.078,
+   "fin": 4.202
+  },
+  {
+   "texto": "fue",
+   "inicio": 4.202,
+   "fin": 4.358
+  },
+  {
+   "texto": "apagando.",
+   "inicio": 4.358,
+   "fin": 4.669
+  },
+  {
+   "texto": "Y",
+   "inicio": 5.139,
+   "fin": 5.282
+  },
+  {
+   "texto": "al",
+   "inicio": 5.282,
+   "fin": 5.472
+  },
+  {
+   "texto": "final",
+   "inicio": 5.472,
+   "fin": 6.198
+  },
+  {
+   "texto": "eliges",
+   "inicio": 6.198,
+   "fin": 6.579
+  },
+  {
+   "texto": "tu",
+   "inicio": 6.579,
+   "fin": 6.77
+  },
+  {
+   "texto": "municipio,",
+   "inicio": 6.77,
+   "fin": 7.294
+  },
+  {
+   "texto": "tu",
+   "inicio": 7.487,
+   "fin": 7.686
+  },
+  {
+   "texto": "edad",
+   "inicio": 7.686,
+   "fin": 7.984
+  },
+  {
+   "texto": "y",
+   "inicio": 7.984,
+   "fin": 8.133
+  },
+  {
+   "texto": "tu",
+   "inicio": 8.133,
+   "fin": 8.332
+  },
+  {
+   "texto": "género,",
+   "inicio": 8.332,
+   "fin": 8.73
+  },
+  {
+   "texto": "para",
+   "inicio": 9.02,
+   "fin": 9.273
+  },
+  {
+   "texto": "recibir",
+   "inicio": 9.273,
+   "fin": 9.654
+  },
+  {
+   "texto": "tarjetas",
+   "inicio": 9.654,
+   "fin": 10.077
+  },
+  {
+   "texto": "personalizadas",
+   "inicio": 10.077,
+   "fin": 10.753
+  },
+  {
+   "texto": "listas",
+   "inicio": 10.753,
+   "fin": 11.365
+  },
+  {
+   "texto": "para",
+   "inicio": 11.365,
+   "fin": 11.833
+  },
+  {
+   "texto": "compartir",
+   "inicio": 11.833,
+   "fin": 12.298
+  },
+  {
+   "texto": "en",
+   "inicio": 12.298,
+   "fin": 12.467
+  },
+  {
+   "texto": "tus",
+   "inicio": 12.467,
+   "fin": 12.678
+  },
+  {
+   "texto": "redes",
+   "inicio": 12.678,
+   "fin": 12.974
+  },
+  {
+   "texto": "sociales.",
+   "inicio": 12.974,
+   "fin": 13.397
+  }
+ ],
+ "bloques": [
+  {
+   "lineas": [
+    "Después, conforme sigues",
+    "avanzando, te lleva por"
+   ],
+   "inicio": 0,
+   "fin": 2.832
+  },
+  {
+   "lineas": [
+    "la historia de una generación",
+    "que se fue apagando."
+   ],
+   "inicio": 2.832,
+   "fin": 5.139
+  },
+  {
+   "lineas": [
+    "Y al final eliges tu municipio,",
+    "tu edad y tu género, para recibir"
+   ],
+   "inicio": 5.139,
+   "fin": 9.654
+  },
+  {
+   "lineas": [
+    "tarjetas personalizadas listas para",
+    "compartir en tus redes sociales."
+   ],
+   "inicio": 9.654,
+   "fin": 13.697000000000001
+  }
+ ]
+}

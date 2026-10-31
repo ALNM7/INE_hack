@@ -1,0 +1,156 @@
+{
+ "clip": 8,
+ "duracion": 8.145333,
+ "metodo": "proporcional con pausas",
+ "palabras": [
+  {
+   "texto": "Pero",
+   "inicio": 0,
+   "fin": 0.291
+  },
+  {
+   "texto": "no",
+   "inicio": 0.291,
+   "fin": 0.485
+  },
+  {
+   "texto": "todo",
+   "inicio": 0.485,
+   "fin": 0.776
+  },
+  {
+   "texto": "está",
+   "inicio": 0.776,
+   "fin": 1.067
+  },
+  {
+   "texto": "perdido:",
+   "inicio": 1.067,
+   "fin": 1.503
+  },
+  {
+   "texto": "hay",
+   "inicio": 1.871,
+   "fin": 2.091
+  },
+  {
+   "texto": "casi",
+   "inicio": 2.091,
+   "fin": 2.356
+  },
+  {
+   "texto": "15",
+   "inicio": 2.356,
+   "fin": 2.709
+  },
+  {
+   "texto": "mil",
+   "inicio": 2.709,
+   "fin": 2.93
+  },
+  {
+   "texto": "secciones",
+   "inicio": 2.93,
+   "fin": 3.415
+  },
+  {
+   "texto": "donde",
+   "inicio": 3.415,
+   "fin": 3.724
+  },
+  {
+   "texto": "los",
+   "inicio": 3.724,
+   "fin": 3.945
+  },
+  {
+   "texto": "jóvenes",
+   "inicio": 3.945,
+   "fin": 4.342
+  },
+  {
+   "texto": "sí",
+   "inicio": 4.342,
+   "fin": 4.519
+  },
+  {
+   "texto": "salen",
+   "inicio": 4.519,
+   "fin": 4.828
+  },
+  {
+   "texto": "a",
+   "inicio": 4.828,
+   "fin": 4.96
+  },
+  {
+   "texto": "votar.",
+   "inicio": 4.96,
+   "fin": 5.269
+  },
+  {
+   "texto": "Las",
+   "inicio": 5.959,
+   "fin": 6.186
+  },
+  {
+   "texto": "luces",
+   "inicio": 6.186,
+   "fin": 6.505
+  },
+  {
+   "texto": "todavía",
+   "inicio": 6.505,
+   "fin": 6.915
+  },
+  {
+   "texto": "no",
+   "inicio": 6.915,
+   "fin": 7.097
+  },
+  {
+   "texto": "se",
+   "inicio": 7.097,
+   "fin": 7.28
+  },
+  {
+   "texto": "apagan",
+   "inicio": 7.28,
+   "fin": 7.644
+  },
+  {
+   "texto": "del",
+   "inicio": 7.644,
+   "fin": 7.872
+  },
+  {
+   "texto": "todo.",
+   "inicio": 7.872,
+   "fin": 8.145
+  }
+ ],
+ "bloques": [
+  {
+   "lineas": [
+    "Pero no todo está perdido: hay casi 15 mil"
+   ],
+   "inicio": 0,
+   "fin": 2.93
+  },
+  {
+   "lineas": [
+    "secciones donde los",
+    "jóvenes sí salen a votar."
+   ],
+   "inicio": 2.93,
+   "fin": 5.569
+  },
+  {
+   "lineas": [
+    "Las luces todavía no se apagan del todo."
+   ],
+   "inicio": 5.959,
+   "fin": 8.445
+  }
+ ]
+}

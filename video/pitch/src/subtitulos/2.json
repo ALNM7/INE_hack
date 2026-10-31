@@ -1,0 +1,286 @@
+{
+ "clip": 2,
+ "duracion": 20.151854,
+ "metodo": "proporcional con pausas",
+ "palabras": [
+  {
+   "texto": "Casi",
+   "inicio": 0,
+   "fin": 0.952
+  },
+  {
+   "texto": "todos",
+   "inicio": 0.952,
+   "fin": 1.263
+  },
+  {
+   "texto": "piensan",
+   "inicio": 1.263,
+   "fin": 1.662
+  },
+  {
+   "texto": "que",
+   "inicio": 1.662,
+   "fin": 1.884
+  },
+  {
+   "texto": "quienes",
+   "inicio": 1.884,
+   "fin": 2.283
+  },
+  {
+   "texto": "menos",
+   "inicio": 2.283,
+   "fin": 2.593
+  },
+  {
+   "texto": "votan",
+   "inicio": 2.593,
+   "fin": 2.904
+  },
+  {
+   "texto": "son",
+   "inicio": 2.904,
+   "fin": 3.126
+  },
+  {
+   "texto": "los",
+   "inicio": 3.126,
+   "fin": 3.347
+  },
+  {
+   "texto": "adultos",
+   "inicio": 3.347,
+   "fin": 3.747
+  },
+  {
+   "texto": "mayores.",
+   "inicio": 3.747,
+   "fin": 4.146
+  },
+  {
+   "texto": "Pero",
+   "inicio": 4.593,
+   "fin": 4.855
+  },
+  {
+   "texto": "los",
+   "inicio": 4.855,
+   "fin": 5.073
+  },
+  {
+   "texto": "datos",
+   "inicio": 5.073,
+   "fin": 5.379
+  },
+  {
+   "texto": "del",
+   "inicio": 5.379,
+   "fin": 5.597
+  },
+  {
+   "texto": "INE",
+   "inicio": 5.597,
+   "fin": 5.816
+  },
+  {
+   "texto": "dicen",
+   "inicio": 5.816,
+   "fin": 6.122
+  },
+  {
+   "texto": "otra",
+   "inicio": 6.122,
+   "fin": 6.384
+  },
+  {
+   "texto": "cosa.",
+   "inicio": 6.384,
+   "fin": 6.646
+  },
+  {
+   "texto": "A",
+   "inicio": 7.258,
+   "fin": 7.377
+  },
+  {
+   "texto": "los",
+   "inicio": 7.377,
+   "fin": 7.575
+  },
+  {
+   "texto": "18",
+   "inicio": 7.575,
+   "fin": 8.011
+  },
+  {
+   "texto": "años",
+   "inicio": 8.011,
+   "fin": 8.503
+  },
+  {
+   "texto": "vota",
+   "inicio": 8.503,
+   "fin": 8.741
+  },
+  {
+   "texto": "el",
+   "inicio": 8.741,
+   "fin": 8.899
+  },
+  {
+   "texto": "61%",
+   "inicio": 8.899,
+   "fin": 9.771
+  },
+  {
+   "texto": "de",
+   "inicio": 9.771,
+   "fin": 9.93
+  },
+  {
+   "texto": "la",
+   "inicio": 9.93,
+   "fin": 10.088
+  },
+  {
+   "texto": "población",
+   "inicio": 10.088,
+   "fin": 10.524
+  },
+  {
+   "texto": "mexicana",
+   "inicio": 10.524,
+   "fin": 10.92
+  },
+  {
+   "texto": "con",
+   "inicio": 10.92,
+   "fin": 11.119
+  },
+  {
+   "texto": "esta",
+   "inicio": 11.119,
+   "fin": 11.356
+  },
+  {
+   "texto": "edad.",
+   "inicio": 11.356,
+   "fin": 11.594
+  },
+  {
+   "texto": "A",
+   "inicio": 12.083,
+   "fin": 12.209
+  },
+  {
+   "texto": "los",
+   "inicio": 12.209,
+   "fin": 12.42
+  },
+  {
+   "texto": "25",
+   "inicio": 12.42,
+   "fin": 12.969
+  },
+  {
+   "texto": "solo",
+   "inicio": 12.969,
+   "fin": 13.505
+  },
+  {
+   "texto": "vota",
+   "inicio": 13.505,
+   "fin": 13.758
+  },
+  {
+   "texto": "el",
+   "inicio": 13.758,
+   "fin": 13.927
+  },
+  {
+   "texto": "47%.",
+   "inicio": 13.927,
+   "fin": 14.982
+  },
+  {
+   "texto": "Y",
+   "inicio": 15.438,
+   "fin": 15.885
+  },
+  {
+   "texto": "a",
+   "inicio": 15.885,
+   "fin": 16.332
+  },
+  {
+   "texto": "los",
+   "inicio": 16.332,
+   "fin": 17.076
+  },
+  {
+   "texto": "65,",
+   "inicio": 17.076,
+   "fin": 19.309
+  },
+  {
+   "texto": "casi",
+   "inicio": 20.068,
+   "fin": 20.08
+  },
+  {
+   "texto": "el",
+   "inicio": 20.08,
+   "fin": 20.089
+  },
+  {
+   "texto": "77%",
+   "inicio": 20.089,
+   "fin": 20.139
+  },
+  {
+   "texto": "vota.",
+   "inicio": 20.139,
+   "fin": 20.152
+  }
+ ],
+ "bloques": [
+  {
+   "lineas": [
+    "Casi todos piensan que quienes",
+    "menos votan son los adultos mayores."
+   ],
+   "inicio": 0,
+   "fin": 4.593
+  },
+  {
+   "lineas": [
+    "Pero los datos del INE dicen otra cosa."
+   ],
+   "inicio": 4.593,
+   "fin": 6.946
+  },
+  {
+   "lineas": [
+    "A los 18 años vota el 61% de la",
+    "población mexicana con esta edad."
+   ],
+   "inicio": 7.258,
+   "fin": 12.083
+  },
+  {
+   "lineas": [
+    "A los 25 solo vota el 47%."
+   ],
+   "inicio": 12.083,
+   "fin": 15.438
+  },
+  {
+   "lineas": [
+    "Y a los 65, casi el 77% vota."
+   ],
+   "inicio": 15.438,
+   "fin": 20.452
+  }
+ ]
+}

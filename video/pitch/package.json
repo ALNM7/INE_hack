@@ -10,7 +10,6 @@
     "subtitulos": "node scripts/generar_subtitulos.mjs"
   },
   "dependencies": {
-    "@remotion/captions": "^4.0.539",
     "@remotion/cli": "^4.0.539",
     "@remotion/fonts": "^4.0.539",
     "@remotion/media-utils": "^4.0.539",

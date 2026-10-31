@@ -1,0 +1,316 @@
+{
+ "clip": 3,
+ "duracion": 22.149479,
+ "metodo": "proporcional con pausas",
+ "palabras": [
+  {
+   "texto": "Seguimos",
+   "inicio": 0,
+   "fin": 0.504
+  },
+  {
+   "texto": "a",
+   "inicio": 0.504,
+   "fin": 0.655
+  },
+  {
+   "texto": "una",
+   "inicio": 0.655,
+   "fin": 0.907
+  },
+  {
+   "texto": "generación.",
+   "inicio": 0.907,
+   "fin": 1.512
+  },
+  {
+   "texto": "Quienes",
+   "inicio": 1.897,
+   "fin": 2.31
+  },
+  {
+   "texto": "cumplieron",
+   "inicio": 2.31,
+   "fin": 2.86
+  },
+  {
+   "texto": "18",
+   "inicio": 2.86,
+   "fin": 3.365
+  },
+  {
+   "texto": "en",
+   "inicio": 3.365,
+   "fin": 3.548
+  },
+  {
+   "texto": "2012",
+   "inicio": 3.548,
+   "fin": 4.099
+  },
+  {
+   "texto": "votaron",
+   "inicio": 4.099,
+   "fin": 4.511
+  },
+  {
+   "texto": "67",
+   "inicio": 4.511,
+   "fin": 5.2
+  },
+  {
+   "texto": "por",
+   "inicio": 5.2,
+   "fin": 5.429
+  },
+  {
+   "texto": "ciento.",
+   "inicio": 5.429,
+   "fin": 5.796
+  },
+  {
+   "texto": "A",
+   "inicio": 6.118,
+   "fin": 6.276
+  },
+  {
+   "texto": "los",
+   "inicio": 6.276,
+   "fin": 6.539
+  },
+  {
+   "texto": "24,",
+   "inicio": 6.539,
+   "fin": 7.275
+  },
+  {
+   "texto": "52.",
+   "inicio": 7.275,
+   "fin": 8.064
+  },
+  {
+   "texto": "A",
+   "inicio": 8.452,
+   "fin": 8.601
+  },
+  {
+   "texto": "los",
+   "inicio": 8.601,
+   "fin": 8.849
+  },
+  {
+   "texto": "30,",
+   "inicio": 8.849,
+   "fin": 9.296
+  },
+  {
+   "texto": "50.",
+   "inicio": 9.296,
+   "fin": 9.841
+  },
+  {
+   "texto": "Nunca",
+   "inicio": 9.841,
+   "fin": 10.188
+  },
+  {
+   "texto": "se",
+   "inicio": 10.188,
+   "fin": 10.387
+  },
+  {
+   "texto": "recuperaron.",
+   "inicio": 10.387,
+   "fin": 11.032
+  },
+  {
+   "texto": "En",
+   "inicio": 11.032,
+   "fin": 11.23
+  },
+  {
+   "texto": "cambio,",
+   "inicio": 11.23,
+   "fin": 11.627
+  },
+  {
+   "texto": "quienes",
+   "inicio": 12.121,
+   "fin": 12.426
+  },
+  {
+   "texto": "tenían",
+   "inicio": 12.426,
+   "fin": 12.696
+  },
+  {
+   "texto": "50",
+   "inicio": 12.696,
+   "fin": 13.069
+  },
+  {
+   "texto": "años",
+   "inicio": 13.069,
+   "fin": 13.272
+  },
+  {
+   "texto": "en",
+   "inicio": 13.272,
+   "fin": 13.407
+  },
+  {
+   "texto": "2018",
+   "inicio": 13.407,
+   "fin": 13.982
+  },
+  {
+   "texto": "votaron",
+   "inicio": 13.982,
+   "fin": 14.286
+  },
+  {
+   "texto": "igual",
+   "inicio": 14.286,
+   "fin": 14.523
+  },
+  {
+   "texto": "seis",
+   "inicio": 14.523,
+   "fin": 14.726
+  },
+  {
+   "texto": "años",
+   "inicio": 14.726,
+   "fin": 14.929
+  },
+  {
+   "texto": "después.",
+   "inicio": 14.929,
+   "fin": 15.234
+  },
+  {
+   "texto": "No",
+   "inicio": 15.464,
+   "fin": 15.948
+  },
+  {
+   "texto": "es",
+   "inicio": 15.948,
+   "fin": 16.432
+  },
+  {
+   "texto": "la",
+   "inicio": 16.432,
+   "fin": 16.916
+  },
+  {
+   "texto": "edad,",
+   "inicio": 16.916,
+   "fin": 17.641
+  },
+  {
+   "texto": "es",
+   "inicio": 17.933,
+   "fin": 18.168
+  },
+  {
+   "texto": "algo",
+   "inicio": 18.168,
+   "fin": 18.521
+  },
+  {
+   "texto": "que",
+   "inicio": 18.521,
+   "fin": 19.121
+  },
+  {
+   "texto": "pasa",
+   "inicio": 19.121,
+   "fin": 19.474
+  },
+  {
+   "texto": "en",
+   "inicio": 19.474,
+   "fin": 19.71
+  },
+  {
+   "texto": "esta",
+   "inicio": 19.71,
+   "fin": 20.063
+  },
+  {
+   "texto": "etapa",
+   "inicio": 20.063,
+   "fin": 20.474
+  },
+  {
+   "texto": "de",
+   "inicio": 20.474,
+   "fin": 20.71
+  },
+  {
+   "texto": "la",
+   "inicio": 20.71,
+   "fin": 20.945
+  },
+  {
+   "texto": "vida.",
+   "inicio": 20.945,
+   "fin": 21.488
+  }
+ ],
+ "bloques": [
+  {
+   "lineas": [
+    "Seguimos a una generación."
+   ],
+   "inicio": 0,
+   "fin": 1.897
+  },
+  {
+   "lineas": [
+    "Quienes cumplieron 18 en",
+    "2012 votaron 67 por ciento."
+   ],
+   "inicio": 1.897,
+   "fin": 6.118
+  },
+  {
+   "lineas": [
+    "A los 24, 52."
+   ],
+   "inicio": 6.118,
+   "fin": 8.452
+  },
+  {
+   "lineas": [
+    "A los 30, 50."
+   ],
+   "inicio": 8.452,
+   "fin": 9.841
+  },
+  {
+   "lineas": [
+    "Nunca se recuperaron."
+   ],
+   "inicio": 9.841,
+   "fin": 11.032
+  },
+  {
+   "lineas": [
+    "En cambio, quienes tenían 50 años en",
+    "2018 votaron igual seis años después."
+   ],
+   "inicio": 11.032,
+   "fin": 15.464
+  },
+  {
+   "lineas": [
+    "No es la edad, es algo que",
+    "pasa en esta etapa de la vida."
+   ],
+   "inicio": 15.464,
+   "fin": 21.788
+  }
+ ]
+}

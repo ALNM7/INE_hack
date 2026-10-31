@@ -392,3 +392,7 @@ Pedido: las tarjetas ya cuentan la historia; las gráficas deben ser visuales.
 - **Mapa del Acto 2**: se quitaron el título de la escala de color y la nota "Cada punto representa 25 secciones...". La escala conserva sus extremos.
 - **Intro**: se quitaron "La forma es el país..." y "Cada punto: unas 92 mil personas..."; queda la leyenda de colores y una línea "Fuente: INE, Conteo Censal de Participación 2024".
 - Lo quitado sigue disponible para lectores de pantalla en la descripción de cada gráfica (`aria-label`), que no cambió.
+
+### Video pitch en Remotion
+
+El pitch se hizo con Remotion y no con HyperFrames: Remotion renderiza cuadro por cuadro con React, así que cada animación depende solo del número de cuadro, y con `calculateMetadata` la duración de cada escena se calcula desde la duración real de las voces (más 0.6 s de respiro, 0.25 s entre clips de la misma escena y 2 s de espera en el cierre). Los reels y el hero hechos con HyperFrames no se tocaron; del pitch solo se reutilizó el estilo de `video/brand.js`. Los tiempos por palabra salen de un reparto proporcional anclado a las pausas reales de cada clip, porque el modelo de whisper.cpp no se pudo descargar desde el entorno.

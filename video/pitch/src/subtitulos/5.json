@@ -1,0 +1,225 @@
+{
+ "clip": 5,
+ "duracion": 12.478896,
+ "metodo": "proporcional con pausas",
+ "palabras": [
+  {
+   "texto": "Por",
+   "inicio": 0,
+   "fin": 0.912
+  },
+  {
+   "texto": "eso",
+   "inicio": 0.912,
+   "fin": 1.176
+  },
+  {
+   "texto": "creamos",
+   "inicio": 1.176,
+   "fin": 1.652
+  },
+  {
+   "texto": "La",
+   "inicio": 1.652,
+   "fin": 1.863
+  },
+  {
+   "texto": "generación",
+   "inicio": 1.863,
+   "fin": 2.498
+  },
+  {
+   "texto": "que",
+   "inicio": 2.498,
+   "fin": 2.762
+  },
+  {
+   "texto": "se",
+   "inicio": 2.762,
+   "fin": 2.973
+  },
+  {
+   "texto": "apagó,",
+   "inicio": 2.973,
+   "fin": 3.343
+  },
+  {
+   "texto": "una",
+   "inicio": 3.917,
+   "fin": 4.129
+  },
+  {
+   "texto": "historia",
+   "inicio": 4.129,
+   "fin": 4.553
+  },
+  {
+   "texto": "hecha",
+   "inicio": 4.553,
+   "fin": 4.849
+  },
+  {
+   "texto": "para",
+   "inicio": 4.849,
+   "fin": 5.104
+  },
+  {
+   "texto": "el",
+   "inicio": 5.104,
+   "fin": 5.273
+  },
+  {
+   "texto": "celular",
+   "inicio": 5.273,
+   "fin": 5.909
+  },
+  {
+   "texto": "con",
+   "inicio": 5.909,
+   "fin": 6.121
+  },
+  {
+   "texto": "los",
+   "inicio": 6.121,
+   "fin": 6.332
+  },
+  {
+   "texto": "Conteos",
+   "inicio": 6.332,
+   "fin": 6.714
+  },
+  {
+   "texto": "Censales",
+   "inicio": 6.714,
+   "fin": 7.137
+  },
+  {
+   "texto": "del",
+   "inicio": 7.137,
+   "fin": 7.349
+  },
+  {
+   "texto": "INE.",
+   "inicio": 7.349,
+   "fin": 7.561
+  },
+  {
+   "texto": "Primero",
+   "inicio": 8.164,
+   "fin": 8.478
+  },
+  {
+   "texto": "te",
+   "inicio": 8.478,
+   "fin": 8.618
+  },
+  {
+   "texto": "reta",
+   "inicio": 8.618,
+   "fin": 8.827
+  },
+  {
+   "texto": "a",
+   "inicio": 8.827,
+   "fin": 8.932
+  },
+  {
+   "texto": "dibujar",
+   "inicio": 8.932,
+   "fin": 9.247
+  },
+  {
+   "texto": "cuánto",
+   "inicio": 9.247,
+   "fin": 9.526
+  },
+  {
+   "texto": "crees",
+   "inicio": 9.526,
+   "fin": 9.771
+  },
+  {
+   "texto": "que",
+   "inicio": 9.771,
+   "fin": 9.945
+  },
+  {
+   "texto": "vota",
+   "inicio": 9.945,
+   "fin": 10.155
+  },
+  {
+   "texto": "cada",
+   "inicio": 10.155,
+   "fin": 10.364
+  },
+  {
+   "texto": "edad,",
+   "inicio": 10.364,
+   "fin": 10.574
+  },
+  {
+   "texto": "y",
+   "inicio": 10.984,
+   "fin": 11.105
+  },
+  {
+   "texto": "luego",
+   "inicio": 11.105,
+   "fin": 11.388
+  },
+  {
+   "texto": "te",
+   "inicio": 11.388,
+   "fin": 11.55
+  },
+  {
+   "texto": "muestra",
+   "inicio": 11.55,
+   "fin": 11.913
+  },
+  {
+   "texto": "la",
+   "inicio": 11.913,
+   "fin": 12.075
+  },
+  {
+   "texto": "realidad.",
+   "inicio": 12.075,
+   "fin": 12.479
+  }
+ ],
+ "bloques": [
+  {
+   "lineas": [
+    "Por eso creamos La",
+    "generación que se apagó,"
+   ],
+   "inicio": 0,
+   "fin": 3.917
+  },
+  {
+   "lineas": [
+    "una historia hecha para el celular",
+    "con los Conteos Censales del INE."
+   ],
+   "inicio": 3.917,
+   "fin": 7.861
+  },
+  {
+   "lineas": [
+    "Primero te reta a dibujar cuánto crees que"
+   ],
+   "inicio": 8.164,
+   "fin": 9.945
+  },
+  {
+   "lineas": [
+    "vota cada edad, y luego",
+    "te muestra la realidad."
+   ],
+   "inicio": 9.945,
+   "fin": 12.779
+  }
+ ]
+}

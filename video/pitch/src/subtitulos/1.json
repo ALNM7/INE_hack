@@ -1,0 +1,178 @@
+{
+ "clip": 1,
+ "duracion": 10.23775,
+ "metodo": "proporcional con pausas",
+ "palabras": [
+  {
+   "texto": "En",
+   "inicio": 0,
+   "fin": 0.181
+  },
+  {
+   "texto": "2024,",
+   "inicio": 0.181,
+   "fin": 1.088
+  },
+  {
+   "texto": "treinta",
+   "inicio": 1.088,
+   "fin": 1.497
+  },
+  {
+   "texto": "y",
+   "inicio": 1.497,
+   "fin": 1.633
+  },
+  {
+   "texto": "siete",
+   "inicio": 1.633,
+   "fin": 1.95
+  },
+  {
+   "texto": "millones",
+   "inicio": 1.95,
+   "fin": 2.403
+  },
+  {
+   "texto": "de",
+   "inicio": 2.403,
+   "fin": 2.585
+  },
+  {
+   "texto": "personas",
+   "inicio": 2.585,
+   "fin": 3.038
+  },
+  {
+   "texto": "con",
+   "inicio": 3.038,
+   "fin": 3.265
+  },
+  {
+   "texto": "credencial",
+   "inicio": 3.265,
+   "fin": 3.809
+  },
+  {
+   "texto": "para",
+   "inicio": 3.809,
+   "fin": 4.081
+  },
+  {
+   "texto": "votar",
+   "inicio": 4.081,
+   "fin": 4.399
+  },
+  {
+   "texto": "no",
+   "inicio": 4.399,
+   "fin": 4.58
+  },
+  {
+   "texto": "votaron.",
+   "inicio": 4.58,
+   "fin": 4.988
+  },
+  {
+   "texto": "Una",
+   "inicio": 5.691,
+   "fin": 5.917
+  },
+  {
+   "texto": "de",
+   "inicio": 5.917,
+   "fin": 6.097
+  },
+  {
+   "texto": "cada",
+   "inicio": 6.097,
+   "fin": 6.368
+  },
+  {
+   "texto": "tres",
+   "inicio": 6.368,
+   "fin": 6.639
+  },
+  {
+   "texto": "tenía",
+   "inicio": 6.639,
+   "fin": 6.955
+  },
+  {
+   "texto": "entre",
+   "inicio": 6.955,
+   "fin": 7.271
+  },
+  {
+   "texto": "18",
+   "inicio": 7.271,
+   "fin": 7.768
+  },
+  {
+   "texto": "y",
+   "inicio": 7.768,
+   "fin": 7.903
+  },
+  {
+   "texto": "29",
+   "inicio": 7.903,
+   "fin": 8.49
+  },
+  {
+   "texto": "años.",
+   "inicio": 8.49,
+   "fin": 8.761
+  },
+  {
+   "texto": "Nos",
+   "inicio": 9.132,
+   "fin": 9.329
+  },
+  {
+   "texto": "preguntamos",
+   "inicio": 9.329,
+   "fin": 9.843
+  },
+  {
+   "texto": "por",
+   "inicio": 9.843,
+   "fin": 10.04
+  },
+  {
+   "texto": "qué.",
+   "inicio": 10.04,
+   "fin": 10.238
+  }
+ ],
+ "bloques": [
+  {
+   "lineas": [
+    "En 2024, treinta y siete",
+    "millones de personas"
+   ],
+   "inicio": 0,
+   "fin": 3.038
+  },
+  {
+   "lineas": [
+    "con credencial para votar no votaron."
+   ],
+   "inicio": 3.038,
+   "fin": 5.288
+  },
+  {
+   "lineas": [
+    "Una de cada tres tenía entre 18 y 29 años."
+   ],
+   "inicio": 5.691,
+   "fin": 9.132
+  },
+  {
+   "lineas": [
+    "Nos preguntamos por qué."
+   ],
+   "inicio": 9.132,
+   "fin": 10.538
+  }
+ ]
+}

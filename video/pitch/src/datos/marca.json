@@ -1,0 +1,247 @@
+{
+  "nombre": "La generación que se apagó",
+  "color": {
+    "noche1": "#0E0C0A",
+    "noche2": "#181512",
+    "noche3": "#231F1A",
+    "nocheLinea": "#3A342D",
+    "luz": "#FFB547",
+    "luzSuave": "#FFD58A",
+    "luzHalo": "rgb(255 181 71 / 0.35)",
+    "apagada": "#675E55",
+    "hueso": "#F4EEE6",
+    "arena": "#B8AEA2",
+    "ceniza": "#978C80",
+    "coral": "#FF8466",
+    "papel1": "#FBF8F3",
+    "papel2": "#F2EDE4",
+    "papel3": "#E7E0D4",
+    "papelLinea": "#D6CDBF",
+    "tinta1": "#1C1814",
+    "tinta2": "#574F46",
+    "tinta3": "#665D53",
+    "luzPapel": "#E39B22",
+    "luzTinta": "#8C5600",
+    "apagadaPapel": "#9A8F80",
+    "ladrillo": "#B2381E",
+    "mujeres": "#F0986F",
+    "hombres": "#65B4E9",
+    "mujeresPapel": "#B35025",
+    "hombresPapel": "#0F68A2",
+    "seq0": "#342c27",
+    "seq1": "#563b25",
+    "seq2": "#774b1c",
+    "seq3": "#985d06",
+    "seq4": "#b67200",
+    "seq5": "#d28900",
+    "seq6": "#eba300",
+    "seq7": "#ffbe2d",
+    "seq8": "#ffdb5c",
+    "seqPapel0": "#efe7d9",
+    "seqPapel1": "#e1d1ba",
+    "seqPapel2": "#d4bb9a",
+    "seqPapel3": "#c7a57c",
+    "seqPapel4": "#bb8f5d",
+    "seqPapel5": "#ae783d",
+    "seqPapel6": "#a26216",
+    "seqPapel7": "#954a00",
+    "seqPapel8": "#883100",
+    "div0": "#74d7ff",
+    "div1": "#6bb1eb",
+    "div2": "#608db2",
+    "div3": "#546a7d",
+    "div4": "#494745",
+    "div5": "#75644d",
+    "div6": "#a28153",
+    "div7": "#d3a055",
+    "div8": "#ffbf54",
+    "divPapel0": "#005fa0",
+    "divPapel1": "#4281b4",
+    "divPapel2": "#7aa3c8",
+    "divPapel3": "#afc6da",
+    "divPapel4": "#eae7e4",
+    "divPapel5": "#d4beaa",
+    "divPapel6": "#bd9670",
+    "divPapel7": "#a56e33",
+    "divPapel8": "#8c4600",
+    "fondo": "#0E0C0A",
+    "superficie": "#181512",
+    "superficieAlta": "#231F1A",
+    "linea": "#3A342D",
+    "texto": "#F4EEE6",
+    "texto2": "#B8AEA2",
+    "texto3": "#978C80",
+    "focoEncendido": "#FFB547",
+    "focoApagado": "#675E55",
+    "acentoTexto": "#FFB547",
+    "sobreAcento": "#0E0C0A",
+    "alerta": "#FF8466",
+    "mujer": "#F0986F",
+    "hombre": "#65B4E9",
+    "acento": "#FFB547",
+    "escala0": "#342c27",
+    "escala1": "#563b25",
+    "escala2": "#774b1c",
+    "escala3": "#985d06",
+    "escala4": "#b67200",
+    "escala5": "#d28900",
+    "escala6": "#eba300",
+    "escala7": "#ffbe2d",
+    "escala8": "#ffdb5c",
+    "divergente0": "#74d7ff",
+    "divergente1": "#6bb1eb",
+    "divergente2": "#608db2",
+    "divergente3": "#546a7d",
+    "divergente4": "#494745",
+    "divergente5": "#75644d",
+    "divergente6": "#a28153",
+    "divergente7": "#d3a055",
+    "divergente8": "#ffbf54"
+  },
+  "fuente": {
+    "titulo": "\"Bricolage Grotesque\", \"Arial Narrow\", system-ui, sans-serif",
+    "texto": "\"Atkinson Hyperlegible Next\", \"Atkinson Hyperlegible\", system-ui, sans-serif",
+    "mono": "\"IBM Plex Mono\", ui-monospace, \"SFMono-Regular\", Menlo, monospace",
+    "estiramientoTitulo": "82%",
+    "peso": {
+      "regular": 400,
+      "medio": 500,
+      "semi": 600,
+      "negrita": 700,
+      "extra": 800
+    }
+  },
+  "texto": {
+    "cifra": {
+      "size": "340px",
+      "lineHeight": "0.86",
+      "letterSpacing": "-0.05em"
+    },
+    "titulo": {
+      "size": "92px",
+      "lineHeight": "1",
+      "letterSpacing": "-0.03em"
+    },
+    "cuerpo": {
+      "size": "44px",
+      "lineHeight": "1.3",
+      "letterSpacing": "0em"
+    },
+    "etiqueta": {
+      "size": "30px",
+      "lineHeight": "1.2",
+      "letterSpacing": "0.1em"
+    }
+  },
+  "curva": {
+    "entrada": [
+      0.16,
+      1,
+      0.3,
+      1
+    ],
+    "salida": [
+      0.4,
+      0,
+      1,
+      1
+    ],
+    "enfasis": [
+      0.34,
+      1.56,
+      0.64,
+      1
+    ],
+    "escena": [
+      0.65,
+      0,
+      0.35,
+      1
+    ],
+    "scroll": "linear",
+    "apagado": [
+      0.7,
+      0,
+      0.84,
+      0
+    ]
+  },
+  "curvaCss": {
+    "entrada": "cubic-bezier(0.16, 1, 0.3, 1)",
+    "salida": "cubic-bezier(0.4, 0, 1, 1)",
+    "enfasis": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+    "escena": "cubic-bezier(0.65, 0, 0.35, 1)",
+    "scroll": "linear",
+    "apagado": "cubic-bezier(0.7, 0, 0.84, 0)"
+  },
+  "duracion": {
+    "instante": 0.09,
+    "corta": 0.16,
+    "media": 0.24,
+    "larga": 0.42,
+    "escena": 0.9,
+    "encendido": 1.4,
+    "escalonado": 0.006
+  },
+  "espacio": {
+    "0": "0px",
+    "1": "4px",
+    "2": "8px",
+    "3": "12px",
+    "4": "16px",
+    "5": "20px",
+    "6": "24px",
+    "8": "32px",
+    "10": "40px",
+    "12": "48px",
+    "16": "64px",
+    "20": "80px",
+    "24": "96px",
+    "32": "128px"
+  },
+  "radio": {
+    "xs": "2px",
+    "sm": "4px",
+    "md": "8px",
+    "lg": "14px",
+    "full": "9999px"
+  },
+  "fuentes": [
+    {
+      "familia": "Bricolage Grotesque",
+      "estilo": "normal",
+      "peso": "200 800",
+      "archivo": "fonts/bricolage-grotesque-normal-200_800-latin.woff2"
+    },
+    {
+      "familia": "Atkinson Hyperlegible Next",
+      "estilo": "italic",
+      "peso": "200 800",
+      "archivo": "fonts/atkinson-hyperlegible-next-italic-200_800-latin.woff2"
+    },
+    {
+      "familia": "Atkinson Hyperlegible Next",
+      "estilo": "normal",
+      "peso": "200 800",
+      "archivo": "fonts/atkinson-hyperlegible-next-normal-200_800-latin.woff2"
+    },
+    {
+      "familia": "IBM Plex Mono",
+      "estilo": "normal",
+      "peso": "400",
+      "archivo": "fonts/ibm-plex-mono-normal-400-latin.woff2"
+    },
+    {
+      "familia": "IBM Plex Mono",
+      "estilo": "normal",
+      "peso": "500",
+      "archivo": "fonts/ibm-plex-mono-normal-500-latin.woff2"
+    },
+    {
+      "familia": "IBM Plex Mono",
+      "estilo": "normal",
+      "peso": "600",
+      "archivo": "fonts/ibm-plex-mono-normal-600-latin.woff2"
+    }
+  ]
+}

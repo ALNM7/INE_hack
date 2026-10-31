@@ -1,0 +1,243 @@
+{
+ "clip": 7,
+ "duracion": 17.803229,
+ "metodo": "proporcional con pausas",
+ "palabras": [
+  {
+   "texto": "Para",
+   "inicio": 0,
+   "fin": 0.767
+  },
+  {
+   "texto": "el",
+   "inicio": 0.767,
+   "fin": 0.979
+  },
+  {
+   "texto": "INE",
+   "inicio": 0.979,
+   "fin": 1.244
+  },
+  {
+   "texto": "es",
+   "inicio": 1.244,
+   "fin": 1.456
+  },
+  {
+   "texto": "una",
+   "inicio": 1.456,
+   "fin": 1.72
+  },
+  {
+   "texto": "herramienta",
+   "inicio": 1.72,
+   "fin": 2.409
+  },
+  {
+   "texto": "lista",
+   "inicio": 2.409,
+   "fin": 2.78
+  },
+  {
+   "texto": "para",
+   "inicio": 2.78,
+   "fin": 3.098
+  },
+  {
+   "texto": "usar.",
+   "inicio": 3.098,
+   "fin": 3.416
+  },
+  {
+   "texto": "Genera",
+   "inicio": 3.638,
+   "fin": 3.978
+  },
+  {
+   "texto": "una",
+   "inicio": 3.978,
+   "fin": 4.191
+  },
+  {
+   "texto": "ficha",
+   "inicio": 4.191,
+   "fin": 4.488
+  },
+  {
+   "texto": "imprimible",
+   "inicio": 4.488,
+   "fin": 4.999
+  },
+  {
+   "texto": "para",
+   "inicio": 4.999,
+   "fin": 5.254
+  },
+  {
+   "texto": "cualquiera",
+   "inicio": 5.254,
+   "fin": 5.765
+  },
+  {
+   "texto": "de",
+   "inicio": 5.765,
+   "fin": 5.935
+  },
+  {
+   "texto": "los",
+   "inicio": 5.935,
+   "fin": 6.148
+  },
+  {
+   "texto": "2,477",
+   "inicio": 6.148,
+   "fin": 7.594
+  },
+  {
+   "texto": "municipios,",
+   "inicio": 7.594,
+   "fin": 8.105
+  },
+  {
+   "texto": "pensada",
+   "inicio": 8.725,
+   "fin": 9.085
+  },
+  {
+   "texto": "para",
+   "inicio": 9.085,
+   "fin": 9.325
+  },
+  {
+   "texto": "pláticas",
+   "inicio": 9.325,
+   "fin": 9.725
+  },
+  {
+   "texto": "en",
+   "inicio": 9.725,
+   "fin": 9.885
+  },
+  {
+   "texto": "escuelas.",
+   "inicio": 9.885,
+   "fin": 10.286
+  },
+  {
+   "texto": "Usa",
+   "inicio": 10.847,
+   "fin": 11.107
+  },
+  {
+   "texto": "datos",
+   "inicio": 11.107,
+   "fin": 11.472
+  },
+  {
+   "texto": "abiertos,",
+   "inicio": 11.472,
+   "fin": 11.993
+  },
+  {
+   "texto": "no",
+   "inicio": 12.449,
+   "fin": 12.668
+  },
+  {
+   "texto": "necesita",
+   "inicio": 12.668,
+   "fin": 13.214
+  },
+  {
+   "texto": "servidor",
+   "inicio": 13.214,
+   "fin": 13.76
+  },
+  {
+   "texto": "y",
+   "inicio": 13.76,
+   "fin": 13.924
+  },
+  {
+   "texto": "se",
+   "inicio": 13.924,
+   "fin": 14.143
+  },
+  {
+   "texto": "puede",
+   "inicio": 14.143,
+   "fin": 14.525
+  },
+  {
+   "texto": "actualizar",
+   "inicio": 14.525,
+   "fin": 15.18
+  },
+  {
+   "texto": "para",
+   "inicio": 15.18,
+   "fin": 15.508
+  },
+  {
+   "texto": "la",
+   "inicio": 15.508,
+   "fin": 15.727
+  },
+  {
+   "texto": "elección",
+   "inicio": 15.727,
+   "fin": 16.273
+  },
+  {
+   "texto": "de",
+   "inicio": 16.273,
+   "fin": 16.491
+  },
+  {
+   "texto": "2027.",
+   "inicio": 16.491,
+   "fin": 17.803
+  }
+ ],
+ "bloques": [
+  {
+   "lineas": [
+    "Para el INE es una",
+    "herramienta lista para usar."
+   ],
+   "inicio": 0,
+   "fin": 3.638
+  },
+  {
+   "lineas": [
+    "Genera una ficha imprimible",
+    "para cualquiera de los"
+   ],
+   "inicio": 3.638,
+   "fin": 6.148
+  },
+  {
+   "lineas": [
+    "2,477 municipios, pensada",
+    "para pláticas en escuelas."
+   ],
+   "inicio": 6.148,
+   "fin": 10.847
+  },
+  {
+   "lineas": [
+    "Usa datos abiertos, no necesita servidor y"
+   ],
+   "inicio": 10.847,
+   "fin": 13.924
+  },
+  {
+   "lineas": [
+    "se puede actualizar para",
+    "la elección de 2027."
+   ],
+   "inicio": 13.924,
+   "fin": 18.103
+  }
+ ]
+}

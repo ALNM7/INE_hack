@@ -54,3 +54,7 @@ El Modelo A no las usa. Se listan para que el Modelo B registre aquí su uso en 
 | `pr-to-video` | Video a partir de un pull request. | No aplica. | pendiente |
 | `remotion-to-hyperframes` | Migrar composiciones de Remotion. | No aplica. | pendiente |
 | `figma` | Importar contenido de Figma. | No aplica (el design system viene de Claude Design). | pendiente |
+| `remotion-best-practices` (y `remotion-markup`, `remotion-render`) | Video pitch en Remotion (`video/pitch/`). | Animaciones solo con `useCurrentFrame` e `interpolate`, duraciones con `calculateMetadata`, render con `npx remotion render`. | aplicada |
+| `emil-design-eng` (pitch) | Entradas de cifras, marcas y teléfono del pitch. | Entradas con ease-out de la marca, nada aparece desde escala cero, desenfoque de 2 px para disimular el cruce entre grabaciones. | aplicada |
+| `apple-design` (pitch) | Jerarquía de cifras y títulos del pitch. | Jerarquía por peso y tamaño, tracking cerrado en títulos grandes, salidas en la misma dirección que las entradas. | aplicada |
+| `animation-vocabulary` (pitch) | Especificación de cada animación del pitch. | Se nombró cada movimiento (dibujo de trazo, escalonado, fundido cruzado) antes de programarlo con `interpolate`. | aplicada |

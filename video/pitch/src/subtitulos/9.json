@@ -1,0 +1,46 @@
+{
+ "clip": 9,
+ "duracion": 1.553292,
+ "metodo": "proporcional con pausas",
+ "palabras": [
+  {
+   "texto": "Que",
+   "inicio": 0,
+   "fin": 0.251
+  },
+  {
+   "texto": "la",
+   "inicio": 0.251,
+   "fin": 0.451
+  },
+  {
+   "texto": "tuya",
+   "inicio": 0.451,
+   "fin": 0.752
+  },
+  {
+   "texto": "no",
+   "inicio": 0.752,
+   "fin": 0.952
+  },
+  {
+   "texto": "se",
+   "inicio": 0.952,
+   "fin": 1.152
+  },
+  {
+   "texto": "apague.",
+   "inicio": 1.152,
+   "fin": 1.553
+  }
+ ],
+ "bloques": [
+  {
+   "lineas": [
+    "Que la tuya no se apague."
+   ],
+   "inicio": 0,
+   "fin": 1.853
+  }
+ ]
+}
