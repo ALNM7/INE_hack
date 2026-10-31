@@ -102,8 +102,8 @@ const Titulos = ({ tramos, transicion }: { tramos: Tramo[]; transicion: number }
       })}
       <div style={{ position: "absolute", left: 0, top: 720, display: "flex", gap: 28, opacity: avance(frame, actos[0].desde, media) }}>
         {actos.map((t) => {
-          const activo = frame >= t.desde - transicion / 2 && frame < t.hasta - transicion / 2;
-          const pasado = frame >= t.hasta - transicion / 2;
+          const activo = frame >= t.desde && frame < t.hasta;
+          const pasado = frame >= t.hasta;
           const brillo = activo ? 1 : pasado ? 0.5 : 0.28;
           return (
             <div key={t.pantalla} style={{ display: "flex", flexDirection: "column", gap: 12, opacity: brillo }}>
