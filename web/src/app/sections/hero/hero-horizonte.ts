@@ -13,29 +13,30 @@ import { contextoGsap, curva, duracion, escalonadoTexto, gsap } from '../../core
 import { MovimientoReducido } from '../../core/movimiento-reducido.service';
 import { pxToken } from '../../core/tokens';
 import { Boton } from '../../shared/ui/boton';
-import { FondoLuces } from './fondo-luces';
+import { HeroCampo } from './hero-campo';
 import { BOTON, SUBTITULO, TITULO, TITULO_LINEAS } from './textos';
 
 @Component({
   selector: 'app-hero-horizonte',
-  imports: [Boton, FondoLuces],
+  imports: [Boton, HeroCampo],
   template: `
     <section
-      class="relative isolate grid min-h-svh grid-rows-[minmax(0,1fr)_auto] overflow-hidden bg-fondo text-texto"
+      class="relative isolate flex min-h-svh flex-col justify-between gap-8 overflow-hidden bg-fondo pt-[calc(var(--space-12)+env(safe-area-inset-top))] pb-[calc(var(--space-10)+env(safe-area-inset-bottom))] text-texto md:gap-10"
       aria-labelledby="hero-titulo"
     >
       <div #campo class="absolute inset-0 -z-10">
-        <app-fondo-luces class="absolute inset-0" />
-        <div class="absolute inset-0 bg-linear-to-t from-fondo via-fondo/70 to-transparent" aria-hidden="true"></div>
+        <app-hero-campo capa="lejos" class="absolute inset-0 opacity-50" />
+        <app-hero-campo class="absolute inset-0" />
+        <div class="absolute inset-0 bg-linear-to-b from-fondo from-5% via-transparent via-50% to-fondo to-90%" aria-hidden="true"></div>
       </div>
-      <div
-        class="relative row-start-2 mx-auto flex w-full max-w-(--container-max) flex-col items-start gap-6 px-margen-movil pt-10 pb-[calc(var(--space-10)+env(safe-area-inset-bottom))] md:px-margen-escritorio md:pt-16"
-      >
-        <h1 id="hero-titulo" class="text-titulo-1 ancho-titulo" [attr.aria-label]="titulo">
+      <div class="mx-auto w-full max-w-(--container-max) px-margen-movil md:px-margen-escritorio">
+        <h1 id="hero-titulo" class="text-cifra ancho-titulo md:text-display" [attr.aria-label]="titulo">
           @for (linea of lineas; track linea) {
             <span #renglon class="block" aria-hidden="true">{{ linea }}</span>
           }
         </h1>
+      </div>
+      <div class="mx-auto flex w-full max-w-(--container-max) flex-col items-start gap-6 px-margen-movil md:px-margen-escritorio">
         <p #sub class="max-w-(--container-texto) text-entrada text-texto-2">{{ subtitulo }}</p>
         <button #accion appBoton type="button" (click)="empezar.emit()">{{ boton }}</button>
       </div>

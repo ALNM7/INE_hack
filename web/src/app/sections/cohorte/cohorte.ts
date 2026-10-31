@@ -438,10 +438,10 @@ export class Cohorte {
   }
 
   protected yCifra(e: Etiqueta): number {
-    const { etiqueta, cifra } = this.tipografia();
+    const { cifra } = this.tipografia();
     const sep = this.medidas()?.sep ?? 0;
     if (e.dy < 0) {
-      return e.y - sep * 2 - etiqueta * 1.3;
+      return e.y - sep * 2;
     }
     if (e.dy > 0) {
       return e.y + sep * 2 + cifra * 0.8;
@@ -449,17 +449,6 @@ export class Cohorte {
     return e.y + cifra * 0.35;
   }
 
-  protected yTexto(e: Etiqueta): number {
-    const { etiqueta, cifra } = this.tipografia();
-    const sep = this.medidas()?.sep ?? 0;
-    if (e.dy < 0) {
-      return e.y - sep * 2;
-    }
-    if (e.dy > 0) {
-      return e.y + sep * 2 + cifra * 0.8 + etiqueta * 1.3;
-    }
-    return e.y + cifra * 0.35;
-  }
 
   private medir(ancho: number, alto: number): void {
     const sep = pxToken('--space-2');
