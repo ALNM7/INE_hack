@@ -374,3 +374,21 @@ Rechazados: deslizar el acto completo de lado (**Direction-aware transition**), 
 - **Tarjetas del mismo tamaño en móvil (Intro y Acto 2).** Antes la tarjeta activa cambiaba de alto en cada paso y la gráfica (que toma el alto que sobra) se encogía o crecía, lo que rompía la animación. Ahora las tarjetas se apilan en la misma celda de una rejilla (`grid-area: 1/1`) y las inactivas se ocultan con `visibility` y `opacity`, sin salir del flujo: el área mide lo que la tarjeta más alta y todas se estiran a ese alto. El cambio de tarjeta queda como **Crossfade** de `--duration-media`. Medido: la gráfica del Acto 2 mide lo mismo en los 8 pasos (364 px a 390x844, 187 px en iPhone SE).
 - **Acto 1 cabe en una pantalla.** La sección mide `100dvh`; la gráfica toma el alto que sobra (mínimo `min-h-40`) y los botones quedan siempre arriba de la barra, antes y después de revelar (probado en 320x568, 375x667, 390x844 y 1280x800). Se quitó el párrafo "A los 18 votó..." (la cifra ya está en la gráfica), la ayuda de teclado quedó solo para lectores de pantalla (`sr-only`) y se quitó el botón "¿Qué pasa entre los 18 y los 25?", que repetía lo que hace "Siguiente" en la barra. Título y mensajes bajan un nivel de la escala tipográfica en móvil.
 - **Acto 1 en escritorio (`lg`) en dos columnas.** Con una sola columna, al revelar aparecían los mensajes debajo y la gráfica se encogía (en 1280x800 pasaba de 381 a 208 px de alto) y en pantallas bajas el texto se encimaba. Ahora la gráfica va a la izquierda y los mensajes y botones a la derecha, centrados. La instrucción y la leyenda comparten el mismo renglón reservado (dos líneas), así que la gráfica mide lo mismo antes y después de revelar en 1024x768, 1280x720, 1366x768, 1440x900 y 1920x1080, sin bloques encimados. En móvil se queda en una columna.
+
+## Hero combinado y gráficas con menos texto (rama `combinar`, 31 oct)
+
+### Hero
+
+- **Base: la propuesta del compañero** (rama `propuesta`): `sections/hero/hero-campo.ts` (campo de luces en canvas que se apaga y luego respira) y la tipografía de la variante Horizonte (título a `--text-cifra`, `--text-display` en escritorio). El selector de variantes `?v=` se queda como él lo dejó; Horizonte, la variante por defecto, usa su campo en lugar del video.
+- **Cambio de composición pedido por el equipo**: en `propuesta` el título iba arriba, las luces en medio y el texto abajo. Ahora las luces son el fondo a pantalla completa y el texto va encima. Un velo de `fondo` arriba y abajo (`bg-linear-to-b`, el mismo recurso de legibilidad que ya usaba el hero con video) asegura el contraste del título y del botón.
+- **Profundidad** (lo "fancy" elegido): el campo se dibuja en dos capas. La lejana es más densa (espaciado al 55%), con luces a la mitad de tamaño y al 50% de opacidad, y su propia semilla; la cercana es la del compañero sin cambios. No hay parallax ni movimiento extra: la sensación de profundidad sale de tamaño, densidad y brillo. La capa lejana es decorativa (`aria-hidden`).
+- Pendiente para decidir: `PROPORCION_ENCENDIDA = 0.38` en `hero-campo.ts` es una cifra escrita a mano (regla 4 del plan). Se dejó tal cual porque es la propuesta del compañero; se puede ligar a `nacional.json` si el equipo quiere.
+
+### Menos texto en las gráficas
+
+Pedido: las tarjetas ya cuentan la historia; las gráficas deben ser visuales.
+
+- **Acto 2**: se quitaron las descripciones junto a las cifras ("a los 18, en 2018", "puntos", "Mujeres" y "Hombres", etc.) y los títulos de ejes ("% que votó", "Edad"). Quedan las cifras, los números de los ejes y los nombres de Ana y Luis. Las cifras que iban arriba de su descripción bajan a donde estaba el texto.
+- **Mapa del Acto 2**: se quitaron el título de la escala de color y la nota "Cada punto representa 25 secciones...". La escala conserva sus extremos.
+- **Intro**: se quitaron "La forma es el país..." y "Cada punto: unas 92 mil personas..."; queda la leyenda de colores y una línea "Fuente: INE, Conteo Censal de Participación 2024".
+- Lo quitado sigue disponible para lectores de pantalla en la descripción de cada gráfica (`aria-label`), que no cambió.

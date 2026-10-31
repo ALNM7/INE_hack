@@ -21,9 +21,8 @@
         <li class="flex items-center gap-2"><span class="size-2 shrink-0 rounded-full bg-foco-apagado" aria-hidden="true"></span>No votó</li>
         <li class="flex items-center gap-2"><span class="size-2 shrink-0 rounded-full bg-arena" aria-hidden="true"></span>No votó y tiene de 18 a 29 años</li>
       </ul>
-      <p class="text-texto-3 [@media(max-height:30rem)]:hidden">La forma es el país; los puntos no indican dónde vive cada persona.</p>
       @if (resumen(); as r) {
-        <p class="text-texto-3 [@media(max-height:30rem)]:hidden">Cada punto: unas {{ r.porPunto }} personas con credencial · Fuente: INE, Conteo Censal de Participación {{ r.anio }}</p>
+        <p class="text-texto-3 [@media(max-height:30rem)]:hidden">Fuente: INE, Conteo Censal de Participación {{ r.anio }}</p>
       }
     </div>
   </div>
