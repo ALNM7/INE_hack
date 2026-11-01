@@ -392,3 +392,13 @@ Pedido: las tarjetas ya cuentan la historia; las gráficas deben ser visuales.
 - **Mapa del Acto 2**: se quitaron el título de la escala de color y la nota "Cada punto representa 25 secciones...". La escala conserva sus extremos.
 - **Intro**: se quitaron "La forma es el país..." y "Cada punto: unas 92 mil personas..."; queda la leyenda de colores y una línea "Fuente: INE, Conteo Censal de Participación 2024".
 - Lo quitado sigue disponible para lectores de pantalla en la descripción de cada gráfica (`aria-label`), que no cambió.
+
+## Hero con luces ligadas al dato (rama `Cambios`, 31 oct)
+
+Reemplaza la composición del hero de la sección anterior; lo de "Menos texto en las gráficas" se conserva sin cambios.
+
+- **Secuencia**: todas las luces arrancan encendidas y se apagan poco a poco hasta dejar encendido el 47.1%, la participación a los 24 años de la generación que cumplió 18 en 2018. La cifra se lee de `cohortes.json` (fila de 18 años de `corta`), así que se resuelve el pendiente de `PROPORCION_ENCENDIDA = 0.38` escrito a mano.
+- **Título**: la palabra "apagó" empieza en `--color-foco-encendido` y pasa a `--color-foco-apagado`; las luces terminan de apagarse (~3.4 s) antes de que la palabra llegue a gris (~3.7 s).
+- **Después de la entrada**: las luces se relevan en vivo (unas se apagan y otras se encienden) sin cambiar la proporción encendida. El dibujo se pausa cuando el hero está oculto por el recorrido.
+- **Composición**: título y subtítulo juntos abajo, más grandes (`--text-cifra`/`--text-display` y `--text-titulo-3`), con el velo inferior `bg-linear-to-t` para legibilidad. Se retiró la capa lejana de luces; el campo es una sola capa.
+- **Movimiento reducido**: se muestra directamente el estado final (47.1% encendido, "apagó" en gris), sin relevo.
