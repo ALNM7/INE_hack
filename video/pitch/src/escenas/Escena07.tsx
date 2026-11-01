@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { random, useCurrentFrame, useVideoConfig } from "remotion";
 import { Escena } from "../compartidos/Escena";
 import { Encabezado } from "../compartidos/Encabezado";
+import { Efecto } from "../compartidos/Efecto";
 import { avance, entra } from "../compartidos/movimiento";
 import { estadosGeo, proyectar, puntosEnEstado } from "../compartidos/mapa";
 import { color, fuente, duracion, curva, nombreProyecto } from "../datos/marca";
@@ -58,6 +59,9 @@ const Contenido = () => {
   const puntosTotales = estados.estados.reduce((s, e) => s + Math.round(e.focos / SECCIONES_POR_FOCO), 0);
   return (
     <>
+      <Efecto id="shimmer-long-soft" en={palabra(8, "hay")} />
+      <Efecto id="riser-2s-soft" en={cierre} />
+      <Efecto id="cinematic-drum-big" en={cierre} />
       <div style={{ opacity: salidaTexto }}>
         <Encabezado numero="07" titulo="Focos encendidos" nota={`Fuente: ${meta.fuente}`} />
       </div>

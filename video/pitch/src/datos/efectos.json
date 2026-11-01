@@ -1,0 +1,98 @@
+{
+ "bass-sub-drop-short": {
+  "archivo": "sfx/bass-sub-drop-short.wav",
+  "sincronia": 0.021,
+  "bajoVoz": -8,
+  "duracion": 1.175
+ },
+ "boom-hit-medium": {
+  "archivo": "sfx/boom-hit-medium.wav",
+  "sincronia": 0.038,
+  "bajoVoz": -8,
+  "duracion": 1.301
+ },
+ "boom-hit-soft": {
+  "archivo": "sfx/boom-hit-soft.wav",
+  "sincronia": 0.031,
+  "bajoVoz": -8,
+  "duracion": 1.02
+ },
+ "cinematic-drum-big": {
+  "archivo": "sfx/cinematic-drum-big.wav",
+  "sincronia": 0.011,
+  "bajoVoz": -8,
+  "duracion": 2.178
+ },
+ "foley-paper-slide": {
+  "archivo": "sfx/foley-paper-slide.wav",
+  "sincronia": 0.006,
+  "bajoVoz": -2,
+  "duracion": 0.492
+ },
+ "riser-2s-soft": {
+  "archivo": "sfx/riser-2s-soft.wav",
+  "sincronia": 1.994,
+  "bajoVoz": -3,
+  "duracion": 2.189
+ },
+ "shimmer-long-soft": {
+  "archivo": "sfx/shimmer-long-soft.wav",
+  "sincronia": 0.01,
+  "bajoVoz": -3,
+  "duracion": 1.923
+ },
+ "shimmer-short-soft": {
+  "archivo": "sfx/shimmer-short-soft.wav",
+  "sincronia": 0.012,
+  "bajoVoz": -3,
+  "duracion": 0.478
+ },
+ "swipe-medium-soft": {
+  "archivo": "sfx/swipe-medium-soft.wav",
+  "sincronia": 0,
+  "bajoVoz": -1,
+  "duracion": 0.293
+ },
+ "tone-ding-low": {
+  "archivo": "sfx/tone-ding-low.wav",
+  "sincronia": 0,
+  "bajoVoz": -3,
+  "duracion": 1.14
+ },
+ "tone-ding-mid": {
+  "archivo": "sfx/tone-ding-mid.wav",
+  "sincronia": 0,
+  "bajoVoz": -3,
+  "duracion": 1.064
+ },
+ "tone-step-1": {
+  "archivo": "sfx/tone-step-1.wav",
+  "sincronia": 0,
+  "bajoVoz": -2,
+  "duracion": 0.513
+ },
+ "tone-step-2": {
+  "archivo": "sfx/tone-step-2.wav",
+  "sincronia": 0,
+  "bajoVoz": -2,
+  "duracion": 0.445
+ },
+ "tone-step-3": {
+  "archivo": "sfx/tone-step-3.wav",
+  "sincronia": 0,
+  "bajoVoz": -2,
+  "duracion": 0.403
+ },
+ "whoosh-medium-soft": {
+  "archivo": "sfx/whoosh-medium-soft.wav",
+  "sincronia": 0.229,
+  "bajoVoz": -2,
+  "duracion": 0.543
+ },
+ "whoosh-slow-medium": {
+  "archivo": "sfx/whoosh-slow-medium.wav",
+  "sincronia": 0.438,
+  "bajoVoz": -3,
+  "duracion": 1.002
+ }
+}

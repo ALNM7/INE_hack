@@ -396,3 +396,7 @@ Pedido: las tarjetas ya cuentan la historia; las gráficas deben ser visuales.
 ### Video pitch en Remotion
 
 El pitch se hizo con Remotion y no con HyperFrames: Remotion renderiza cuadro por cuadro con React, así que cada animación depende solo del número de cuadro, y con `calculateMetadata` la duración de cada escena se calcula desde la duración real de las voces (más 0.6 s de respiro, 0.25 s entre clips de la misma escena y 2 s de espera en el cierre). Los reels y el hero hechos con HyperFrames no se tocaron; del pitch solo se reutilizó el estilo de `video/brand.js`. Los tiempos por palabra salen de un reparto proporcional anclado a las pausas reales de cada clip, porque el modelo de whisper.cpp no se pudo descargar desde el entorno.
+
+### Música y efectos del pitch
+
+Música: "Novus Initium" de Alexander Nakarada (FreePD, CC0), alineada para que su final coincida con el último cuadro. Efectos: wyzowl/sfx-kit (CC0), colocados con el punto de sincronía y el nivel bajo voz que trae su catálogo. La música queda a -20 dB bajo la voz, sube a -10 dB en las pausas y a -4 dB en el cierre; se subió desde los -24 dB del encargo original porque a ese nivel no se percibía. Créditos en `video/pitch/assets/CREDITOS_AUDIO.md`.

@@ -1,6 +1,7 @@
 import { Img, OffthreadVideo, Sequence, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import { Escena } from "../compartidos/Escena";
 import { Encabezado } from "../compartidos/Encabezado";
+import { Efecto } from "../compartidos/Efecto";
 import { MarcoTelefono } from "../compartidos/MarcoTelefono";
 import { avance } from "../compartidos/movimiento";
 import { color, fuente, duracion, curva, nombreProyecto } from "../datos/marca";
@@ -135,6 +136,9 @@ const Contenido = ({ pantallas }: { pantallas: PropsEscena["pantallas"] }) => {
   const entradaTelefono = avance(frame, 0, Math.round(duracion.escena * fps), curva.entrada);
   return (
     <>
+      {cortes.slice(1, -1).map((c) => (
+        <Efecto key={c} id="swipe-medium-soft" en={c} />
+      ))}
       <Encabezado numero="05" titulo="La propuesta" />
       <Titulos tramos={tramos} transicion={transicion} />
       <MarcoTelefono

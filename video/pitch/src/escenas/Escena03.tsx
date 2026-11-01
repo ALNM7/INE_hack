@@ -2,6 +2,7 @@ import { useCurrentFrame, useVideoConfig } from "remotion";
 import { scaleLinear } from "d3-scale";
 import { Escena } from "../compartidos/Escena";
 import { Encabezado } from "../compartidos/Encabezado";
+import { Efecto, IdEfecto } from "../compartidos/Efecto";
 import { Ejes, Lienzo, Marca } from "../compartidos/Grafica";
 import { avance, entra } from "../compartidos/movimiento";
 import { color, fuente, duracion, curva } from "../datos/marca";
@@ -45,6 +46,10 @@ const Contenido = () => {
   const atenuar = avance(frame, inicioContraste, media);
   return (
     <>
+      {momentos.map((m, i) => (
+        <Efecto key={m} id={`tone-step-${momentos.length - i}` as IdEfecto} en={m} />
+      ))}
+      <Efecto id="shimmer-short-soft" en={igual} />
       <Encabezado numero="03" titulo="Una generación" nota={`Fuente: ${fuenteDatos}`} />
       <Lienzo izquierda={220} arriba={260}>
         <Ejes

@@ -4,10 +4,11 @@ import { ALTO, ANCHO, ESCENAS, FPS } from "./datos/escenas";
 import { metadatosEscena, metadatosPitch } from "./datos/tiempos";
 import { Pitch, componentesEscena } from "./Pitch";
 import { Miniatura } from "./Miniatura";
+import musica from "./datos/musica.json";
 
 export const Raiz = () => (
   <>
-    <Composition id="Pitch" component={Pitch} durationInFrames={FPS} fps={FPS} width={ANCHO} height={ALTO} defaultProps={{ escenas: [], musica: null }} calculateMetadata={metadatosPitch} />
+    <Composition id="Pitch" component={Pitch} durationInFrames={FPS} fps={FPS} width={ANCHO} height={ALTO} defaultProps={{ escenas: [], musica: musica.archivo }} calculateMetadata={metadatosPitch} />
     {ESCENAS.map((definicion) => (
       <Composition
         key={definicion.id}

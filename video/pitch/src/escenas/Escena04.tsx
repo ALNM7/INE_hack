@@ -3,6 +3,7 @@ import { scaleQuantize } from "d3-scale";
 import { geoCentroid } from "d3-geo";
 import { Escena } from "../compartidos/Escena";
 import { Encabezado } from "../compartidos/Encabezado";
+import { Efecto } from "../compartidos/Efecto";
 import { CifraProtagonista } from "../compartidos/CifraProtagonista";
 import { avance, entra, entraYSale } from "../compartidos/movimiento";
 import { estadosGeo, proyectar } from "../compartidos/mapa";
@@ -51,6 +52,8 @@ const Brecha = ({ hasta }: { hasta: number }) => {
   ];
   return (
     <div style={{ position: "absolute", inset: 0, ...entraYSale(frame, 0, hasta, media, 0) }}>
+      <Efecto id="tone-ding-mid" en={momentoMujeres} />
+      <Efecto id="tone-ding-low" en={momentoHombres} />
       <div style={{ position: "absolute", left: 260, top: 170, fontFamily: fuente.mono, fontSize: 22, color: color.arena, letterSpacing: "0.04em" }}>
         Participación de {rangoTexto(GRUPO_BRECHA)} años, {anioReciente}
       </div>
@@ -155,6 +158,7 @@ const Contenido = () => {
   return (
     <>
       <Encabezado numero="04" titulo="No se apaga igual" nota={`Fuente: ${fuenteDatos}`} />
+      <Efecto id="whoosh-slow-medium" en={momentoMapa} />
       <Brecha hasta={momentoMapa} />
       <Mapa desde={momentoMapa} />
     </>

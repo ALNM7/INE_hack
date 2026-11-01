@@ -3,6 +3,7 @@ import { scaleLinear } from "d3-scale";
 import { line, curveMonotoneX } from "d3-shape";
 import { Escena } from "../compartidos/Escena";
 import { Encabezado } from "../compartidos/Encabezado";
+import { Efecto, IdEfecto } from "../compartidos/Efecto";
 import { Ejes, Lienzo, Marca } from "../compartidos/Grafica";
 import { avance } from "../compartidos/movimiento";
 import { color, fuente, duracion, curva } from "../datos/marca";
@@ -36,6 +37,9 @@ const Contenido = () => {
   ];
   return (
     <>
+      {marcas.map((m, i) => (
+        <Efecto key={m.edad} id={`tone-step-${i + 1}` as IdEfecto} en={m.momento} />
+      ))}
       <Encabezado numero="02" titulo="Participación por edad" nota={`Fuente: ${fuenteDatos}`} />
       <Lienzo izquierda={220} arriba={250}>
         <Ejes

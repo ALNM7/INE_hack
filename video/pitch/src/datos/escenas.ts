@@ -4,7 +4,10 @@ export const ALTO = 1080;
 export const RESPIRO = 0.6;
 export const ENTRE_CLIPS = 0.25;
 export const ESPERA_FINAL = 2;
-export const VOLUMEN_MUSICA = Math.pow(10, -24 / 20);
+export const MUSICA_BAJO_VOZ_DB = -20;
+export const MUSICA_PAUSA_DB = -10;
+export const MUSICA_FINAL_DB = -4;
+export const MUSICA_RAMPA = 0.5;
 
 export const URL_SITIO = "https://alnm7.github.io/INE_hack/";
 export const URL_REPO = "https://github.com/alnm7/INE_hack";

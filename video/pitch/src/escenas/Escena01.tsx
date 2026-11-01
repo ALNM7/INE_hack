@@ -1,6 +1,7 @@
 import { useCurrentFrame, useVideoConfig } from "remotion";
 import { Escena } from "../compartidos/Escena";
 import { Encabezado } from "../compartidos/Encabezado";
+import { Efecto } from "../compartidos/Efecto";
 import { CampoLuces } from "../compartidos/CampoLuces";
 import { CifraProtagonista } from "../compartidos/CifraProtagonista";
 import { avance, entra } from "../compartidos/movimiento";
@@ -50,6 +51,8 @@ const Contenido = () => {
   };
   return (
     <>
+      <Efecto id="boom-hit-soft" en={cifra} />
+      <Efecto id="bass-sub-drop-short" en={jovenes} />
       <Encabezado numero="01" titulo="Abstención" nota={`Fuente: ${fuenteDatos}`} />
       <CampoLuces columnas={COLUMNAS} filas={FILAS} separacion={22} radio={5.2} semilla="escena01" estado={estado} style={{ left: 920, top: 230 }} />
       <div style={{ position: "absolute", left: 920, top: 190, fontFamily: fuente.mono, fontSize: 18, color: color.ceniza, ...entra(frame, 0, Math.round(duracion.larga * fps), 6) }}>

@@ -3,6 +3,7 @@ import { useCurrentFrame, useVideoConfig } from "remotion";
 import { scaleLinear } from "d3-scale";
 import { Escena } from "../compartidos/Escena";
 import { Encabezado } from "../compartidos/Encabezado";
+import { Efecto, IdEfecto } from "../compartidos/Efecto";
 import { Qr } from "../compartidos/Qr";
 import { avance, entra } from "../compartidos/movimiento";
 import { color, fuente, duracion, curva, nombreProyecto } from "../datos/marca";
@@ -140,6 +141,9 @@ const Mensajes = () => {
         Una ficha imprimible para cada uno de los <span style={{ color: color.luz }}>{total}</span> municipios
       </div>
       <div style={{ marginTop: 22, fontSize: 30, fontFamily: fuente.texto, color: color.arena, ...entra(frame, palabra(7, "pensada"), larga, 12) }}>Pensada para pláticas en escuelas.</div>
+      {lineas.map((l, i) => (
+        <Efecto key={l.texto} id={`tone-step-${i + 1}` as IdEfecto} en={l.momento} />
+      ))}
       <div style={{ marginTop: 56, display: "flex", flexDirection: "column", gap: 18 }}>
         {lineas.map((l) => (
           <div key={l.texto} style={{ display: "flex", alignItems: "center", gap: 18, ...entra(frame, l.momento, larga, 16) }}>
@@ -157,6 +161,7 @@ const Contenido = () => {
   return (
     <>
       <Encabezado numero="06" titulo="Para el INE" />
+      <Efecto id="foley-paper-slide" en={Math.round(duracion.media * fps)} />
       <Ficha desde={Math.round(duracion.media * fps)} />
       <Mensajes />
     </>
